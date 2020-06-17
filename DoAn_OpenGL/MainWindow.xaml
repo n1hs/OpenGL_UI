@@ -1,0 +1,170 @@
+﻿<Window x:Class="DoAn_OpenGL.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:vm="clr-namespace:DoAn_OpenGL.ViewModels"
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="13" 
+        TextOptions.TextFormattingMode="Ideal" 
+        TextOptions.TextRenderingMode="Auto"        
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="{DynamicResource MaterialDesignFont}"
+        BorderBrush="{DynamicResource MaterialDesignDarkBackground}"
+        BorderThickness="1.5"
+        xmlns:sharpGL="clr-namespace:SharpGL.WPF;assembly=SharpGL.WPF" 
+        x:Name="MainForm"
+        Height="800" Width="1400"
+        Title="Đồ án - Đồ họa máy tính."
+        WindowStartupLocation="CenterScreen">
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding RegisterFormCommand}" CommandParameter="{Binding ElementName=MainForm}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    <Window.DataContext>
+        <vm:MainWindowViewModel/>
+    </Window.DataContext>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid.Resources>
+            <Storyboard x:Key="OpenDialog">
+                <DoubleAnimation Storyboard.TargetProperty="Width"
+                                 Duration="0:0:1.8"
+                                 From="0" To="250"/>
+            </Storyboard>
+            <Storyboard x:Key="CloseDialog">
+                <DoubleAnimation Storyboard.TargetProperty="Width"
+                                 Duration="0:0:0.8"
+                                 From="250" To="0"/>
+            </Storyboard>
+        </Grid.Resources>
+
+        <materialDesign:ColorZone Grid.ColumnSpan="2"
+                                  Mode="Dark"
+                                  Padding="14">
+            <DockPanel>
+                <materialDesign:PopupBox
+                    DockPanel.Dock="Right"
+                    PlacementMode="BottomAndAlignRightEdges">
+                    <ListBox>
+                        <ListBoxItem>
+                            Hello World
+                        </ListBoxItem>
+                        <ListBoxItem>
+                            Nice Popup
+                        </ListBoxItem>
+                        <ListBoxItem>
+                            Goodbye.
+                        </ListBoxItem>
+                    </ListBox>
+                </materialDesign:PopupBox>
+                <StackPanel DockPanel.Dock="Left"
+                            Orientation="Horizontal">
+                    <ToggleButton
+        Style="{DynamicResource MaterialDesignHamburgerToggleButton}" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal"
+                            HorizontalAlignment="Center">
+                    <RadioButton Style="{StaticResource MaterialDesignTabRadioButton}"
+                            Content="{materialDesign:PackIcon Kind=Pencil}"
+                                 IsChecked="True"
+                            Margin="2"
+                            ToolTip="Vẽ hình"
+                            Command="{Binding ShowDialogCommand}"
+                            CommandParameter="1"/>
+                    <RadioButton Style="{StaticResource MaterialDesignTabRadioButton}"
+                            Content="{materialDesign:PackIcon Kind=CameraControl}"
+                            Margin="2"
+                            ToolTip="Phối cảnh"
+                                 Command="{Binding ShowDialogCommand}"
+                            CommandParameter="2"/>
+                    <RadioButton Style="{StaticResource MaterialDesignTabRadioButton}"
+                            Content="{materialDesign:PackIcon Kind=Rotate3d}"
+                            Margin="2"
+                            ToolTip="Phép biến đổi "
+                                 Command="{Binding ShowDialogCommand}"
+                            CommandParameter="3"/>
+                    <RadioButton Style="{StaticResource MaterialDesignTabRadioButton}"
+                            Content="{materialDesign:PackIcon Kind=Texture}"
+                            Margin="2"
+                            ToolTip="Texture"
+                                 Command="{Binding ShowDialogCommand}"
+                            CommandParameter="4"/>
+                    <RadioButton Style="{StaticResource MaterialDesignTabRadioButton}"
+                            Content="{materialDesign:PackIcon Kind=Animation}"
+                            Margin="2"
+                            ToolTip="Animation"
+                              Command="{Binding ShowDialogCommand}"
+                            CommandParameter="5"/>
+                </StackPanel>
+            </DockPanel>
+        </materialDesign:ColorZone>
+
+        <materialDesign:Card Grid.Row="1"   
+                             x:Name="DialogHost"
+                             Grid.Column="1"
+                             Padding="5"
+                             Width="250"
+                             materialDesign:ShadowAssist.ShadowDepth="Depth3"
+                             materialDesign:ShadowAssist.ShadowEdges="Left">
+            <materialDesign:Card.Style>
+                <Style TargetType="materialDesign:Card">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding ShowDialog, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Value="True">
+                            <DataTrigger.EnterActions>
+                                <BeginStoryboard Storyboard="{StaticResource OpenDialog}"/>
+                            </DataTrigger.EnterActions>
+                            <DataTrigger.ExitActions>
+                                <BeginStoryboard Storyboard="{StaticResource CloseDialog}"/>
+                            </DataTrigger.ExitActions>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </materialDesign:Card.Style>
+            <Grid>                
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <DockPanel>
+                    <Button Style="{StaticResource MaterialDesignFlatButton}"
+                            DockPanel.Dock="Right"
+                            Content="{materialDesign:PackIcon Kind=Close}"
+                            Margin="2">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="Click">
+                                <i:InvokeCommandAction Command="{Binding HideDialogCommand}"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </Button>
+                    <TextBlock Text="{Binding DialogTitle}"
+                               Style="{StaticResource MaterialDesignHeadline5TextBlock}"
+                               VerticalAlignment="Center"
+                               Margin="3 0"
+                               TextWrapping="WrapWithOverflow"/>
+                </DockPanel>
+                <ContentControl Content="{Binding DialogContent, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                                Grid.Row="1"/>
+            </Grid>
+        </materialDesign:Card>
+        <sharpGL:OpenGLControl Grid.Row="1"     
+                               x:Name="OpenGLControl"
+                               Margin="5"/>
+        <StatusBar Grid.Row="2"
+                   Background="{DynamicResource MaterialDesignDarkBackground}"
+                   Grid.ColumnSpan="2">
+            <TextBlock Foreground="{DynamicResource MaterialDesignDarkForeground}" 
+                       x:Name="lblStatus" />
+        </StatusBar>
+    </Grid>
+</Window>

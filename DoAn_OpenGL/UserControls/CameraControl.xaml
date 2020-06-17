@@ -1,0 +1,39 @@
+﻿<UserControl x:Class="DoAn_OpenGL.UserControls.CameraControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:DoAn_OpenGL.UserControls"
+             Width="250">
+    <StackPanel>
+        <TextBlock Margin="2"
+                   Style="{StaticResource MaterialDesignSubtitle1TextBlock}"
+                   Text="Eye point"/>
+        <DockPanel Margin="2" >
+            <TextBlock DockPanel.Dock="Left" Text="X: "/>
+            <Slider TickFrequency="5"
+                    Orientation="Horizontal"
+                    Minimum="-50"
+                    Maximum="50"
+                    Value="{Binding XEye, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+        </DockPanel>
+        <DockPanel Margin="2" >
+            <TextBlock DockPanel.Dock="Left" Text="Y: "/>
+            <Slider TickFrequency="5"
+                    Orientation="Horizontal"
+                    Minimum="-50"
+                    Maximum="50"
+                    Value="{Binding YEye, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+        </DockPanel>
+        <DockPanel Margin="2" >
+            <TextBlock DockPanel.Dock="Left" Text="Z: "/>
+            <Slider TickFrequency="5"
+                    Orientation="Horizontal"
+                    Minimum="-50"
+                    Maximum="50"
+                    Value="{Binding ZEye, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+        </DockPanel>
+        <Separator/>
+
+    </StackPanel>
+</UserControl>
