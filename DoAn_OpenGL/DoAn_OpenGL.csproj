@@ -97,6 +97,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="3DGraphics\3DGraphic.cs" />
+    <Compile Include="Assets\DrawMode.cs" />
     <Compile Include="Assets\RelayCommand.cs" />
     <Compile Include="UserControls\CameraControl.xaml.cs">
       <DependentUpon>CameraControl.xaml</DependentUpon>
@@ -105,6 +107,7 @@
       <DependentUpon>DrawControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\BaseViewModel.cs" />
+    <Compile Include="ViewModels\DrawViewModel.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>

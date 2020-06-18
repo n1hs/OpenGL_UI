@@ -12,6 +12,9 @@ namespace DoAn_OpenGL.ViewModels
     {
         #region UI
         private MainWindow mainWindow;
+        internal DrawMode DrawMode;
+        internal bool drawCoodinate;
+        private DrawViewModel drawmodel ;
         private bool showDialog;
 
         public bool ShowDialog
@@ -56,6 +59,8 @@ namespace DoAn_OpenGL.ViewModels
         {
             showDialog = true;
             DialogContent = new UserControls.DrawControl();
+            drawmodel = new DrawViewModel(this);
+            DialogContent.DataContext = drawmodel;
             DialogTitle = "Main";
             ShowDialogCommand = new RelayCommand<string>(
                 (i) => true,
@@ -92,6 +97,7 @@ namespace DoAn_OpenGL.ViewModels
             {
                 case 1:
                     DialogContent = new UserControls.DrawControl();
+                    DialogContent.DataContext = drawmodel;
                     DialogTitle = "Main";
                     break;
                 case 2:
@@ -102,7 +108,6 @@ namespace DoAn_OpenGL.ViewModels
             }
             if (dialogContent != null)
             {
-                DialogContent.DataContext = this;
                 ShowDialog = true;
             }
         }
@@ -167,7 +172,7 @@ namespace DoAn_OpenGL.ViewModels
             gl.Rotate(rotation, 0.0f, 1.0f, 0.0f);
 
             Teapot tp = new Teapot();
-            tp.Draw(gl, 14, 1, OpenGL.GL_FILL);
+            tp.Draw(gl, 14, 3, OpenGL.GL_FILL);
 
 
             rotation += 3.0f;
@@ -204,20 +209,22 @@ namespace DoAn_OpenGL.ViewModels
 
         private void DrawCoodinate()
         {
+            if (!drawCoodinate)
+                return;
             gl.Begin(SharpGL.Enumerations.BeginMode.Lines);
-            gl.Color(1.0, 0.0, 0.0);
+            gl.Color(1.0, 0.0, 0.0); // red X
             gl.Vertex(0.0, 0.0, 0.0);
             gl.Vertex(10.0, 0.0, 0.0);
             gl.End();
 
             gl.Begin(SharpGL.Enumerations.BeginMode.Lines);
-            gl.Color(0.0, 1.0, 0.0);
+            gl.Color(0.0, 1.0, 0.0); //Green X
             gl.Vertex(0.0, 0.0, 0.0);
             gl.Vertex(0.0, 10.0, 0.0);
             gl.End();
 
             gl.Begin(SharpGL.Enumerations.BeginMode.Lines);
-            gl.Color(0.0, 0.0, 1.0);
+            gl.Color(0.0, 0.0, 1.0); //Blue Z
             gl.Vertex(0.0, 0.0, 0.0);
             gl.Vertex(0.0, 0.0, 10.0);
             gl.End();
