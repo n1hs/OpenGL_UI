@@ -1,8 +1,10 @@
 ﻿using DoAn_OpenGL.Assets;
 using SharpGL;
-using SharpGL.SceneGraph.Primitives;
+using DoAn_OpenGL.Graphics3D;
+using SharpGL.SceneGraph.Quadrics;
 using SharpGL.WPF;
 using System;
+using System.Collections.ObjectModel;
 using System.Windows.Controls;
 using System.Windows.Input;
 
@@ -12,8 +14,8 @@ namespace DoAn_OpenGL.ViewModels
     {
         #region UI
         private MainWindow mainWindow;
-        internal DrawMode DrawMode;
-        internal bool drawCoodinate;
+        internal bool showXYPlane;
+        internal bool isDrawMode;
         private DrawViewModel drawmodel ;
         private bool showDialog;
 
@@ -50,6 +52,8 @@ namespace DoAn_OpenGL.ViewModels
         }
 
 
+
+
         public ICommand ShowDialogCommand { set; get; }
         public ICommand HideDialogCommand { set; get; }
         public ICommand RegisterFormCommand { set; get; }
@@ -57,6 +61,7 @@ namespace DoAn_OpenGL.ViewModels
 
         public MainWindowViewModel()
         {
+            listObject = new ObservableCollection<Graphic3D>();
             showDialog = true;
             DialogContent = new UserControls.DrawControl();
             drawmodel = new DrawViewModel(this);
@@ -82,10 +87,10 @@ namespace DoAn_OpenGL.ViewModels
                     mainWindow.OpenGLControl.MouseLeave += OpenGLControl_MouseLeave;
                     mainWindow.OpenGLControl.MouseLeftButtonDown += OpenGLControl_MouseLeftButtonDown;
                     mainWindow.OpenGLControl.MouseLeftButtonUp += OpenGLControl_MouseLeftButtonUp;
+                    mainWindow.OpenGLControl.MouseEnter += OpenGLControl_MouseEnter;
                     });
         }
 
-       
 
         private void ShowDialogControl(string key)
         {
@@ -115,7 +120,7 @@ namespace DoAn_OpenGL.ViewModels
 
 
         #region CameraControl
-        private double xEye = 5.0;
+        private double xEye = 15.0;
 
         public double XEye
         {
@@ -124,7 +129,7 @@ namespace DoAn_OpenGL.ViewModels
                 OnPropertyChanged("XEye");
             }
         }
-        private double yEye = 5.0;
+        private double yEye = 0.0;
 
         public double YEye
         {
@@ -150,42 +155,64 @@ namespace DoAn_OpenGL.ViewModels
 
         #endregion
 
+
+
+
         #region OpenGL
+        private const double xeye = 15.0;
+        private const double yeye = 0.0;
+        private const double zeye = 15.0;
+        private const double xcenter = 0.0;
+        private const double ycenter = 0.0;
+        private const double zcenter = 0.0;
+        private const double xup = 0.0;
+        private const double yup = 0.0;
+        private const double zup = 1.0;
         OpenGL gl;
+        private bool isMouseEnter;
+        internal DrawStyle drawMode;
+        internal DrawGraphic drawGraphic;
+        double pointX, pointY = 0;
+        private Graphic3D temp;
+
+        internal ObservableCollection<Graphics3D.Graphic3D> listObject;
+
+
+
         private void OpenGLControl_OpenGLDraw(object sender, SharpGL.SceneGraph.OpenGLEventArgs args)
         {
             gl = args.OpenGL;
 
             // Clear The Screen And The Depth Buffer
             gl.Clear(OpenGL.GL_COLOR_BUFFER_BIT | OpenGL.GL_DEPTH_BUFFER_BIT);
-
+            gl.ClearColor(0, 0, 0, 0);
             // Move Left And Into The Screen
             gl.LoadIdentity();
 
-            gl.LookAt(xEye, YEye, ZEye, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
+            gl.LookAt(xEye, YEye, ZEye, xcenter, ycenter, zcenter, xup, yup, zup);
+            gl.PushMatrix();
 
-            DrawCoodinate();
-            
-            //test ham ve hinh tru voi 2 diem x1, y1 va x2,y2
-            DrawCylinder(gl, 10, 10, 15, 15);
+            DrawXYPlane();
+            gl.ClearColor(0, 0, 0, 0);
 
-            //test ham ve hinh non voi 2 diem x1, y1 va x2,y2
-            DrawCone(gl, 10, 10, 30, 30);
-            
+            gl.PopMatrix();
             
 
-            gl.Translate(0.0f, 0.0f, -6.0f);
+            if(listObject!=null)
+            {
+                foreach(var g in listObject)
+                {
+                    g.DrawSolid(gl);
+                }
+            }
 
-
-            gl.Rotate(rotation, 0.0f, 1.0f, 0.0f);
-
-            Teapot tp = new Teapot();
-            tp.Draw(gl, 14, 3, OpenGL.GL_FILL);
-
-
-            rotation += 3.0f;
+            if (isMouseEnter && isDrawMode)
+            {
+                gl.PushMatrix();
+                temp = Cone.DrawConeSolid(gl, 2,2,1,0,0, pointX, pointY);
+                gl.PopMatrix();
+            }
         }
-        float rotation = 0;
 
         private void OpenGLControl_OpenGLInitialized(object sender, SharpGL.SceneGraph.OpenGLEventArgs args)
         {
@@ -194,18 +221,58 @@ namespace DoAn_OpenGL.ViewModels
 
         private void OpenGLControl_MouseMove(object sender, MouseEventArgs e)
         {
-            OpenGLControl openGLControl = sender as OpenGLControl;
-            mainWindow.lblStatus.Text = string.Format("Point x = {0} y = {1}.", e.GetPosition(openGLControl).X, e.GetPosition(openGLControl).Y);
+            if (isMouseEnter)
+            {
+                OpenGLControl openGLControl = sender as OpenGLControl;
+
+                int[] viewport = new int[4];
+                gl.GetInteger(OpenGL.GL_VIEWPORT, viewport);
+
+                double[] modelview = new double[16];
+                gl.GetDouble(SharpGL.Enumerations.GetTarget.ModelviewMatix, modelview);
+
+                double[] projection = new double[16];
+                gl.GetDouble(SharpGL.Enumerations.GetTarget.ProjectionMatrix, projection);
+
+                double winX = e.GetPosition(openGLControl).X;
+                double winY = e.GetPosition(openGLControl).Y;
+                winY = (double)viewport[3] - winY;
+                double posX, posY, posZ;
+                posX = posY = posZ = 0;
+                gl.UnProject(winX, winY, 0, modelview, projection, viewport, ref posX, ref posY, ref posZ);
+
+                double pos1X, pos1Y, pos1Z;
+                pos1X = pos1Y = pos1Z = 0;
+                gl.UnProject(winX, winY, 1, modelview, projection, viewport, ref pos1X, ref pos1Y, ref pos1Z);
+
+                double t = - posZ / (pos1Z - posZ);
+                pointX = t * (pos1X - posX) + posX;
+                pointY = t * (pos1Y - posY) + posY;
+                SetStatus( string.Format("DrawMode: {0} . Point x = {1} y = {2}.",isDrawMode, pointX, pointY));
+            }
         }
 
         private void OpenGLControl_MouseLeave(object sender, MouseEventArgs e)
         {
-            mainWindow.lblStatus.Text = string.Empty;
+            SetStatus(string.Format("DrawMode: {0}.", isDrawMode));
+            isMouseEnter = false;
+        }
+
+        private void OpenGLControl_MouseEnter(object sender, MouseEventArgs e)
+        {
+            if (isMouseEnter == false)
+                isMouseEnter = true;
         }
 
         private void OpenGLControl_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-
+            if(isMouseEnter)
+            {
+                if(isDrawMode)
+                {
+                    drawmodel.ListObject.Add(temp);
+                }
+            }
             
         }
 
@@ -214,69 +281,61 @@ namespace DoAn_OpenGL.ViewModels
             
         }
 
-
-        private void DrawCoodinate()
+        internal void SetStatus(string text)
         {
-            if (!drawCoodinate)
+            mainWindow.lblStatus.Text = text;
+        }
+
+        private void DrawXYPlane()
+        {
+            if (!showXYPlane)
                 return;
-            gl.Begin(SharpGL.Enumerations.BeginMode.Lines);
-            gl.Color(1.0, 0.0, 0.0); // red X
-            gl.Vertex(0.0, 0.0, 0.0);
-            gl.Vertex(10.0, 0.0, 0.0);
-            gl.End();
 
-            gl.Begin(SharpGL.Enumerations.BeginMode.Lines);
-            gl.Color(0.0, 1.0, 0.0); //Green X
-            gl.Vertex(0.0, 0.0, 0.0);
-            gl.Vertex(0.0, 10.0, 0.0);
-            gl.End();
+            int grid = 10;
+            double distanceBetweenLines = 1.0;
 
-            gl.Begin(SharpGL.Enumerations.BeginMode.Lines);
-            gl.Color(0.0, 0.0, 1.0); //Blue Z
-            gl.Vertex(0.0, 0.0, 0.0);
-            gl.Vertex(0.0, 0.0, 10.0);
-            gl.End();
+            for (int x = -grid; x <= grid; x++)
+            {
+
+                gl.Begin(SharpGL.Enumerations.BeginMode.Lines);
+                gl.Vertex(x, -(grid * distanceBetweenLines), 0.0);
+                gl.Vertex(x, (grid * distanceBetweenLines), 0.0);
+                gl.End();
+            };
+            for (int y = -grid; y <= grid; y++)
+            {
+                gl.Begin(SharpGL.Enumerations.BeginMode.Lines);
+                gl.Vertex(-(grid * distanceBetweenLines), y, 0.0);
+                gl.Vertex(grid * distanceBetweenLines, y, 0.0);
+                gl.End();
+            }
+
         }
+
+        //private void DrawCoodinate()
+        //{
+        //    //gl.Begin(SharpGL.Enumerations.BeginMode.Lines);
+        //    //gl.Color(1.0, 0.0, 0.0); // red X
+        //    //gl.Vertex(0.0, 0.0, 0.0);
+        //    //gl.Vertex(10.0, 0.0, 0.0);
+        //    //gl.End();
+
+        //    //gl.Begin(SharpGL.Enumerations.BeginMode.Lines);
+        //    //gl.Color(0.0, 1.0, 0.0); //Green X
+        //    //gl.Vertex(0.0, 0.0, 0.0);
+        //    //gl.Vertex(0.0, 10.0, 0.0);
+        //    //gl.End();
+
+        //    //gl.Begin(SharpGL.Enumerations.BeginMode.Lines);
+        //    //gl.Color(0.0, 0.0, 1.0); //Blue Z
+        //    //gl.Vertex(0.0, 0.0, 0.0);
+        //    //gl.Vertex(0.0, 0.0, 10.0);
+        //    //gl.End();
+        //}
         
-        //ham ve hinh tru
-        private void DrawCylinder(OpenGL gl, int x1, int y1, int x2, int y2)
-        {
-            Cylinder cylinder = new Cylinder();
-            cylinder.TopRadius = 0.1 * Math.Abs(x2 - x1);
-            cylinder.BaseRadius = 0.1*Math.Abs(x2 - x1);
-            cylinder.Height = 0.1*Math.Abs(y2 - y1);
-            cylinder.Slices = 100;
-            cylinder.Stacks = 100;
+      
 
-            cylinder.CreateInContext(gl);
-            cylinder.PushObjectSpace(gl);
-            cylinder.Render(gl, SharpGL.SceneGraph.Core.RenderMode.Render);
-            cylinder.PopObjectSpace(gl);
-            cylinder.DestroyInContext(gl);
-        }
 
-        //ham ve hinh non
-        private void DrawCone(OpenGL gl, int x1, int y1, int x2, int y2)
-        {
-            Cylinder cone = new Cylinder();
-            cone.TopRadius = 0;
-            cone.BaseRadius = 0.1 * Math.Abs(x2 - x1);
-            cone.Height = 0.1 * Math.Abs(y2 - y1);
-            cone.Slices = 100;
-            cone.Stacks = 100;
-
-            cone.CreateInContext(gl);
-            cone.PushObjectSpace(gl);
-            cone.Render(gl, SharpGL.SceneGraph.Core.RenderMode.Render);
-            cone.PopObjectSpace(gl);
-            cone.DestroyInContext(gl);
-        }
-
-        private void Draw()
-        {
-            Teapot teapot = new Teapot();
-            teapot.Draw(gl, 14, 1, OpenGL.GLU_FILL);
-        }
         #endregion
     }
 }

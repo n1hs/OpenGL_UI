@@ -97,8 +97,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="3DGraphics\3DGraphic.cs" />
-    <Compile Include="Assets\DrawMode.cs" />
+    <Compile Include="Graphics3D\Cone.cs" />
+    <Compile Include="Graphics3D\Cylinder.cs" />
+    <Compile Include="Graphics3D\Graphic3D.cs" />
+    <Compile Include="Assets\DrawGraphic.cs" />
     <Compile Include="Assets\RelayCommand.cs" />
     <Compile Include="UserControls\CameraControl.xaml.cs">
       <DependentUpon>CameraControl.xaml</DependentUpon>
