@@ -160,6 +160,14 @@ namespace DoAn_OpenGL.ViewModels
             gl.LookAt(xEye, YEye, ZEye, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
 
             DrawCoodinate();
+            
+            //test ham ve hinh tru voi 2 diem x1, y1 va x2,y2
+            DrawCylinder(gl, 10, 10, 15, 15);
+
+            //test ham ve hinh non voi 2 diem x1, y1 va x2,y2
+            DrawCone(gl, 10, 10, 30, 30);
+            
+            
 
             gl.Translate(0.0f, 0.0f, -6.0f);
 
@@ -221,6 +229,40 @@ namespace DoAn_OpenGL.ViewModels
             gl.Vertex(0.0, 0.0, 0.0);
             gl.Vertex(0.0, 0.0, 10.0);
             gl.End();
+        }
+        
+        //ham ve hinh tru
+        private void DrawCylinder(OpenGL gl, int x1, int y1, int x2, int y2)
+        {
+            Cylinder cylinder = new Cylinder();
+            cylinder.TopRadius = 0.1 * Math.Abs(x2 - x1);
+            cylinder.BaseRadius = 0.1*Math.Abs(x2 - x1);
+            cylinder.Height = 0.1*Math.Abs(y2 - y1);
+            cylinder.Slices = 100;
+            cylinder.Stacks = 100;
+
+            cylinder.CreateInContext(gl);
+            cylinder.PushObjectSpace(gl);
+            cylinder.Render(gl, SharpGL.SceneGraph.Core.RenderMode.Render);
+            cylinder.PopObjectSpace(gl);
+            cylinder.DestroyInContext(gl);
+        }
+
+        //ham ve hinh non
+        private void DrawCone(OpenGL gl, int x1, int y1, int x2, int y2)
+        {
+            Cylinder cone = new Cylinder();
+            cone.TopRadius = 0;
+            cone.BaseRadius = 0.1 * Math.Abs(x2 - x1);
+            cone.Height = 0.1 * Math.Abs(y2 - y1);
+            cone.Slices = 100;
+            cone.Stacks = 100;
+
+            cone.CreateInContext(gl);
+            cone.PushObjectSpace(gl);
+            cone.Render(gl, SharpGL.SceneGraph.Core.RenderMode.Render);
+            cone.PopObjectSpace(gl);
+            cone.DestroyInContext(gl);
         }
 
         private void Draw()
