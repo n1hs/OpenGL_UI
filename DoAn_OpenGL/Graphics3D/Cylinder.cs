@@ -1,5 +1,6 @@
 ﻿using SharpGL;
 using SharpGL.SceneGraph.Quadrics;
+using System.Windows.Controls;
 
 namespace DoAn_OpenGL.Graphics3D
 {
@@ -21,13 +22,69 @@ namespace DoAn_OpenGL.Graphics3D
         }
         public override void DrawPoint(OpenGL gl)
         {
+            gl.PushMatrix();
+            gl.Translate(LocationX, LocationY, LocationZ);
+            gl.Rotate(RotateX, 1.0, 0.0, 0.0);
+            gl.Rotate(RotateY, 0.0, 1.0, 0.0);
+            gl.Rotate(RotateZ, 0.0, 0.0, 1.0);
+            gl.Color(ColorR, ColorG, ColorB);
+            SharpGL.SceneGraph.Quadrics.Cylinder cylinder = new SharpGL.SceneGraph.Quadrics.Cylinder();
+            cylinder.TopRadius = SizeX;
+            cylinder.BaseRadius = SizeX;
+            cylinder.Height = SizeZ;
+            cylinder.Slices = 100;
+            cylinder.Stacks = 100;
+            cylinder.QuadricDrawStyle = DrawStyle.Point;
+            cylinder.CreateInContext(gl);
+            cylinder.PushObjectSpace(gl);
+            cylinder.Render(gl, SharpGL.SceneGraph.Core.RenderMode.Render);
+            cylinder.PopObjectSpace(gl);
+            cylinder.DestroyInContext(gl);
+            gl.PopMatrix();
         }
         public override void DrawLine(OpenGL gl)
         {
+            gl.PushMatrix();
+            gl.Translate(LocationX, LocationY, LocationZ);
+            gl.Rotate(RotateX, 1.0, 0.0, 0.0);
+            gl.Rotate(RotateY, 0.0, 1.0, 0.0);
+            gl.Rotate(RotateZ, 0.0, 0.0, 1.0);
+            gl.Color(ColorR, ColorG, ColorB);
+            SharpGL.SceneGraph.Quadrics.Cylinder cylinder = new SharpGL.SceneGraph.Quadrics.Cylinder();
+            cylinder.TopRadius = SizeX;
+            cylinder.BaseRadius = SizeX;
+            cylinder.Height = SizeZ;
+            cylinder.Slices = 100;
+            cylinder.Stacks = 100;
+            cylinder.QuadricDrawStyle = DrawStyle.Line;
+            cylinder.CreateInContext(gl);
+            cylinder.PushObjectSpace(gl);
+            cylinder.Render(gl, SharpGL.SceneGraph.Core.RenderMode.Render);
+            cylinder.PopObjectSpace(gl);
+            cylinder.DestroyInContext(gl);
+            gl.PopMatrix();
         }
-        //ham ve hinh non
         public override void DrawSolid(OpenGL gl)
         {
+            gl.PushMatrix();
+            gl.Translate(LocationX, LocationY, LocationZ);
+            gl.Rotate(RotateX, 1.0, 0.0, 0.0);
+            gl.Rotate(RotateY, 0.0, 1.0, 0.0);
+            gl.Rotate(RotateZ, 0.0, 0.0, 1.0);
+            gl.Color(ColorR, ColorG, ColorB);
+            SharpGL.SceneGraph.Quadrics.Cylinder cylinder = new SharpGL.SceneGraph.Quadrics.Cylinder();
+            cylinder.TopRadius = SizeX;
+            cylinder.BaseRadius = SizeX;
+            cylinder.Height = SizeZ;
+            cylinder.Slices = 100;
+            cylinder.Stacks = 100;
+            cylinder.QuadricDrawStyle = DrawStyle.Fill;
+            cylinder.CreateInContext(gl);
+            cylinder.PushObjectSpace(gl);
+            cylinder.Render(gl, SharpGL.SceneGraph.Core.RenderMode.Render);
+            cylinder.PopObjectSpace(gl);
+            cylinder.DestroyInContext(gl);
+            gl.PopMatrix();
         }
 
     }

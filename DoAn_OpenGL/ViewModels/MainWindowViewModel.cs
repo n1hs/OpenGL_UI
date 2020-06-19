@@ -199,7 +199,7 @@ namespace DoAn_OpenGL.ViewModels
 
 
             ///Vẽ lại hình dã luu trong listObject
-
+           
             if (listObject!=null)
             {
                 foreach(Graphic3D g in listObject)

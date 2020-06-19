@@ -23,11 +23,48 @@ namespace DoAn_OpenGL.Graphics3D
         }
         public override void DrawPoint(OpenGL gl)
         {
+            gl.PushMatrix();
+            gl.Translate(LocationX, LocationY, LocationZ);
+            gl.Rotate(RotateX, 1.0, 0.0, 0.0);
+            gl.Rotate(RotateY, 0.0, 1.0, 0.0);
+            gl.Rotate(RotateZ, 0.0, 0.0, 1.0);
+            gl.Color(ColorR, ColorG, ColorB);
+            SharpGL.SceneGraph.Quadrics.Cylinder cone = new SharpGL.SceneGraph.Quadrics.Cylinder();
+            cone.TopRadius = 0;
+            cone.BaseRadius = SizeX;
+            cone.Height = SizeZ;
+            cone.Slices = 100;
+            cone.Stacks = 100;
+            cone.QuadricDrawStyle = DrawStyle.Point;
+            cone.CreateInContext(gl);
+            cone.PushObjectSpace(gl);
+            cone.Render(gl, SharpGL.SceneGraph.Core.RenderMode.Render);
+            cone.PopObjectSpace(gl);
+            cone.DestroyInContext(gl);
+            gl.PopMatrix();
         }
         public override void DrawLine(OpenGL gl)
         {
+            gl.PushMatrix();
+            gl.Translate(LocationX, LocationY, LocationZ);
+            gl.Rotate(RotateX, 1.0, 0.0, 0.0);
+            gl.Rotate(RotateY, 0.0, 1.0, 0.0);
+            gl.Rotate(RotateZ, 0.0, 0.0, 1.0);
+            gl.Color(ColorR, ColorG, ColorB);
+            SharpGL.SceneGraph.Quadrics.Cylinder cone = new SharpGL.SceneGraph.Quadrics.Cylinder();
+            cone.TopRadius = 0;
+            cone.BaseRadius = SizeX;
+            cone.Height = SizeZ;
+            cone.Slices = 100;
+            cone.Stacks = 100;
+            cone.QuadricDrawStyle = DrawStyle.Line;
+            cone.CreateInContext(gl);
+            cone.PushObjectSpace(gl);
+            cone.Render(gl, SharpGL.SceneGraph.Core.RenderMode.Render);
+            cone.PopObjectSpace(gl);
+            cone.DestroyInContext(gl);
+            gl.PopMatrix();
         }
-        //ham ve hinh non
         public override void DrawSolid(OpenGL gl)
         {
             gl.PushMatrix();
@@ -42,7 +79,7 @@ namespace DoAn_OpenGL.Graphics3D
             cone.Height = SizeZ;
             cone.Slices = 100;
             cone.Stacks = 100;
-
+            cone.QuadricDrawStyle = DrawStyle.Fill;
             cone.CreateInContext(gl);
             cone.PushObjectSpace(gl);
             cone.Render(gl, SharpGL.SceneGraph.Core.RenderMode.Render);
@@ -51,15 +88,6 @@ namespace DoAn_OpenGL.Graphics3D
             gl.PopMatrix();
         }
 
-        public static Cone DrawConePoint(OpenGL gl, double baseRadius, double height, double R, double G, double B, double tranX = 0, double tranY = 0)
-        {
-            return null;
-        }
-        public static Cone DrawConeLine(OpenGL gl, double baseRadius, double height, double R, double G, double B, double tranX = 0, double tranY = 0)
-        {
-            return null;
-        }
-
-
+        
     }
 }
