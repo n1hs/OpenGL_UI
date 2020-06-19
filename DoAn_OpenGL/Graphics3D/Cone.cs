@@ -38,7 +38,12 @@ namespace DoAn_OpenGL.Graphics3D
             LocationZ = tranZ;
 
         }
-
+        public void DrawPoint(OpenGL gl)
+        {
+        }
+        public void DrawLine(OpenGL gl)
+        {
+        }
         //ham ve hinh non
         public void DrawSolid(OpenGL gl)
         {
@@ -63,6 +68,16 @@ namespace DoAn_OpenGL.Graphics3D
             gl.PopMatrix();
         }
 
+        public static Cone DrawConePoint(OpenGL gl, double baseRadius, double height, double R, double G, double B, double tranX = 0, double tranY = 0)
+        {
+            return null;
+        }
+        public static Cone DrawConeLine(OpenGL gl, double baseRadius, double height, double R, double G, double B, double tranX = 0, double tranY = 0)
+        {
+            return null;
+        }
+
+
         public static Cone DrawConeSolid(OpenGL gl, double baseRadius, double height, double R, double G, double B, double tranX = 0, double tranY = 0)
         {
             gl.PushMatrix();
@@ -83,5 +98,6 @@ namespace DoAn_OpenGL.Graphics3D
             gl.PopMatrix();
             return new Cone(baseRadius, height, R, G, B, tranX, tranY);
         }
+
     }
 }

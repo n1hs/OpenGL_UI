@@ -26,6 +26,8 @@ namespace DoAn_OpenGL.Graphics3D
 
         DrawStyle Style { get;  }
 
+        void DrawPoint(OpenGL gl);
+        void DrawLine(OpenGL gl);
         void DrawSolid(OpenGL gl);
 
     }

@@ -3,7 +3,7 @@ using SharpGL.SceneGraph.Quadrics;
 
 namespace DoAn_OpenGL.Graphics3D
 {
-    public class TruncatedConeGraphic : Graphic3D
+    public class Cube : Graphic3D
     {
         public double LocationX { get; private set; }
         public double LocationY { get; private set; }
@@ -24,9 +24,9 @@ namespace DoAn_OpenGL.Graphics3D
         public string Name { get; private set; }
 
         public DrawStyle Style { get; private set; }
-        public TruncatedConeGraphic(double baseRadius, double height, double R, double G, double B, double tranX = 0, double tranY = 0, double tranZ = 0, double rotX = 0, double rotY = 0, double rotZ = 0)
+        public Cube(double baseRadius, double height, double R, double G, double B, double tranX = 0, double tranY = 0, double tranZ = 0, double rotX = 0, double rotY = 0, double rotZ = 0)
         {
-            Name = "Cylinder";
+            Name = "Cube";
             SizeX = baseRadius;
             SizeZ = height;
             ColorR = R;
@@ -48,17 +48,17 @@ namespace DoAn_OpenGL.Graphics3D
         {
         }
 
-        public static TruncatedConeGraphic DrawCylinderGraphicPoint(OpenGL gl, double baseRadius, double height, double R, double G, double B, double tranX = 0, double tranY = 0)
+        public static Cube DrawCubePoint(OpenGL gl, double baseRadius, double height, double R, double G, double B, double tranX = 0, double tranY = 0)
         {
             return null;
         }
-        public static TruncatedConeGraphic DrawCylinderGraphicLine(OpenGL gl, double baseRadius, double height, double R, double G, double B, double tranX = 0, double tranY = 0)
+        public static Cube DrawCubeLine(OpenGL gl, double baseRadius, double height, double R, double G, double B, double tranX = 0, double tranY = 0)
         {
             return null;
         }
 
 
-        public static TruncatedConeGraphic DrawCylinderGraphicSolid(OpenGL gl, double baseRadius, double height, double R, double G, double B, double tranX = 0, double tranY = 0)
+        public static Cube DrawCubeSolid(OpenGL gl, double baseRadius, double height, double R, double G, double B, double tranX = 0, double tranY = 0)
         {
             return null;
         }

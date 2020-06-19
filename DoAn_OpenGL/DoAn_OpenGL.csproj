@@ -98,10 +98,16 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Graphics3D\Cone.cs" />
+    <Compile Include="Graphics3D\Cube.cs" />
+    <Compile Include="Graphics3D\FrustumShape.cs" />
+    <Compile Include="Graphics3D\Octagon.cs" />
+    <Compile Include="Graphics3D\TruncatedCone.cs" />
     <Compile Include="Graphics3D\Cylinder.cs" />
     <Compile Include="Graphics3D\Graphic3D.cs" />
     <Compile Include="Assets\DrawGraphic.cs" />
     <Compile Include="Assets\RelayCommand.cs" />
+    <Compile Include="Graphics3D\Sphere.cs" />
+    <Compile Include="Graphics3D\Pyramid.cs" />
     <Compile Include="UserControls\CameraControl.xaml.cs">
       <DependentUpon>CameraControl.xaml</DependentUpon>
     </Compile>
