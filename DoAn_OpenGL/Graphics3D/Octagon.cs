@@ -5,27 +5,9 @@ namespace DoAn_OpenGL.Graphics3D
 {
     public class Octagon : Graphic3D
     {
-        public double LocationX { get; private set; }
-        public double LocationY { get; private set; }
-        public double LocationZ { get; private set; }
-
-        public double SizeX { get; private set; }
-        public double SizeY { get; private set; }
-        public double SizeZ { get; private set; }
-
-        public double ColorR { get; private set; }
-        public double ColorG { get; private set; }
-        public double ColorB { get; private set; }
-
-        public double RotateX { get; private set; }
-        public double RotateY { get; private set; }
-        public double RotateZ { get; private set; }
-
-        public string Name { get; private set; }
-
-        public DrawStyle Style { get; private set; }
-        public Octagon(double baseRadius, double height, double R, double G, double B, double tranX = 0, double tranY = 0, double tranZ = 0, double rotX = 0, double rotY = 0, double rotZ = 0)
+        public Octagon(DrawStyle style, double baseRadius, double height, double R, double G, double B, double tranX = 0, double tranY = 0, double tranZ = 0, double rotX = 0, double rotY = 0, double rotZ = 0)
         {
+            Style = style;
             Name = "Octagon";
             SizeX = baseRadius;
             SizeZ = height;
@@ -37,31 +19,17 @@ namespace DoAn_OpenGL.Graphics3D
             LocationZ = tranZ;
 
         }
-        public void DrawPoint(OpenGL gl)
+        public override void DrawPoint(OpenGL gl)
         {
         }
-        public void DrawLine(OpenGL gl)
+        public override void DrawLine(OpenGL gl)
         {
         }
         //ham ve hinh non
-        public void DrawSolid(OpenGL gl)
+        public override void DrawSolid(OpenGL gl)
         {
         }
 
-        public static Octagon DrawOctagonPoint(OpenGL gl, double baseRadius, double height, double R, double G, double B, double tranX = 0, double tranY = 0)
-        {
-            return null;
-        }
-        public static Octagon DrawOctagonLine(OpenGL gl, double baseRadius, double height, double R, double G, double B, double tranX = 0, double tranY = 0)
-        {
-            return null;
-        }
-
-
-        public static Octagon DrawOctagonSolid(OpenGL gl, double baseRadius, double height, double R, double G, double B, double tranX = 0, double tranY = 0)
-        {
-            return null;
-        }
 
     }
 }

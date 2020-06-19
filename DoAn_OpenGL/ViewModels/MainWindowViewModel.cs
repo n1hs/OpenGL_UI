@@ -173,7 +173,7 @@ namespace DoAn_OpenGL.ViewModels
         internal DrawStyle drawMode;
         internal DrawGraphic drawGraphic;
         double pointX, pointY = 0;
-        private Graphic3D temp;
+        internal Graphic3D temp;
 
         internal ObservableCollection<Graphics3D.Graphic3D> listObject;
 
@@ -196,22 +196,37 @@ namespace DoAn_OpenGL.ViewModels
             gl.ClearColor(0, 0, 0, 0);
 
             gl.PopMatrix();
-            
 
-            if(listObject!=null)
+
+            ///Vẽ lại hình dã luu trong listObject
+
+            if (listObject!=null)
             {
-                foreach(var g in listObject)
+                foreach(Graphic3D g in listObject)
                 {
-                    g.DrawSolid(gl);
+                    if (g.Style == DrawStyle.Fill)
+                        g.DrawSolid(gl);
+                    if (g.Style == DrawStyle.Point)
+                        g.DrawPoint(gl);
+                    if (g.Style == DrawStyle.Line)
+                        g.DrawLine(gl);
                 }
             }
 
-            if (isMouseEnter && isDrawMode)
+
+            ///// Vẽ hình đang chọn
+            if (isMouseEnter && isDrawMode && temp != null)
             {
                 gl.PushMatrix();
-                temp = Cone.DrawConeSolid(gl, 2,2,1,0,0, pointX, pointY);
+                if (temp.Style == DrawStyle.Fill)
+                    temp.DrawSolid(gl);
+                if (temp.Style == DrawStyle.Point)
+                    temp.DrawPoint(gl);
+                if (temp.Style == DrawStyle.Line)
+                    temp.DrawLine(gl);
                 gl.PopMatrix();
             }
+            gl.Flush();
         }
 
         private void OpenGLControl_OpenGLInitialized(object sender, SharpGL.SceneGraph.OpenGLEventArgs args)
@@ -249,6 +264,11 @@ namespace DoAn_OpenGL.ViewModels
                 pointX = t * (pos1X - posX) + posX;
                 pointY = t * (pos1Y - posY) + posY;
                 SetStatus( string.Format("DrawMode: {0} . Point x = {1} y = {2}.",isDrawMode, pointX, pointY));
+                if(temp != null)
+                {
+                    temp.LocationX = pointX;
+                    temp.LocationY = pointY;
+                }
             }
         }
 
@@ -268,9 +288,12 @@ namespace DoAn_OpenGL.ViewModels
         {
             if(isMouseEnter)
             {
-                if(isDrawMode)
+                if(isDrawMode && temp!= null)
                 {
                     drawmodel.ListObject.Add(temp);
+                    drawmodel.ResetDraw = true;
+                    isDrawMode = false;
+                    temp = null;
                 }
             }
             
@@ -286,11 +309,15 @@ namespace DoAn_OpenGL.ViewModels
             mainWindow.lblStatus.Text = text;
         }
 
+        /// <summary>
+        ///  Vẽ mặt phẳng OXY 
+        /// </summary>
         private void DrawXYPlane()
         {
             if (!showXYPlane)
                 return;
 
+            gl.Color(0.5, 0.5, 0.5);
             int grid = 10;
             double distanceBetweenLines = 1.0;
 

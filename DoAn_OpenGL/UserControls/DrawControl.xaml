@@ -2,190 +2,358 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
-             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:assets="clr-namespace:DoAn_OpenGL.Assets"
              Width="250">
-    <StackPanel >
-        <TextBlock HorizontalAlignment="Center"
+    <DockPanel >
+        <StackPanel DockPanel.Dock="Top">
+            <TextBlock HorizontalAlignment="Center"
                    Margin="5"
                    Style="{StaticResource MaterialDesignHeadline6TextBlock}">
             Kiểu vẽ
-        </TextBlock>
-        <StackPanel 
+            </TextBlock>
+            <StackPanel 
   Orientation="Horizontal"
   Margin="4">
-            <RadioButton Width="65"
+                <RadioButton Width="65"
     Style="{StaticResource MaterialDesignTabRadioButton}"
     IsChecked="{Binding DrawByPoint, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
     Content="POINT" />
-            <RadioButton Width="65"
+                <RadioButton Width="65"
     Style="{StaticResource MaterialDesignTabRadioButton}"
     IsChecked="{Binding DrawByLines, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
     Content="LINES" />
-            <RadioButton Width="65"
+                <RadioButton Width="65"
     Style="{StaticResource MaterialDesignTabRadioButton}"
     IsChecked="{Binding DrawBySolid, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
     Content="SOLID" />
-        </StackPanel>
+            </StackPanel>
 
         <Separator />
+        </StackPanel>
+        <StackPanel DockPanel.Dock="Top">
+            <StackPanel.Resources>
+                <Style TargetType="RadioButton" 
+                       x:Key="ColorButton"
+                       BasedOn="{StaticResource MaterialDesignRaisedButton}">
+                    <Setter Property="BorderThickness" Value="2" />
+                    <Setter Property="BorderBrush" Value="Transparent" />
+                    <Setter Property="Margin" Value="1 1 0 0" />
+                    <Setter Property="Tag" Value="0" />
+                    <Style.Triggers>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation Storyboard.TargetProperty="BorderBrush.Color" 
+                                                                 To="Bisque" Duration="0:0:0.18" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation Storyboard.TargetProperty="BorderBrush.Color" 
+                                                                 To="Transparent" Duration="0:0:0.18" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </StackPanel.Resources>
+            <TextBlock HorizontalAlignment="Center"
+                   Margin="5"
+                   Style="{StaticResource MaterialDesignHeadline6TextBlock}">
+            Màu
+            </TextBlock>
+            <WrapPanel>
+                <RadioButton Height="40" Width="40"
+                             Margin="3"
+                             ToolTip="Black"
+                             Style="{StaticResource ColorButton}"
+                        Background="Black" >
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Checked">
+                            <i:InvokeCommandAction Command="{Binding ChoseColorCommand}"
+                                               CommandParameter="Black"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </RadioButton>
+                <RadioButton Height="40" Width="40"
+                             Margin="3"
+                             ToolTip="White"
+                             Style="{StaticResource ColorButton}"
+                        Background="White" >
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Checked">
+                            <i:InvokeCommandAction Command="{Binding ChoseColorCommand}"
+                                               CommandParameter="White"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </RadioButton>
+                <RadioButton Height="40" Width="40"
+                             Margin="3"
+                             IsChecked="True"
+                             ToolTip="Red"
+                             Style="{StaticResource ColorButton}"
+                        Background="Red" >
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Checked">
+                            <i:InvokeCommandAction Command="{Binding ChoseColorCommand}"
+                                               CommandParameter="Red"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </RadioButton>
+                <RadioButton Height="40" Width="40"
+                             Margin="3"
+                             ToolTip="Yellow"
+                             Style="{StaticResource ColorButton}"
+                        Background="Yellow" >
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Checked">
+                            <i:InvokeCommandAction Command="{Binding ChoseColorCommand}"
+                                               CommandParameter="Yellow"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </RadioButton>
+                <RadioButton Height="40" Width="40"
+                             Margin="3"
+                             ToolTip="Green"
+                             Style="{StaticResource ColorButton}"
+                        Background="Green" >
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Checked">
+                            <i:InvokeCommandAction Command="{Binding ChoseColorCommand}"
+                                               CommandParameter="Green"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </RadioButton>
+                <RadioButton Height="40" Width="40"
+                             Margin="3"
+                             ToolTip="Cyan"
+                             Style="{StaticResource ColorButton}"
+                        Background="Cyan" >
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Checked">
+                            <i:InvokeCommandAction Command="{Binding ChoseColorCommand}"
+                                               CommandParameter="Cyan"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </RadioButton>
+                <RadioButton Height="40" Width="40"
+                             Margin="3"
+                             ToolTip="Blue"
+                             Style="{StaticResource ColorButton}"
+                        Background="Blue" >
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Checked">
+                            <i:InvokeCommandAction Command="{Binding ChoseColorCommand}"
+                                               CommandParameter="Blue"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </RadioButton>
+                <RadioButton Height="40" Width="40"
+                             Margin="3"
+                             ToolTip="Magenta"
+                             Style="{StaticResource ColorButton}"
+                        Background="Magenta" >
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Checked">
+                            <i:InvokeCommandAction Command="{Binding ChoseColorCommand}"
+                                               CommandParameter="Magenta"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </RadioButton>
+                <RadioButton Height="40" Width="40"
+                             Margin="3"
+                             ToolTip="Gray"
+                             Style="{StaticResource ColorButton}"
+                        Background="Gray" >
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Checked">
+                            <i:InvokeCommandAction Command="{Binding ChoseColorCommand}"
+                                               CommandParameter="Gray"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </RadioButton>
+            </WrapPanel>
 
-        <TextBlock HorizontalAlignment="Center"
+            <Separator />
+        </StackPanel>
+        <StackPanel DockPanel.Dock="Top">
+
+            <TextBlock HorizontalAlignment="Center"
                    Margin="5"
                    Style="{StaticResource MaterialDesignHeadline6TextBlock}">
             Hình vẽ
-        </TextBlock>
+            </TextBlock>
 
-        <Grid HorizontalAlignment="Center">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="50"/>
-                <ColumnDefinition Width="50"/>
-                <ColumnDefinition Width="50"/>
-                <ColumnDefinition Width="50"/>
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="50"/>
-                <RowDefinition Height="50"/>
-                <RowDefinition Height="50"/>
-            </Grid.RowDefinitions>
-            <RadioButton Style="{StaticResource MaterialDesignFlatPrimaryToggleButton}"
-                         Content="{materialDesign:PackIcon Kind=Cube}"
-                         Height="46"
+            <Grid HorizontalAlignment="Center">
+                <Grid.Resources>
+                    <Style TargetType="RadioButton" 
+                       x:Key="GraphicButton"
+                       BasedOn="{StaticResource MaterialDesignRaisedButton}">
+                        <Setter Property="Background" Value="Transparent"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ResetDraw, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Value="True">
+                                <Setter Property="IsChecked" Value="False"/>
+                            </DataTrigger>
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter Property="Background" Value="{DynamicResource PrimaryHueMidBrush}"/>                               
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Grid.Resources>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="50"/>
+                    <ColumnDefinition Width="50"/>
+                    <ColumnDefinition Width="50"/>
+                    <ColumnDefinition Width="50"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="50"/>
+                </Grid.RowDefinitions>
+                <RadioButton Style="{StaticResource GraphicButton}"
+                         Content="{md:PackIcon Kind=Cube}"
+                         x:Name="Cube"
+                         Height="46" 
                          Width="46"
                          ToolTip="Cube">
-                <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="Checked">
-                        <i:InvokeCommandAction Command="{Binding ChoseGraphicCommand}"
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Checked">
+                            <i:InvokeCommandAction Command="{Binding ChoseGraphicCommand}"
                                                CommandParameter="{x:Static assets:DrawGraphic.Cube}"/>
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
-            </RadioButton>
-            <RadioButton Style="{StaticResource MaterialDesignFlatPrimaryToggleButton}"
-                           Content="{materialDesign:PackIcon Kind=SphereRadiusOutline}"
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </RadioButton>
+                <RadioButton Style="{StaticResource GraphicButton}"
+                           Content="{md:PackIcon Kind=Circle}"
                          Grid.Column="1"
-                         Height="46"
-                         Width="46"
+                         x:Name="Sphere"
+                         Height="48"
+                         Width="48"
                          ToolTip="Sphere" >
-                <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="Checked">
-                        <i:InvokeCommandAction Command="{Binding ChoseGraphicCommand}"
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Checked">
+                            <i:InvokeCommandAction Command="{Binding ChoseGraphicCommand}"
                                                CommandParameter="{x:Static assets:DrawGraphic.Sphere}"/>
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
-            </RadioButton>
-            <RadioButton Style="{StaticResource MaterialDesignFlatPrimaryToggleButton}"
-                         Content="{materialDesign:PackIcon Kind=CurrencyYer}"
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </RadioButton>
+                <RadioButton Style="{StaticResource GraphicButton}"
+                         x:Name="Cylinder"
                          Grid.Column="2"
                          Height="46"
                          Width="46"
                          ToolTip="Cylinder" >
-                <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="Checked">
-                        <i:InvokeCommandAction Command="{Binding ChoseGraphicCommand}"
+                    <Image Source="pack://application:,,,/DoAn_OpenGL;component/Assets/Images/cylinder.png"/>
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Checked">
+                            <i:InvokeCommandAction Command="{Binding ChoseGraphicCommand}"
                                                CommandParameter="{x:Static assets:DrawGraphic.Cylinder}"/>
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
-            </RadioButton>
-            <RadioButton Style="{StaticResource MaterialDesignFlatPrimaryToggleButton}"
-                         Content="{materialDesign:PackIcon Kind=EmoticonExcited}"
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </RadioButton>
+                <RadioButton Style="{StaticResource GraphicButton}"
+                         Content="{md:PackIcon Kind=EmoticonExcited}"
                          Grid.Column="3"
+                         x:Name="TruncatedCone"
                          Height="46"
                          Width="46"
                          ToolTip="Truncated Cone" >
-                <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="Checked">
-                        <i:InvokeCommandAction Command="{Binding ChoseGraphicCommand}"
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Checked">
+                            <i:InvokeCommandAction Command="{Binding ChoseGraphicCommand}"
                                                CommandParameter="{x:Static assets:DrawGraphic.TruncatedCone}"/>
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
-            </RadioButton>
-            <RadioButton Style="{StaticResource MaterialDesignFlatPrimaryToggleButton}"
-                         Content="{materialDesign:PackIcon Kind=TrafficCone}"
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </RadioButton>
+                <RadioButton Style="{StaticResource GraphicButton}"
+                         Content="{md:PackIcon Kind=TrafficCone}"
                          Grid.Row="1"
                          Height="46"
+                         x:Name="Cone"
                          Width="46"
                          ToolTip="Cone" >
-                <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="Checked">
-                        <i:InvokeCommandAction Command="{Binding ChoseGraphicCommand}"
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Checked">
+                            <i:InvokeCommandAction Command="{Binding ChoseGraphicCommand}"
                                                CommandParameter="{x:Static assets:DrawGraphic.Cone}"/>
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
-            </RadioButton>
-            <RadioButton Style="{StaticResource MaterialDesignFlatPrimaryToggleButton}"
-                         Content="{materialDesign:PackIcon Kind=Pylon}"
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </RadioButton>
+                <RadioButton Style="{StaticResource GraphicButton}"
                          Grid.Column="1"
                          Grid.Row="1"
                          Height="46"
+                         x:Name="Pyramid"
                          Width="46"
                          ToolTip="Pyramid" >
-                <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="Checked">
-                        <i:InvokeCommandAction Command="{Binding ChoseGraphicCommand}"
+                    <Image Source="pack://application:,,,/DoAn_OpenGL;component/Assets/Images/pyramid.png"/>
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Checked">
+                            <i:InvokeCommandAction Command="{Binding ChoseGraphicCommand}"
                                                CommandParameter="{x:Static assets:DrawGraphic.Pyramid}"/>
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
-            </RadioButton>
-            <RadioButton Style="{StaticResource MaterialDesignFlatPrimaryToggleButton}"
-                           Content="{materialDesign:PackIcon Kind=FruitCherries}"
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </RadioButton>
+                <RadioButton Style="{StaticResource GraphicButton}"
+                           Content="{md:PackIcon Kind=FruitCherries}"
                     Grid.Column="2"
                     Grid.Row="1"
                     Height="46"
+                         x:Name="FrustumShape"
                     Width="46"
                     ToolTip="Frustum Shape" >
-                <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="Checked">
-                        <i:InvokeCommandAction Command="{Binding ChoseGraphicCommand}"
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Checked">
+                            <i:InvokeCommandAction Command="{Binding ChoseGraphicCommand}"
                                                CommandParameter="{x:Static assets:DrawGraphic.FrustumShape}"/>
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
-            </RadioButton>
-            <RadioButton Style="{StaticResource MaterialDesignFlatPrimaryToggleButton}"
-                           Content="{materialDesign:PackIcon Kind=Ocr}"
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </RadioButton>
+                <RadioButton Style="{StaticResource GraphicButton}"
+                           Content="{md:PackIcon Kind=Ocr}"
                     Grid.Column="3"
                     Grid.Row="1"
                     Height="46"
+                         x:Name="Octagon"
                     Width="46"
                     ToolTip="Octagon" >
-                <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="Checked">
-                        <i:InvokeCommandAction Command="{Binding ChoseGraphicCommand}"
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Checked">
+                            <i:InvokeCommandAction Command="{Binding ChoseGraphicCommand}"
                                                CommandParameter="{x:Static assets:DrawGraphic.Octagon}"/>
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
-            </RadioButton>
-            <RadioButton Style="{StaticResource MaterialDesignFlatPrimaryToggleButton}"
-                           Content="{materialDesign:PackIcon Kind=None}"
-                    Grid.Row="2"
-                    Height="46"
-                    Width="46"
-                    ToolTip="Icon" />
-            <RadioButton Style="{StaticResource MaterialDesignFlatPrimaryToggleButton}"
-                           Content="{materialDesign:PackIcon Kind=None}"
-                    Grid.Column="1"
-                    Grid.Row="2"
-                    Height="46"
-                    Width="46"
-                    ToolTip="Icon" />
-        </Grid>
-        <Separator/>
-        <CheckBox Content="Show XY Plane" 
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </RadioButton>
+            </Grid>
+            <Separator/>
+        </StackPanel>
+        <StackPanel DockPanel.Dock="Top">
+            <CheckBox Content="Show XY Plane" 
                   Margin="2"
                   IsChecked="{Binding ShowXYPlane, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-        <Separator/>
-        <TextBlock HorizontalAlignment="Center"
+            <Separator/>
+        </StackPanel>
+        <StackPanel>
+            <TextBlock HorizontalAlignment="Center"
                    Margin="5"
                    Style="{StaticResource MaterialDesignHeadline6TextBlock}">
             Object
-        </TextBlock>
-        <ListView SelectionMode="Single"
+            </TextBlock>
+            <ListView SelectionMode="Single"
+                      ScrollViewer.HorizontalScrollBarVisibility ="Auto"
+                      ScrollViewer.VerticalScrollBarVisibility ="Auto"
                   ItemsSource="{Binding ListObject, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}">
-            <ListView.ItemTemplate>
-                <DataTemplate DataType="{x:Type assets:DrawGraphic}">
-                    <TextBlock Text="{Binding Name}"/>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
-        
-    </StackPanel>
+                <ListView.ItemTemplate>
+                    <DataTemplate DataType="{x:Type assets:DrawGraphic}">
+                        <TextBlock Text="{Binding Name}"/>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackPanel>
+    </DockPanel>
 </UserControl>

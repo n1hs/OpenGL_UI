@@ -4,31 +4,30 @@ using System;
 
 namespace DoAn_OpenGL.Graphics3D
 {
-    public interface Graphic3D
+    public abstract class Graphic3D 
     {
-        double LocationX { get;}
-        double LocationY { get;}
-        double LocationZ { get;}
+        public double LocationX { get; set; }
+        public double LocationY { get; set; }
+        public double LocationZ { get; set; }
 
-        double SizeX { get; }
-        double SizeY { get; }
-        double SizeZ { get;  }
+        public double SizeX { get; set; }
+        public double SizeY { get; set; }
+        public double SizeZ { get; set; }
 
-        double ColorR { get;  }
-        double ColorG { get;  }
-        double ColorB { get;  }
+        public double ColorR { get; set; }
+        public double ColorG { get; set; }
+        public double ColorB { get; set; }
 
-        double RotateX { get; }
-        double RotateY { get; }
-        double RotateZ { get; }
+        public double RotateX { get; set; }
+        public double RotateY { get; set; }
+        public double RotateZ { get; set; }
 
-        string Name { get; }
+        public string Name { get; set; }
 
-        DrawStyle Style { get;  }
+        public DrawStyle Style { get; protected set; }
 
-        void DrawPoint(OpenGL gl);
-        void DrawLine(OpenGL gl);
-        void DrawSolid(OpenGL gl);
-
+        public abstract void DrawPoint(OpenGL gl);
+        public abstract void DrawLine(OpenGL gl);
+        public abstract void DrawSolid(OpenGL gl);
     }
 }
