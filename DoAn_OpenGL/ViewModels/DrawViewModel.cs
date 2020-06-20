@@ -166,7 +166,7 @@ namespace DoAn_OpenGL.ViewModels
                     mainmodel.temp = new Cube(mainmodel.drawMode, 2, 2, 2, r, g, b);
                     break;
                 case DrawGraphic.Cylinder:
-                    mainmodel.temp = new Cylinder(mainmodel.drawMode, 2, 2, r, g, b);
+                    mainmodel.temp = new Cylinder(mainmodel.drawMode, 2, 3, r, g, b);
                     break;
                 case DrawGraphic.FrustumShape:
                     mainmodel.temp = new FrustumShape(mainmodel.drawMode, 2, 2,  r, g, b);
@@ -181,7 +181,7 @@ namespace DoAn_OpenGL.ViewModels
                     mainmodel.temp = new Sphere(mainmodel.drawMode, 2, 2,  r, g, b);
                     break;
                 case DrawGraphic.TruncatedCone:
-                    mainmodel.temp = new TruncatedCone(mainmodel.drawMode, 2, 2, r, g, b);
+                    mainmodel.temp = new TruncatedCone(mainmodel.drawMode, 2, 1, 2, r, g, b);
                     break;
             }
         }

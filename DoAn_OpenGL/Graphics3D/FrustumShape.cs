@@ -21,13 +21,16 @@ namespace DoAn_OpenGL.Graphics3D
         }
         public override void DrawPoint(OpenGL gl)
         {
+
         }
         public override void DrawLine(OpenGL gl)
         {
+
         }
-        //ham ve hinh non
+        
         public override void DrawSolid(OpenGL gl)
         {
+
         }
 
     }

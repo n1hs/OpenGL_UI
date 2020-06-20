@@ -42,6 +42,8 @@ namespace DoAn_OpenGL.Graphics3D
             cone.PopObjectSpace(gl);
             cone.DestroyInContext(gl);
             gl.PopMatrix();
+
+            
         }
         public override void DrawLine(OpenGL gl)
         {
@@ -79,7 +81,7 @@ namespace DoAn_OpenGL.Graphics3D
             cone.Height = SizeZ;
             cone.Slices = 100;
             cone.Stacks = 100;
-            cone.QuadricDrawStyle = DrawStyle.Fill;
+            cone.QuadricDrawStyle = DrawStyle.Point;
             cone.CreateInContext(gl);
             cone.PushObjectSpace(gl);
             cone.Render(gl, SharpGL.SceneGraph.Core.RenderMode.Render);

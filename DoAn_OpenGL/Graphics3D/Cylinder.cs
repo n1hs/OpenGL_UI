@@ -11,6 +11,7 @@ namespace DoAn_OpenGL.Graphics3D
             Style = style;
             Name = "Cylinder";
             SizeX = baseRadius;
+            SizeY = baseRadius;
             SizeZ = height;
             ColorR = R;
             ColorG = G;
@@ -29,7 +30,7 @@ namespace DoAn_OpenGL.Graphics3D
             gl.Rotate(RotateZ, 0.0, 0.0, 1.0);
             gl.Color(ColorR, ColorG, ColorB);
             SharpGL.SceneGraph.Quadrics.Cylinder cylinder = new SharpGL.SceneGraph.Quadrics.Cylinder();
-            cylinder.TopRadius = SizeX;
+            cylinder.TopRadius = SizeY;
             cylinder.BaseRadius = SizeX;
             cylinder.Height = SizeZ;
             cylinder.Slices = 100;
@@ -73,12 +74,15 @@ namespace DoAn_OpenGL.Graphics3D
             gl.Rotate(RotateZ, 0.0, 0.0, 1.0);
             gl.Color(ColorR, ColorG, ColorB);
             SharpGL.SceneGraph.Quadrics.Cylinder cylinder = new SharpGL.SceneGraph.Quadrics.Cylinder();
-            cylinder.TopRadius = SizeX;
+
+            cylinder.QuadricDrawStyle = DrawStyle.Fill;
+
+            cylinder.TopRadius = SizeZ;
             cylinder.BaseRadius = SizeX;
             cylinder.Height = SizeZ;
             cylinder.Slices = 100;
             cylinder.Stacks = 100;
-            cylinder.QuadricDrawStyle = DrawStyle.Fill;
+            
             cylinder.CreateInContext(gl);
             cylinder.PushObjectSpace(gl);
             cylinder.Render(gl, SharpGL.SceneGraph.Core.RenderMode.Render);

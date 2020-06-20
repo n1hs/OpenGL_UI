@@ -227,6 +227,8 @@ namespace DoAn_OpenGL.ViewModels
                 gl.PopMatrix();
             }
             gl.Flush();
+
+            
         }
 
         private void OpenGLControl_OpenGLInitialized(object sender, SharpGL.SceneGraph.OpenGLEventArgs args)

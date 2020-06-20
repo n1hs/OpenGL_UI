@@ -25,6 +25,7 @@ namespace DoAn_OpenGL.Graphics3D
         public override void DrawPoint(OpenGL gl)
         {
             
+            
             gl.PushMatrix();
 
             gl.Translate(LocationX, LocationY, LocationZ);
@@ -32,58 +33,109 @@ namespace DoAn_OpenGL.Graphics3D
             gl.Rotate(RotateY, 0.0, 1.0, 0.0);
             gl.Rotate(RotateZ, 0.0, 0.0, 1.0);
             gl.Color(ColorR, ColorG, ColorB);
-            //Back
-            gl.Begin(OpenGL.GL_POINT_SIZE_MAX_ARB);
-            gl.Normal(0.0f, 0.0f, -1.0f);
-            gl.Vertex(0, 0, 0);
-            gl.Vertex(SizeX, 0, 0);
-            gl.Vertex(SizeX, SizeY, 0);
-            gl.Vertex(0, SizeY, 0);
+
+            //ve size cua point
+            gl.PointSize(3.0f);
+
+            //ve 4 canh base
+            double temp = 0;
+            gl.Begin(OpenGL.GL_POINTS);
+
+            temp = -SizeX;
+            while (temp <= SizeX)
+            {
+                gl.Vertex(temp, -SizeY, 0);
+                temp += 0.1;
+            }
+
+            temp = -SizeX;
+            while (temp <= SizeX)
+            {
+                gl.Vertex(temp, SizeY, 0);
+                temp += 0.1;
+            }
+
+            temp = -SizeY;
+            while (temp <= SizeY)
+            {
+                gl.Vertex(-SizeX, temp, 0);
+                temp += 0.1;
+            }
+
+            temp = -SizeY;
+            while (temp <= SizeY)
+            {
+                gl.Vertex(SizeX, temp, 0);
+                temp += 0.1;
+            }
+
             gl.End();
 
-            // left
+            //ve 4 canh top
+            
             gl.Begin(OpenGL.GL_POINTS);
-            gl.Normal(-1.0f, 0.0f, 0.0f);
-            gl.Vertex(0, 0, 0);
-            gl.Vertex(0, 0, SizeZ);
-            gl.Vertex(0, SizeY, SizeZ);
-            gl.Vertex(0, SizeY, 0);
+
+            temp = -SizeX;
+            while (temp <= SizeX)
+            {
+                gl.Vertex(temp, -SizeY, SizeZ);
+                temp += 0.1;
+            }
+
+            temp = -SizeX;
+            while (temp <= SizeX)
+            {
+                gl.Vertex(temp, SizeY, SizeZ);
+                temp += 0.1;
+            }
+
+            temp = -SizeY;
+            while (temp <= SizeY)
+            {
+                gl.Vertex(-SizeX, temp, SizeZ);
+                temp += 0.1;
+            }
+
+            temp = -SizeY;
+            while (temp <= SizeY)
+            {
+                gl.Vertex(SizeX, temp, SizeZ);
+                temp += 0.1;
+            }
+
             gl.End();
 
-            //front
+            //ve 4 canh dung
             gl.Begin(OpenGL.GL_POINTS);
-            gl.Normal(0.0f, 0.0f, 1.0f);
-            gl.Vertex(0, 0, SizeZ);
-            gl.Vertex(0, SizeY, SizeZ);
-            gl.Vertex(SizeX, SizeY, SizeZ);
-            gl.Vertex(SizeX, 0, SizeZ);
-            gl.End();
 
-            //// right
-            gl.Begin(OpenGL.GL_POINTS);
-            gl.Normal(1.0f, 0.0f, 0.0f);
-            gl.Vertex(SizeX, 0, SizeZ);
-            gl.Vertex(SizeX, 0, 0);
-            gl.Vertex(SizeX, SizeY, 0);
-            gl.Vertex(SizeX, SizeY, SizeZ);
-            gl.End();
+            temp = 0;
+            while (temp <= SizeZ)
+            {
+                gl.Vertex(SizeX,SizeY,temp);
+                temp += 0.1;
+            }
 
-            //Top
-            gl.Begin(OpenGL.GL_POINTS);
-            gl.Normal(0.0f, 1.0f, 0.0f);
-            gl.Vertex(0, SizeY, 0);
-            gl.Vertex(SizeX, SizeY, 0);
-            gl.Vertex(SizeX, SizeY, SizeZ);
-            gl.Vertex(0, SizeY, SizeZ);
-            gl.End();
+            temp = 0;
+            while (temp <= SizeZ)
+            {
+                gl.Vertex(-SizeX, SizeY, temp);
+                temp += 0.1;
+            }
 
-            //Bottom
-            gl.Begin(OpenGL.GL_POINTS);
-            gl.Normal(0.0f, -1.0f, 0.0f);
-            gl.Vertex(0, 0, 0);
-            gl.Vertex(SizeX, 0, 0);
-            gl.Vertex(SizeX, 0, SizeZ);
-            gl.Vertex(0, 0, SizeZ);
+            temp = 0;
+            while (temp <= SizeZ)
+            {
+                gl.Vertex(SizeX, -SizeY, temp);
+                temp += 0.1;
+            }
+
+            temp = 0;
+            while (temp <= SizeZ)
+            {
+                gl.Vertex(-SizeX, -SizeY, temp);
+                temp += 0.1;
+            }
+
             gl.End();
 
             gl.PopMatrix();
