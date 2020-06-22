@@ -14,9 +14,15 @@ namespace DoAn_OpenGL.ViewModels
     {
         #region UI
         private MainWindow mainWindow;
+        private CameraControlViewModel cameraVM;
+        private DrawViewModel drawmodel;
+        private GraphicPropertyVM graphicPropertyvm;
+        private AnimationViewModel animationVM;
+        private TextureViewModel textureVM;
+        internal Graphic3D seletedGraphic;
+
         internal bool showXYPlane;
         internal bool isDrawMode;
-        private DrawViewModel drawmodel ;
         private bool showDialog;
 
         public bool ShowDialog
@@ -62,6 +68,10 @@ namespace DoAn_OpenGL.ViewModels
         public MainWindowViewModel()
         {
             listObject = new ObservableCollection<Graphic3D>();
+            cameraVM = new CameraControlViewModel(this);
+            graphicPropertyvm = new GraphicPropertyVM(this);
+            animationVM = new AnimationViewModel(this);
+            textureVM = new TextureViewModel(this);
             showDialog = true;
             DialogContent = new UserControls.DrawControl();
             drawmodel = new DrawViewModel(this);
@@ -107,7 +117,23 @@ namespace DoAn_OpenGL.ViewModels
                     break;
                 case 2:
                     DialogContent = new UserControls.CameraControl();
+                    dialogContent.DataContext = cameraVM;
                     DialogTitle = "Camera Control";
+                    break;
+                case 3:
+                    DialogContent = new UserControls.GraphicProperties();
+                    DialogContent.DataContext = graphicPropertyvm;
+                    DialogTitle = "Thuộc tính";
+                    break;
+                case 4:
+                    DialogContent = new UserControls.Animation();
+                    DialogContent.DataContext = animationVM;
+                    DialogTitle = "Animation";
+                    break;
+                case 5:
+                    DialogContent = new UserControls.Texture();
+                    DialogContent.DataContext = textureVM;
+                    DialogTitle = "Texture";
                     break;
 
             }
@@ -119,61 +145,25 @@ namespace DoAn_OpenGL.ViewModels
         #endregion UI
 
 
-        #region CameraControl
-        private double xEye = 15.0;
-
-        public double XEye
-        {
-            get { return xEye; }
-            set { xEye = value;
-                OnPropertyChanged("XEye");
-            }
-        }
-        private double yEye = 0.0;
-
-        public double YEye
-        {
-            get { return yEye; }
-            set
-            {
-                yEye = value;
-                OnPropertyChanged("YEye");
-            }
-        }
-
-        private double zEye = 15.0;
-
-        public double ZEye
-        {
-            get { return zEye; }
-            set
-            {
-                zEye = value;
-                OnPropertyChanged("ZEye");
-            }
-        }
-
-        #endregion
-
-
-
 
         #region OpenGL
-        private const double xeye = 15.0;
-        private const double yeye = 0.0;
-        private const double zeye = 15.0;
-        private const double xcenter = 0.0;
-        private const double ycenter = 0.0;
-        private const double zcenter = 0.0;
-        private const double xup = 0.0;
-        private const double yup = 0.0;
-        private const double zup = 1.0;
         OpenGL gl;
         private bool isMouseEnter;
         internal DrawStyle drawMode;
         internal DrawGraphic drawGraphic;
         double pointX, pointY = 0;
         internal Graphic3D temp;
+
+
+        internal double xEye = 15.0;
+        internal double yEye = 0.0;
+        internal double zEye = 15.0;
+        internal double xCenter = 0.0;
+        internal double yCenter = 0.0;
+        internal double zCenter = 0.0;
+        private const double xup = 0.0;
+        private const double yup = 0.0;
+        private const double zup = 1.0;
 
         internal ObservableCollection<Graphics3D.Graphic3D> listObject;
 
@@ -189,7 +179,7 @@ namespace DoAn_OpenGL.ViewModels
             // Move Left And Into The Screen
             gl.LoadIdentity();
 
-            gl.LookAt(xEye, YEye, ZEye, xcenter, ycenter, zcenter, xup, yup, zup);
+            gl.LookAt(xEye, yEye, zEye, xCenter, yCenter, zCenter, xup, yup, zup);
             gl.PushMatrix();
 
             DrawXYPlane();

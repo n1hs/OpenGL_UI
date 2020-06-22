@@ -42,7 +42,7 @@ namespace DoAn_OpenGL.Graphics3D
         public override void DrawPoint(OpenGL gl)
         {
             gl.PushMatrix();
-
+            Animation(gl);
             gl.Translate(LocationX, LocationY, LocationZ);
             gl.Rotate(RotateX, 1.0, 0.0, 0.0);
             gl.Rotate(RotateY, 0.0, 1.0, 0.0);
@@ -70,7 +70,7 @@ namespace DoAn_OpenGL.Graphics3D
         public override void DrawLine(OpenGL gl)
         {
             gl.PushMatrix();
-
+            Animation(gl);
             gl.Translate(LocationX, LocationY, LocationZ);
             gl.Rotate(RotateX, 1.0, 0.0, 0.0);
             gl.Rotate(RotateY, 0.0, 1.0, 0.0);
@@ -100,7 +100,7 @@ namespace DoAn_OpenGL.Graphics3D
         public override void DrawSolid(OpenGL gl)
         {
             gl.PushMatrix();
-
+            Animation(gl);
             gl.Translate(LocationX, LocationY, LocationZ);
             gl.Rotate(RotateX, 1.0, 0.0, 0.0);
             gl.Rotate(RotateY, 0.0, 1.0, 0.0);

@@ -40,12 +40,12 @@
             <Storyboard x:Key="OpenDialog">
                 <DoubleAnimation Storyboard.TargetProperty="Width"
                                  Duration="0:0:1.8"
-                                 From="0" To="250"/>
+                                 From="0" To="258"/>
             </Storyboard>
             <Storyboard x:Key="CloseDialog">
                 <DoubleAnimation Storyboard.TargetProperty="Width"
                                  Duration="0:0:0.8"
-                                 From="250" To="0"/>
+                                 From="258" To="0"/>
             </Storyboard>
         </Grid.Resources>
 
@@ -91,20 +91,20 @@
                     <RadioButton Style="{StaticResource MaterialDesignTabRadioButton}"
                             Content="{materialDesign:PackIcon Kind=Rotate3d}"
                             Margin="2"
-                            ToolTip="Phép biến đổi "
+                            ToolTip="Thuộc tính "
                                  Command="{Binding ShowDialogCommand}"
                             CommandParameter="3"/>
-                    <RadioButton Style="{StaticResource MaterialDesignTabRadioButton}"
-                            Content="{materialDesign:PackIcon Kind=Texture}"
-                            Margin="2"
-                            ToolTip="Texture"
-                                 Command="{Binding ShowDialogCommand}"
-                            CommandParameter="4"/>
                     <RadioButton Style="{StaticResource MaterialDesignTabRadioButton}"
                             Content="{materialDesign:PackIcon Kind=Animation}"
                             Margin="2"
                             ToolTip="Animation"
                               Command="{Binding ShowDialogCommand}"
+                            CommandParameter="4"/>
+                    <RadioButton Style="{StaticResource MaterialDesignTabRadioButton}"
+                            Content="{materialDesign:PackIcon Kind=Texture}"
+                            Margin="2"
+                            ToolTip="Texture"
+                                 Command="{Binding ShowDialogCommand}"
                             CommandParameter="5"/>
                 </StackPanel>
             </DockPanel>

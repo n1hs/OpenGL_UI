@@ -8,7 +8,7 @@ namespace DoAn_OpenGL.Graphics3D
     public class Cone : Graphic3D
     {
         
-        public Cone(DrawStyle style,double baseRadius, double height, double R, double G, double B, double tranX = 0, double tranY = 0, double tranZ = 0, double rotX = 0, double rotY = 0, double rotZ = 0) 
+        public Cone(DrawStyle style,double baseRadius, double height, double R, double G, double B, double tranX = 0, double tranY = 0, double tranZ = 0, double rotX = 0, double rotY = 0, double rotZ = 0) : base()
         {
             Style = style;
             Name = "Cone";
@@ -25,7 +25,7 @@ namespace DoAn_OpenGL.Graphics3D
             Stacks = 100;
         }
 
-        public Cone(DrawStyle style, double baseRadius, double height, int slices, int stacks, double R, double G, double B, double tranX = 0, double tranY = 0, double tranZ = 0, double rotX = 0, double rotY = 0, double rotZ = 0)
+        public Cone(DrawStyle style, double baseRadius, double height, int slices, int stacks, double R, double G, double B, double tranX = 0, double tranY = 0, double tranZ = 0, double rotX = 0, double rotY = 0, double rotZ = 0):base()
         {
             Style = style;
             Name = "Cone";
@@ -45,6 +45,8 @@ namespace DoAn_OpenGL.Graphics3D
         public override void DrawPoint(OpenGL gl)
         {
             gl.PushMatrix();
+
+            Animation(gl);
 
             gl.Translate(LocationX, LocationY, LocationZ);
             gl.Rotate(RotateX, 1.0, 0.0, 0.0);
@@ -72,7 +74,7 @@ namespace DoAn_OpenGL.Graphics3D
         public override void DrawLine(OpenGL gl)
         {
             gl.PushMatrix();
-
+            Animation(gl);
             gl.Translate(LocationX, LocationY, LocationZ);
             gl.Rotate(RotateX, 1.0, 0.0, 0.0);
             gl.Rotate(RotateY, 0.0, 1.0, 0.0);
@@ -99,7 +101,7 @@ namespace DoAn_OpenGL.Graphics3D
         public override void DrawSolid(OpenGL gl)
         {
             gl.PushMatrix();
-
+            Animation(gl);
             gl.Translate(LocationX, LocationY, LocationZ);
             gl.Rotate(RotateX, 1.0, 0.0, 0.0);
             gl.Rotate(RotateY, 0.0, 1.0, 0.0);

@@ -3,9 +3,9 @@ using SharpGL.SceneGraph.Quadrics;
 
 namespace DoAn_OpenGL.Graphics3D
 {
-    public class Octagon : Graphic3D
+    public class Teapot : Graphic3D
     {
-        public Octagon(DrawStyle style, int grid, double size, double R, double G, double B, double tranX = 0, double tranY = 0, double tranZ = 0, double rotX = 0, double rotY = 0, double rotZ = 0)
+        public Teapot(DrawStyle style, int grid, double size, double R, double G, double B, double tranX = 0, double tranY = 0, double tranZ = 0, double rotX = 0, double rotY = 0, double rotZ = 0)
         {
             Style = style;
             Name = "Teapot";
@@ -24,7 +24,7 @@ namespace DoAn_OpenGL.Graphics3D
         public override void DrawPoint(OpenGL gl)
         {
             gl.PushMatrix();
-
+            Animation(gl);
             gl.Translate(LocationX, LocationY, LocationZ);
             gl.Rotate(RotateX, 1.0, 0.0, 0.0);
             gl.Rotate(RotateY, 0.0, 1.0, 0.0);
@@ -42,7 +42,7 @@ namespace DoAn_OpenGL.Graphics3D
         public override void DrawLine(OpenGL gl)
         {
             gl.PushMatrix();
-
+            Animation(gl);
             gl.Translate(LocationX, LocationY, LocationZ);
             gl.Rotate(RotateX, 1.0, 0.0, 0.0);
             gl.Rotate(RotateY, 0.0, 1.0, 0.0);
@@ -61,7 +61,7 @@ namespace DoAn_OpenGL.Graphics3D
         public override void DrawSolid(OpenGL gl)
         {
             gl.PushMatrix();
-
+            Animation(gl);
             gl.Translate(LocationX, LocationY, LocationZ);
             gl.Rotate(RotateX, 1.0, 0.0, 0.0);
             gl.Rotate(RotateY, 0.0, 1.0, 0.0);

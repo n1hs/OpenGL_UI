@@ -1,0 +1,58 @@
+﻿<UserControl x:Class="DoAn_OpenGL.UserControls.Texture"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes" 
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"             
+             xmlns:cv="clr-namespace:DoAn_OpenGL.Converters"
+             Width="250">
+    <StackPanel>
+        <StackPanel.Resources>
+            <cv:IsNullConverter x:Key="isNullConverter"/>
+        </StackPanel.Resources>
+        <StackPanel DockPanel.Dock="Top">
+            <TextBlock HorizontalAlignment="Center"
+                   Margin="5"
+                   Style="{StaticResource MaterialDesignHeadline6TextBlock}">
+            Chọn khối hình
+            </TextBlock>
+            <ComboBox Margin="5" 
+                      x:Name="Propertycbb"
+                      DisplayMemberPath="Name"
+                      ItemsSource="{Binding ListObject, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                      SelectedItem="{Binding SelectedGraphic, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                      md:HintAssist.Hint="None">
+            </ComboBox>
+        </StackPanel>
+        <StackPanel IsEnabled="True" >
+            <StackPanel.Style>
+                <Style TargetType="StackPanel">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding ElementName=Propertycbb, Path=SelectedItem, Converter={StaticResource isNullConverter}}"  Value="False">
+                            <Setter Property="IsEnabled" Value="True"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding ElementName=Propertycbb, Path=SelectedItem, Converter={StaticResource isNullConverter}}"  Value="True">
+                            <Setter Property="IsEnabled" Value="False"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </StackPanel.Style>
+            <Button Style="{StaticResource MaterialDesignRaisedDarkButton}"
+                        Height="40"
+                    Margin="15 5"
+                        md:ButtonAssist.CornerRadius="25"
+                        ToolTip="Browser">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Click">
+                        <i:InvokeCommandAction Command="{Binding BrowserCommand}"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+                <TextBlock Text="Browser" />
+            </Button>
+            <Image Width="245"
+                   Height="245"
+                   Margin="2"
+                   Source="{Binding TextuteImage, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
+               
+        </StackPanel>
+    </StackPanel>
+</UserControl>

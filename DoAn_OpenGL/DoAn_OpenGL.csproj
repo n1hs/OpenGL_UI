@@ -100,11 +100,13 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Assets\Animation.cs" />
     <Compile Include="Assets\ObjectCopier.cs" />
+    <Compile Include="Converters\IsNullConverter.cs" />
     <Compile Include="Graphics3D\Cone.cs" />
     <Compile Include="Graphics3D\Cube.cs" />
     <Compile Include="Graphics3D\FrustumShape.cs" />
-    <Compile Include="Graphics3D\Octagon.cs" />
+    <Compile Include="Graphics3D\Teapot.cs" />
     <Compile Include="Graphics3D\TruncatedCone.cs" />
     <Compile Include="Graphics3D\Cylinder.cs" />
     <Compile Include="Graphics3D\Graphic3D.cs" />
@@ -112,15 +114,28 @@
     <Compile Include="Assets\RelayCommand.cs" />
     <Compile Include="Graphics3D\Sphere.cs" />
     <Compile Include="Graphics3D\Pyramid.cs" />
+    <Compile Include="UserControls\Animation.xaml.cs">
+      <DependentUpon>Animation.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Texture.xaml.cs">
+      <DependentUpon>Texture.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModels\AnimationViewModel.cs" />
     <Compile Include="UserControls\CameraControl.xaml.cs">
       <DependentUpon>CameraControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserControls\DrawControl.xaml.cs">
       <DependentUpon>DrawControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\GraphicProperties.xaml.cs">
+      <DependentUpon>GraphicProperties.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ViewModels\BaseViewModel.cs" />
+    <Compile Include="ViewModels\CameraControlViewModel.cs" />
     <Compile Include="ViewModels\DrawViewModel.cs" />
+    <Compile Include="ViewModels\GraphicPropertyVM.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
+    <Compile Include="ViewModels\TextureViewModel.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -133,11 +148,23 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="UserControls\Animation.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="UserControls\CameraControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UserControls\DrawControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\GraphicProperties.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\Texture.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
