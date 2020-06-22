@@ -9,7 +9,7 @@ namespace DoAn_OpenGL.Graphics3D
         {
             Style = style;
             Name = "Sphere";
-            SizeX = baseRadius;
+            SizeX = baseRadius/2;
             SizeZ = height;
             ColorR = R;
             ColorG = G;

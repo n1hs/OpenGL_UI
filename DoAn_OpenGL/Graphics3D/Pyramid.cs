@@ -9,7 +9,8 @@ namespace DoAn_OpenGL.Graphics3D
         {
             Style = style;
             Name = "Pyramid";
-            SizeX = baseRadius;
+            SizeX = baseRadius/2;
+            SizeY = 0;
             SizeZ = height;
             ColorR = R;
             ColorG = G;
@@ -17,8 +18,10 @@ namespace DoAn_OpenGL.Graphics3D
             LocationX = tranX;
             LocationY = tranY;
             LocationZ = tranZ;
+            Stacks = 100;
 
         }
+
         public override void DrawPoint(OpenGL gl)
         {
             gl.PushMatrix();
@@ -28,9 +31,6 @@ namespace DoAn_OpenGL.Graphics3D
             gl.Rotate(RotateY, 0.0, 1.0, 0.0);
             gl.Rotate(RotateZ, 0.0, 0.0, 1.0);
             gl.Color(ColorR, ColorG, ColorB);
-
-            //ve size cua point
-            gl.PointSize(3.0f);
 
             //ve 4 canh base
             double temp = 0;
@@ -114,40 +114,43 @@ namespace DoAn_OpenGL.Graphics3D
             gl.Rotate(RotateZ, 0.0, 0.0, 1.0);
             gl.Color(ColorR, ColorG, ColorB);
 
-            // Draw the base square
+           
+            double tempX = SizeX;
+            double tempZ = 0;
             gl.Begin(OpenGL.GL_LINES);
-            gl.Vertex(-SizeX, -SizeX, 0);
-            gl.Vertex(-SizeX, SizeX, 0);
 
-            gl.Vertex(-SizeX, SizeX, 0);
-            gl.Vertex(SizeX, SizeX, 0);
-
-            gl.Vertex(SizeX, SizeX, 0);
-            gl.Vertex(SizeX, -SizeX, 0);
-
-            gl.Vertex(SizeX, -SizeX, 0);
-            gl.Vertex(-SizeX, -SizeX, 0);
+            while (tempZ <= SizeZ)
+            {
+                for (double i = -tempX; i <= tempX; i += 0.1)
+                {
+                    for (double j = -tempX; j <= tempX; j += 0.1)
+                    {
+                        gl.Vertex(i, -j, tempZ);
+                        gl.Vertex(i, j, tempZ);
+                    }
+                }
+                tempX -= ((SizeX - SizeY) / Stacks);
+                tempZ += (SizeZ / Stacks);
+            }
             gl.End();
 
-            // Draw four side triangles
+            tempX = SizeX;
+            tempZ = 0;
             gl.Begin(OpenGL.GL_LINES);
 
-            // the commond point of the four triangles
-            gl.Vertex(0, 0, SizeZ);
-            gl.Vertex(-SizeX, -SizeX, 0);
-            // Base points of each triangle
-
-            gl.Vertex(0, 0, SizeZ);
-            gl.Vertex(-SizeX, SizeX, 0);
-
-            gl.Vertex(0, 0, SizeZ);
-            gl.Vertex(SizeX, SizeX, 0);
-
-            gl.Vertex(0, 0, SizeZ);
-            gl.Vertex(SizeX, -SizeX, 0);
-
-            
-
+            while (tempZ <= SizeZ)
+            {
+                for (double i = -tempX; i <= tempX; i += 0.1)
+                {
+                    for (double j = -tempX; j <= tempX; j += 0.1)
+                    {
+                        gl.Vertex(-j, i, tempZ);
+                        gl.Vertex(j, i, tempZ);
+                    }
+                }
+                tempX -= ((SizeX - SizeY) / Stacks);
+                tempZ += (SizeZ / Stacks);
+            }
             gl.End();
 
             gl.PopMatrix();

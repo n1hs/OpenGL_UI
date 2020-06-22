@@ -1,5 +1,6 @@
 ﻿using SharpGL;
 using SharpGL.SceneGraph.Quadrics;
+using System;
 using System.Windows.Controls;
 
 namespace DoAn_OpenGL.Graphics3D
@@ -10,8 +11,8 @@ namespace DoAn_OpenGL.Graphics3D
         {
             Style = style;
             Name = "Cylinder";
-            SizeX = baseRadius;
-            SizeY = baseRadius;
+            SizeX = baseRadius/2;
+            SizeY = baseRadius/2;
             SizeZ = height;
             ColorR = R;
             ColorG = G;
@@ -30,7 +31,7 @@ namespace DoAn_OpenGL.Graphics3D
             gl.Rotate(RotateZ, 0.0, 0.0, 1.0);
             gl.Color(ColorR, ColorG, ColorB);
             SharpGL.SceneGraph.Quadrics.Cylinder cylinder = new SharpGL.SceneGraph.Quadrics.Cylinder();
-            cylinder.TopRadius = SizeY;
+            cylinder.TopRadius = SizeX;
             cylinder.BaseRadius = SizeX;
             cylinder.Height = SizeZ;
             cylinder.Slices = 100;
@@ -73,22 +74,42 @@ namespace DoAn_OpenGL.Graphics3D
             gl.Rotate(RotateY, 0.0, 1.0, 0.0);
             gl.Rotate(RotateZ, 0.0, 0.0, 1.0);
             gl.Color(ColorR, ColorG, ColorB);
-            SharpGL.SceneGraph.Quadrics.Cylinder cylinder = new SharpGL.SceneGraph.Quadrics.Cylinder();
 
-            cylinder.QuadricDrawStyle = DrawStyle.Fill;
+            gl.Begin(OpenGL.GL_POLYGON);
+            for (int iogl = 0; iogl <= 359; iogl++)
+            {
+                gl.Vertex(SizeX * (double) Math.Sin(Math.PI / 180 * iogl), SizeX * (double)Math.Cos(Math.PI / 180 * iogl), 0);
+                gl.Vertex(SizeX * (double)Math.Sin(Math.PI / 180 * (iogl + 30)), SizeX * (double)Math.Cos(Math.PI / 180 * (iogl + 30)), 0);
 
-            cylinder.TopRadius = SizeZ;
-            cylinder.BaseRadius = SizeX;
-            cylinder.Height = SizeZ;
-            cylinder.Slices = 100;
-            cylinder.Stacks = 100;
-            
-            cylinder.CreateInContext(gl);
-            cylinder.PushObjectSpace(gl);
-            cylinder.Render(gl, SharpGL.SceneGraph.Core.RenderMode.Render);
-            cylinder.PopObjectSpace(gl);
-            cylinder.DestroyInContext(gl);
+                gl.Vertex(SizeX * (double)Math.Sin(Math.PI / 180 * iogl), SizeX * (double)Math.Cos(Math.PI / 180 * iogl), SizeZ);
+                gl.Vertex(SizeX * (double)Math.Sin(Math.PI / 180 * (iogl + 30)), SizeX * (double)Math.Cos(Math.PI / 180 * (iogl + 30)), SizeZ);
+            }
+            gl.End();
+
             gl.PopMatrix();
+
+            //gl.PushMatrix();
+            //gl.Translate(LocationX, LocationY, LocationZ);
+            //gl.Rotate(RotateX, 1.0, 0.0, 0.0);
+            //gl.Rotate(RotateY, 0.0, 1.0, 0.0);
+            //gl.Rotate(RotateZ, 0.0, 0.0, 1.0);
+            //gl.Color(ColorR, ColorG, ColorB);
+            //SharpGL.SceneGraph.Quadrics.Cylinder cylinder = new SharpGL.SceneGraph.Quadrics.Cylinder();
+
+            //cylinder.QuadricDrawStyle = DrawStyle.Fill;
+
+            //cylinder.TopRadius = SizeZ;
+            //cylinder.BaseRadius = SizeX;
+            //cylinder.Height = SizeZ;
+            //cylinder.Slices = 100;
+            //cylinder.Stacks = 100;
+
+            //cylinder.CreateInContext(gl);
+            //cylinder.PushObjectSpace(gl);
+            //cylinder.Render(gl, SharpGL.SceneGraph.Core.RenderMode.Render);
+            //cylinder.PopObjectSpace(gl);
+            //cylinder.DestroyInContext(gl);
+            //gl.PopMatrix();
         }
 
     }
