@@ -14,6 +14,7 @@ namespace DoAn_OpenGL.Graphics3D
         public double SizeY { get; set; }
         public double SizeZ { get; set; }
 
+        public int Slices { get; set; }
         public int Stacks { get; set; }
 
         public double ColorR { get; set; }

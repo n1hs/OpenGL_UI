@@ -10,8 +10,8 @@ namespace DoAn_OpenGL.Graphics3D
         {
             Style = style;
             Name = "FrustumShape";
-            SizeX = baseRadius/2;
-            SizeY = topRadius/2;
+            SizeX = baseRadius;
+            SizeY = topRadius;
             SizeZ = height;
             ColorR = R;
             ColorG = G;
@@ -19,139 +19,103 @@ namespace DoAn_OpenGL.Graphics3D
             LocationX = tranX;
             LocationY = tranY;
             LocationZ = tranZ;
+            Slices = 4;
             Stacks = 100;
+        }
+
+        public FrustumShape(DrawStyle style, double baseRadius, double topRadius, int stacks, double height, double R, double G, double B, double tranX = 0, double tranY = 0, double tranZ = 0, double rotX = 0, double rotY = 0, double rotZ = 0)
+        {
+            Style = style;
+            Name = "FrustumShape";
+            SizeX = baseRadius;
+            SizeY = topRadius;
+            SizeZ = height;
+            ColorR = R;
+            ColorG = G;
+            ColorB = B;
+            LocationX = tranX;
+            LocationY = tranY;
+            LocationZ = tranZ;
+            Slices = 4;
+            Stacks = stacks;
         }
 
         public override void DrawPoint(OpenGL gl)
         {
             gl.PushMatrix();
+
             gl.Translate(LocationX, LocationY, LocationZ);
             gl.Rotate(RotateX, 1.0, 0.0, 0.0);
             gl.Rotate(RotateY, 0.0, 1.0, 0.0);
             gl.Rotate(RotateZ, 0.0, 0.0, 1.0);
             gl.Color(ColorR, ColorG, ColorB);
 
-            gl.Begin(OpenGL.GL_POINTS);
-            double stacks = 10;
-            double tempX = SizeX;
-            double tempZ = 0;
-            while (tempZ <= SizeZ)
-            {
-                for (double i = -tempX; i <= tempX; i += 0.1)
-                {
-                    for (double j = -tempX; j <= tempX; j += 0.1)
-                    {
-                        gl.Vertex(i, j, tempZ);
-                    }
-                }
-                tempX -= ((SizeX - SizeY) / stacks);
-                tempZ += (SizeZ / stacks);
-            }
+            SharpGL.SceneGraph.Quadrics.Cylinder frumstumShape = new SharpGL.SceneGraph.Quadrics.Cylinder();
+            frumstumShape.TopRadius = SizeY;
+            frumstumShape.BaseRadius = SizeX;
+            frumstumShape.Height = SizeZ;
+            frumstumShape.Slices = Slices;
+            frumstumShape.Stacks = Stacks;
+            frumstumShape.QuadricDrawStyle = DrawStyle.Point;
 
-            gl.End();
+            frumstumShape.CreateInContext(gl);
+            frumstumShape.PushObjectSpace(gl);
+            frumstumShape.Render(gl, SharpGL.SceneGraph.Core.RenderMode.Render);
+            frumstumShape.PopObjectSpace(gl);
+            frumstumShape.DestroyInContext(gl);
 
             gl.PopMatrix();
-
         }
         public override void DrawLine(OpenGL gl)
         {
             gl.PushMatrix();
+
             gl.Translate(LocationX, LocationY, LocationZ);
             gl.Rotate(RotateX, 1.0, 0.0, 0.0);
             gl.Rotate(RotateY, 0.0, 1.0, 0.0);
             gl.Rotate(RotateZ, 0.0, 0.0, 1.0);
             gl.Color(ColorR, ColorG, ColorB);
 
-            double tempX = SizeX;
-            double tempZ = 0;
-            gl.Begin(OpenGL.GL_LINES);
+            SharpGL.SceneGraph.Quadrics.Cylinder frumstumShape = new SharpGL.SceneGraph.Quadrics.Cylinder();
+            frumstumShape.TopRadius = SizeY;
+            frumstumShape.BaseRadius = SizeX;
+            frumstumShape.Height = SizeZ;
+            frumstumShape.Slices = Slices;
+            frumstumShape.Stacks = Stacks;
+            frumstumShape.QuadricDrawStyle = DrawStyle.Line;
 
-            while (tempZ <= SizeZ)
-            {
-                for (double i = -tempX; i <= tempX; i += 0.1)
-                {
-                    for (double j = -tempX; j <= tempX; j += 0.1)
-                    {
-                        gl.Vertex(i, -j, tempZ);
-                        gl.Vertex(i, j, tempZ);
-                    }
-                }
-                tempX -= ((SizeX - SizeY) / Stacks);
-                tempZ += (SizeZ / Stacks);
-            }
-            gl.End();
-
-
-            tempX = SizeX;
-            tempZ = 0;
-            gl.Begin(OpenGL.GL_LINES);
-
-            while (tempZ <= SizeZ)
-            {
-                for (double i = -tempX; i <= tempX; i += 0.1)
-                {
-                    for (double j = -tempX; j <= tempX; j += 0.1)
-                    {
-                        gl.Vertex(-j, i, tempZ);
-                        gl.Vertex(j, i, tempZ);
-                    }
-                }
-                tempX -= ((SizeX - SizeY) / Stacks);
-                tempZ += (SizeZ / Stacks);
-            }
-            gl.End();
+            frumstumShape.CreateInContext(gl);
+            frumstumShape.PushObjectSpace(gl);
+            frumstumShape.Render(gl, SharpGL.SceneGraph.Core.RenderMode.Render);
+            frumstumShape.PopObjectSpace(gl);
+            frumstumShape.DestroyInContext(gl);
 
             gl.PopMatrix();
-
         }
         
         public override void DrawSolid(OpenGL gl)
         {
             gl.PushMatrix();
+
             gl.Translate(LocationX, LocationY, LocationZ);
             gl.Rotate(RotateX, 1.0, 0.0, 0.0);
             gl.Rotate(RotateY, 0.0, 1.0, 0.0);
             gl.Rotate(RotateZ, 0.0, 0.0, 1.0);
             gl.Color(ColorR, ColorG, ColorB);
 
-            // Draw the base
-            gl.Begin(OpenGL.GL_QUADS);
-            gl.Vertex(-SizeX, -SizeX, 0);
-            gl.Vertex(-SizeX, SizeX, 0);
-            gl.Vertex(SizeX, SizeX, 0);
-            gl.Vertex(SizeX, -SizeX, 0);
-            gl.End();
+            SharpGL.SceneGraph.Quadrics.Cylinder frumstumShape = new SharpGL.SceneGraph.Quadrics.Cylinder();
+            frumstumShape.TopRadius = SizeY;
+            frumstumShape.BaseRadius = SizeX;
+            frumstumShape.Height = SizeZ;
+            frumstumShape.Slices = Slices;
+            frumstumShape.Stacks = Stacks;
+            frumstumShape.QuadricDrawStyle = DrawStyle.Fill;
 
-            // Draw 4 side
-            gl.Begin(OpenGL.GL_QUADS);
-            gl.Vertex(-SizeX, -SizeX, 0);
-            gl.Vertex(SizeX, -SizeX, 0);
-            gl.Vertex(SizeY,-SizeY,SizeZ);
-            gl.Vertex(-SizeY, -SizeY, SizeZ);
-
-            gl.Vertex(SizeX, -SizeX, 0);
-            gl.Vertex(SizeY, -SizeY, SizeZ);
-            gl.Vertex(SizeY, SizeY, SizeZ);
-            gl.Vertex(SizeX, SizeX, 0);
-
-            gl.Vertex(SizeY, SizeY, SizeZ);
-            gl.Vertex(SizeX, SizeX, 0);
-            gl.Vertex(-SizeX, SizeX, 0);
-            gl.Vertex(-SizeY, SizeY, SizeZ);
-
-            gl.Vertex(-SizeX, SizeX, 0);
-            gl.Vertex(-SizeY, SizeY, SizeZ);
-            gl.Vertex(-SizeY, -SizeY, SizeZ);
-            gl.Vertex(-SizeX, -SizeX, 0);
-            gl.End();
-
-            // Draw top base
-            gl.Begin(OpenGL.GL_QUADS);
-            gl.Vertex(-SizeY, -SizeY, SizeZ);
-            gl.Vertex(-SizeY, SizeY, SizeZ);
-            gl.Vertex(SizeY, SizeY, SizeZ);
-            gl.Vertex(SizeY, -SizeY, SizeZ);
-            gl.End();
+            frumstumShape.CreateInContext(gl);
+            frumstumShape.PushObjectSpace(gl);
+            frumstumShape.Render(gl, SharpGL.SceneGraph.Core.RenderMode.Render);
+            frumstumShape.PopObjectSpace(gl);
+            frumstumShape.DestroyInContext(gl);
 
             gl.PopMatrix();
         }

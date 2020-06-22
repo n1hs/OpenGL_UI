@@ -19,13 +19,29 @@ namespace DoAn_OpenGL.Graphics3D
             LocationX = tranX;
             LocationY = tranY;
             LocationZ = tranZ;
+            Slices = 10;
             Stacks = 10;
+        }
+
+        public Cube(DrawStyle style, double WidthX, double WidthY, double height, int slices, int stacks, double R, double G, double B, double tranX = 0, double tranY = 0, double tranZ = 0, double rotX = 0, double rotY = 0, double rotZ = 0)
+        {
+            Style = style;
+            Name = "Cube";
+            SizeX = WidthX / 2;
+            SizeY = WidthY / 2;
+            SizeZ = height;
+            ColorR = R;
+            ColorG = G;
+            ColorB = B;
+            LocationX = tranX;
+            LocationY = tranY;
+            LocationZ = tranZ;
+            Slices = slices;
+            Stacks = stacks;
         }
 
         public override void DrawPoint(OpenGL gl)
         {
-            
-            
             gl.PushMatrix();
 
             gl.Translate(LocationX, LocationY, LocationZ);
@@ -33,7 +49,6 @@ namespace DoAn_OpenGL.Graphics3D
             gl.Rotate(RotateY, 0.0, 1.0, 0.0);
             gl.Rotate(RotateZ, 0.0, 0.0, 1.0);
             gl.Color(ColorR, ColorG, ColorB);
-
 
             gl.Begin(OpenGL.GL_POINTS);
             double tempX = SizeX;
@@ -53,20 +68,18 @@ namespace DoAn_OpenGL.Graphics3D
             gl.End();
 
             gl.PopMatrix();
-
         }
 
         public override void DrawLine(OpenGL gl)
         {
-            
             gl.PushMatrix();
-
             gl.Translate(LocationX, LocationY, LocationZ);
             gl.Rotate(RotateX, 1.0, 0.0, 0.0);
             gl.Rotate(RotateY, 0.0, 1.0, 0.0);
             gl.Rotate(RotateZ, 0.0, 0.0, 1.0);
             gl.Color(ColorR, ColorG, ColorB);
 
+            //draw columns
             gl.Begin(OpenGL.GL_LINES);
             double tempX = SizeX;
             double tempY = SizeY;
@@ -85,6 +98,7 @@ namespace DoAn_OpenGL.Graphics3D
             }
             gl.End();
 
+            //draw row
             gl.Begin(OpenGL.GL_LINES);
             tempX = SizeX;
             tempY = SizeY;
@@ -116,53 +130,53 @@ namespace DoAn_OpenGL.Graphics3D
             gl.Rotate(RotateY, 0.0, 1.0, 0.0);
             gl.Rotate(RotateZ, 0.0, 0.0, 1.0);
             gl.Color(ColorR, ColorG, ColorB);
-            //Back
-            gl.Begin(OpenGL.GL_QUADS);
-            gl.Vertex(-SizeX, SizeY, 0);
-            gl.Vertex(-SizeX, SizeY, SizeZ);
-            gl.Vertex(SizeX, SizeY, SizeZ);
-            gl.Vertex(SizeX, SizeY, 0);
-            gl.End();
+            ////Back
+            //gl.Begin(OpenGL.GL_QUADS);
+            //gl.Vertex(-SizeX, SizeY, 0);
+            //gl.Vertex(-SizeX, SizeY, SizeZ);
+            //gl.Vertex(SizeX, SizeY, SizeZ);
+            //gl.Vertex(SizeX, SizeY, 0);
+            //gl.End();
 
-            // left
-            gl.Begin(OpenGL.GL_QUADS);
-            gl.Vertex(-SizeX, -SizeY, 0);
-            gl.Vertex(-SizeX, -SizeY, SizeZ);
-            gl.Vertex(-SizeX, SizeY, SizeZ);
-            gl.Vertex(-SizeX, SizeY, 0);
-            gl.End();
+            //// left
+            //gl.Begin(OpenGL.GL_QUADS);
+            //gl.Vertex(-SizeX, -SizeY, 0);
+            //gl.Vertex(-SizeX, -SizeY, SizeZ);
+            //gl.Vertex(-SizeX, SizeY, SizeZ);
+            //gl.Vertex(-SizeX, SizeY, 0);
+            //gl.End();
 
-            //front
-            gl.Begin(OpenGL.GL_QUADS);
-            gl.Vertex(-SizeX, -SizeY, 0);
-            gl.Vertex(-SizeX, -SizeY, SizeZ);
-            gl.Vertex(SizeX, -SizeY, SizeZ);
-            gl.Vertex(SizeX, -SizeY, 0);
-            gl.End();
+            ////front
+            //gl.Begin(OpenGL.GL_QUADS);
+            //gl.Vertex(-SizeX, -SizeY, 0);
+            //gl.Vertex(-SizeX, -SizeY, SizeZ);
+            //gl.Vertex(SizeX, -SizeY, SizeZ);
+            //gl.Vertex(SizeX, -SizeY, 0);
+            //gl.End();
 
-            //// right
-            gl.Begin(OpenGL.GL_QUADS);
-            gl.Vertex(SizeX, SizeY, 0);
-            gl.Vertex(SizeX, SizeY, SizeZ);
-            gl.Vertex(SizeX, -SizeY, SizeZ);
-            gl.Vertex(SizeX, -SizeY, 0);
-            gl.End();
+            ////// right
+            //gl.Begin(OpenGL.GL_QUADS);
+            //gl.Vertex(SizeX, SizeY, 0);
+            //gl.Vertex(SizeX, SizeY, SizeZ);
+            //gl.Vertex(SizeX, -SizeY, SizeZ);
+            //gl.Vertex(SizeX, -SizeY, 0);
+            //gl.End();
 
-            //Top
-            gl.Begin(OpenGL.GL_QUADS);
-            gl.Vertex(-SizeX, SizeY, SizeZ);
-            gl.Vertex(-SizeX, -SizeY, SizeZ);
-            gl.Vertex(SizeX, -SizeY, SizeZ);
-            gl.Vertex(SizeX, SizeY, SizeZ);
-            gl.End();
+            ////Top
+            //gl.Begin(OpenGL.GL_QUADS);
+            //gl.Vertex(-SizeX, SizeY, SizeZ);
+            //gl.Vertex(-SizeX, -SizeY, SizeZ);
+            //gl.Vertex(SizeX, -SizeY, SizeZ);
+            //gl.Vertex(SizeX, SizeY, SizeZ);
+            //gl.End();
 
-            //Bottom
-            gl.Begin(OpenGL.GL_QUADS);
-            gl.Vertex(-SizeX, SizeY, 0);
-            gl.Vertex(-SizeX, -SizeY, 0);
-            gl.Vertex(SizeX, -SizeY, 0);
-            gl.Vertex(SizeX, SizeY, 0);
-            gl.End();
+            ////Bottom
+            //gl.Begin(OpenGL.GL_QUADS);
+            //gl.Vertex(-SizeX, SizeY, 0);
+            //gl.Vertex(-SizeX, -SizeY, 0);
+            //gl.Vertex(SizeX, -SizeY, 0);
+            //gl.Vertex(SizeX, SizeY, 0);
+            //gl.End();
 
             gl.PopMatrix();
         }
