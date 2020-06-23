@@ -149,7 +149,7 @@ namespace DoAn_OpenGL.ViewModels
         #region OpenGL
         OpenGL gl;
         private bool isMouseEnter;
-        internal DrawStyle drawMode;
+        internal DrawStyle drawMode = DrawStyle.Point;
         internal DrawGraphic drawGraphic;
         double pointX, pointY = 0;
         internal Graphic3D temp;
