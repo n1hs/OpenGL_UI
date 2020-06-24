@@ -28,9 +28,22 @@ namespace DoAn_OpenGL.ViewModels
                 if(value!= null)
                 {
                     CheckColor(value.ColorR, value.ColorG, value.ColorB);
+                    IsPanelEnable = true;
+                }    
+                else
+                {
+                    IsPanelEnable = false;
                 }    
             }
         }
+        private bool isPanelEnable;
+
+        public bool IsPanelEnable
+        {
+            get { return isPanelEnable; }
+            set { isPanelEnable = value; OnPropertyChanged("IsPanelEnable"); }
+        }
+
         public ICommand ChoseColorCommand { get; set; }
         public ICommand DeleteCommand { get; set; }
         #endregion
@@ -83,22 +96,16 @@ namespace DoAn_OpenGL.ViewModels
                 {
                     if (SelectedGraphic == null)
                     {
-                        if (System.Windows.MessageBox.Show(String.Format("Vui long chon hinh can xoa"), "Xác nhận", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Warning) == System.Windows.MessageBoxResult.OK)
-                        {
-
-                        }
+                        return;
                     }
-                    else
+                    if (System.Windows.MessageBox.Show(String.Format("Bạn có muốn xóa {0} không? ", SelectedGraphic.Name), "Xác nhận", System.Windows.MessageBoxButton.YesNo, System.Windows.MessageBoxImage.Warning) == System.Windows.MessageBoxResult.Yes)
                     {
-                        if (System.Windows.MessageBox.Show(String.Format("Bạn có muốn xóa {0} không? ", SelectedGraphic.Name), "Xác nhận", System.Windows.MessageBoxButton.YesNo, System.Windows.MessageBoxImage.Warning) == System.Windows.MessageBoxResult.Yes)
+                        Graphic3D x = SelectedGraphic;
+                        if (x != null)
                         {
-                            Graphic3D x = SelectedGraphic;
-                            if (x != null)
-                            {
-                                ListObject.Remove(x);
-                                SelectedGraphic = null;
-                                OnPropertyChanged("SelectedGraphic");
-                            }
+                            ListObject.Remove(x);
+                            SelectedGraphic = null;
+                            OnPropertyChanged("SelectedGraphic");
                         }
                     }
                     
@@ -226,6 +233,18 @@ namespace DoAn_OpenGL.ViewModels
                     }
                 }
             }    
+        }
+
+        internal void Update()
+        {
+            if (SelectedGraphic != null)
+            {
+                IsPanelEnable = true;
+            }
+            else
+            {
+                IsPanelEnable = false;
+            }
         }
         #endregion
 

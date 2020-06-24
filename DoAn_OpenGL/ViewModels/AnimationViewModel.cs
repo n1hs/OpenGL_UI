@@ -26,6 +26,14 @@ namespace DoAn_OpenGL.ViewModels
             set
             {
                 mainVM.seletedGraphic = value;
+                if (value != null)
+                {
+                    IsPanelEnable = true;
+                }
+                else
+                {
+                    IsPanelEnable = false;
+                }
                 OnPropertyChanged("ATNone");
                 OnPropertyChanged("ATOx");
                 OnPropertyChanged("ATOy");
@@ -36,7 +44,14 @@ namespace DoAn_OpenGL.ViewModels
 
             }
         }
-         public bool ATNone
+        private bool isPanelEnable;
+
+        public bool IsPanelEnable
+        {
+            get { return isPanelEnable; }
+            set { isPanelEnable = value; OnPropertyChanged("IsPanelEnable"); }
+        }
+        public bool ATNone
         {
             get { return SelectedGraphic?.AnimationTT == Translational.None; }
             set { if (value)
@@ -118,6 +133,18 @@ namespace DoAn_OpenGL.ViewModels
         public AnimationViewModel(MainWindowViewModel vm)
         {
             mainVM = vm;
+        }
+
+        internal void Update()
+        {
+            if (SelectedGraphic != null)
+            {
+                IsPanelEnable = true;
+            }
+            else
+            {
+                IsPanelEnable = false;
+            }
         }
         #endregion
     }

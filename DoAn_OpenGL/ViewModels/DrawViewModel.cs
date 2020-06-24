@@ -171,7 +171,7 @@ namespace DoAn_OpenGL.ViewModels
                 case DrawGraphic.FrustumShape:
                     mainmodel.temp = new FrustumShape(mainmodel.drawMode, 2, 1, 2,  r, g, b);
                     break;
-                case DrawGraphic.Octagon:
+                case DrawGraphic.Teapot:
                     mainmodel.temp = new Teapot(mainmodel.drawMode, 2, 2, r, g, b);
                     break;
                 case DrawGraphic.Pyramid:
