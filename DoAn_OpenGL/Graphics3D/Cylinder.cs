@@ -20,8 +20,8 @@ namespace DoAn_OpenGL.Graphics3D
             LocationX = tranX;
             LocationY = tranY;
             LocationZ = tranZ;
-            Slices = 10;
-            Stacks = 10;
+            Slices = 100;
+            Stacks = 100;
         }
 
         public Cylinder(DrawStyle style, double baseRadius, double height, int slices, int stacks, double R, double G, double B, double tranX = 0, double tranY = 0, double tranZ = 0, double rotX = 0, double rotY = 0, double rotZ = 0)

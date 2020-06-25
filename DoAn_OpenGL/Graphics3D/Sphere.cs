@@ -64,8 +64,6 @@ namespace DoAn_OpenGL.Graphics3D
             sphere.DestroyInContext(gl);
 
             gl.PopMatrix();
-
-
         }
         public override void DrawLine(OpenGL gl)
         {
@@ -91,8 +89,6 @@ namespace DoAn_OpenGL.Graphics3D
             sphere.Render(gl, SharpGL.SceneGraph.Core.RenderMode.Render);
             sphere.PopObjectSpace(gl);
             sphere.DestroyInContext(gl);
-
-            
 
             gl.PopMatrix();
         }

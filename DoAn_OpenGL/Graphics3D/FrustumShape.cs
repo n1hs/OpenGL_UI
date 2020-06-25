@@ -50,19 +50,38 @@ namespace DoAn_OpenGL.Graphics3D
             gl.Rotate(RotateZ, 0.0, 0.0, 1.0);
             gl.Color(ColorR, ColorG, ColorB);
 
-            SharpGL.SceneGraph.Quadrics.Cylinder frumstumShape = new SharpGL.SceneGraph.Quadrics.Cylinder();
-            frumstumShape.TopRadius = SizeY;
-            frumstumShape.BaseRadius = SizeX;
-            frumstumShape.Height = SizeZ;
-            frumstumShape.Slices = Slices;
-            frumstumShape.Stacks = Stacks;
-            frumstumShape.QuadricDrawStyle = DrawStyle.Point;
+            //SharpGL.SceneGraph.Quadrics.Cylinder frumstumShape = new SharpGL.SceneGraph.Quadrics.Cylinder();
+            //frumstumShape.TopRadius = SizeY;
+            //frumstumShape.BaseRadius = SizeX;
+            //frumstumShape.Height = SizeZ;
+            //frumstumShape.Slices = Slices;
+            //frumstumShape.Stacks = Stacks;
+            //frumstumShape.QuadricDrawStyle = DrawStyle.Point;
 
-            frumstumShape.CreateInContext(gl);
-            frumstumShape.PushObjectSpace(gl);
-            frumstumShape.Render(gl, SharpGL.SceneGraph.Core.RenderMode.Render);
-            frumstumShape.PopObjectSpace(gl);
-            frumstumShape.DestroyInContext(gl);
+            //frumstumShape.CreateInContext(gl);
+            //frumstumShape.PushObjectSpace(gl);
+            //frumstumShape.Render(gl, SharpGL.SceneGraph.Core.RenderMode.Render);
+            //frumstumShape.PopObjectSpace(gl);
+            //frumstumShape.DestroyInContext(gl);
+
+            gl.Begin(OpenGL.GL_POINTS);
+            double stacks = Stacks;
+            double tempX = SizeX;
+            double tempZ = 0;
+            while (tempZ <= SizeZ)
+            {
+                for (double i = -tempX; i <= tempX; i += 0.1)
+                {
+                    for (double j = -tempX; j <= tempX; j += 0.1)
+                    {
+                        gl.Vertex(i, j, tempZ);
+                    }
+                }
+                tempX -= ((SizeX - SizeY) / stacks);
+                tempZ += (SizeZ / stacks);
+            }
+
+            gl.End();
 
             gl.PopMatrix();
         }

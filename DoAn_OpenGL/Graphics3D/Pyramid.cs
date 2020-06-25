@@ -45,6 +45,12 @@ namespace DoAn_OpenGL.Graphics3D
         {
             gl.PushMatrix();
             Animation(gl);
+            //ham chieu sang -> toan phan, ,do bong(gl)
+
+            //them enum trong Graphics3D
+
+            //them ham chieu sang
+
             gl.Translate(LocationX, LocationY, LocationZ);
             gl.Rotate(RotateX, 1.0, 0.0, 0.0);
             gl.Rotate(RotateY, 0.0, 1.0, 0.0);
@@ -64,6 +70,16 @@ namespace DoAn_OpenGL.Graphics3D
             pyramid.Render(gl, SharpGL.SceneGraph.Core.RenderMode.Render);
             pyramid.PopObjectSpace(gl);
             pyramid.DestroyInContext(gl);
+
+            //gl.Begin(OpenGL.GL_POINTS);
+            //for (double i = 0; i <= SizeX; i += SizeX / Stacks)
+            //{
+            //    for (double j = 0; j <= SizeX; j += SizeX / Stacks)
+            //    {
+            //        gl.Vertex(j+i, -SizeX + j, 0);
+            //    }
+            //}
+            //gl.End();
 
             gl.PopMatrix();
         }
