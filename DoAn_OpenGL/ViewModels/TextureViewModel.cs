@@ -29,10 +29,24 @@ namespace DoAn_OpenGL.ViewModels
             set
             {
                 mainVM.seletedGraphic = value;
+                if (value != null)
+                {
+                    IsPanelEnable = true;
+                }
+                else
+                {
+                    IsPanelEnable = false;
+                }
 
             }
         }
+        private bool isPanelEnable;
 
+        public bool IsPanelEnable
+        {
+            get { return isPanelEnable; }
+            set { isPanelEnable = value; OnPropertyChanged("IsPanelEnable"); }
+        }
         private ImageSource textuteImage;
 
         public ImageSource TextuteImage
@@ -54,6 +68,18 @@ namespace DoAn_OpenGL.ViewModels
                 if (openFileDialog.ShowDialog() == true)
                     TextuteImage = new BitmapImage(new Uri(openFileDialog.FileName));
             });
+        }
+
+        internal void Update()
+        {
+            if (SelectedGraphic != null)
+            {
+                IsPanelEnable = true;
+            }
+            else
+            {
+                IsPanelEnable = false;
+            }
         }
         #endregion
     }

@@ -4,7 +4,13 @@
                xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:assets="clr-namespace:DoAn_OpenGL.Assets"
+             xmlns:cv="clr-namespace:DoAn_OpenGL.Converters"
+             HorizontalAlignment="Stretch"
+             VerticalAlignment="Stretch"
              Width="250">
+    <UserControl.Resources>
+        <cv:ImageSourceConverter x:Key="ImagesourceCV"/>
+    </UserControl.Resources>
     <DockPanel >
         <StackPanel DockPanel.Dock="Top">
             <TextBlock HorizontalAlignment="Center"
@@ -216,11 +222,11 @@
                     <RowDefinition Height="50"/>
                 </Grid.RowDefinitions>
                 <RadioButton Style="{StaticResource GraphicButton}"
-                         Content="{md:PackIcon Kind=Cube}"
                          x:Name="Cube"
                          Height="46" 
                          Width="46"
                          ToolTip="Cube">
+                    <Image Source="pack://application:,,,/DoAn_OpenGL;component/Assets/Images/Cube.png"/>
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="Checked">
                             <i:InvokeCommandAction Command="{Binding ChoseGraphicCommand}"
@@ -229,12 +235,12 @@
                     </i:Interaction.Triggers>
                 </RadioButton>
                 <RadioButton Style="{StaticResource GraphicButton}"
-                           Content="{md:PackIcon Kind=Circle}"
                          Grid.Column="1"
                          x:Name="Sphere"
                          Height="48"
                          Width="48"
                          ToolTip="Sphere" >
+                    <Image Source="pack://application:,,,/DoAn_OpenGL;component/Assets/Images/Sphere.png"/>
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="Checked">
                             <i:InvokeCommandAction Command="{Binding ChoseGraphicCommand}"
@@ -248,7 +254,7 @@
                          Height="46"
                          Width="46"
                          ToolTip="Cylinder" >
-                    <Image Source="pack://application:,,,/DoAn_OpenGL;component/Assets/Images/cylinder.png"/>
+                    <Image Source="pack://application:,,,/DoAn_OpenGL;component/Assets/Images/Cylinder.png"/>
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="Checked">
                             <i:InvokeCommandAction Command="{Binding ChoseGraphicCommand}"
@@ -257,12 +263,12 @@
                     </i:Interaction.Triggers>
                 </RadioButton>
                 <RadioButton Style="{StaticResource GraphicButton}"
-                         Content="{md:PackIcon Kind=EmoticonExcited}"
                          Grid.Column="3"
                          x:Name="TruncatedCone"
                          Height="46"
                          Width="46"
                          ToolTip="Truncated Cone" >
+                    <Image Source="pack://application:,,,/DoAn_OpenGL;component/Assets/Images/TruncatedCone.png"/>
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="Checked">
                             <i:InvokeCommandAction Command="{Binding ChoseGraphicCommand}"
@@ -271,12 +277,12 @@
                     </i:Interaction.Triggers>
                 </RadioButton>
                 <RadioButton Style="{StaticResource GraphicButton}"
-                         Content="{md:PackIcon Kind=TrafficCone}"
                          Grid.Row="1"
                          Height="46"
                          x:Name="Cone"
                          Width="46"
                          ToolTip="Cone" >
+                    <Image Source="pack://application:,,,/DoAn_OpenGL;component/Assets/Images/Cone.png"/>
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="Checked">
                             <i:InvokeCommandAction Command="{Binding ChoseGraphicCommand}"
@@ -291,7 +297,7 @@
                          x:Name="Pyramid"
                          Width="46"
                          ToolTip="Pyramid" >
-                    <Image Source="pack://application:,,,/DoAn_OpenGL;component/Assets/Images/pyramid.png"/>
+                    <Image Source="pack://application:,,,/DoAn_OpenGL;component/Assets/Images/Pyramid.png"/>
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="Checked">
                             <i:InvokeCommandAction Command="{Binding ChoseGraphicCommand}"
@@ -300,13 +306,13 @@
                     </i:Interaction.Triggers>
                 </RadioButton>
                 <RadioButton Style="{StaticResource GraphicButton}"
-                           Content="{md:PackIcon Kind=FruitCherries}"
                     Grid.Column="2"
                     Grid.Row="1"
                     Height="46"
                          x:Name="FrustumShape"
                     Width="46"
                     ToolTip="Frustum Shape" >
+                    <Image Source="pack://application:,,,/DoAn_OpenGL;component/Assets/Images/FrustumShape.png"/>
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="Checked">
                             <i:InvokeCommandAction Command="{Binding ChoseGraphicCommand}"
@@ -315,17 +321,17 @@
                     </i:Interaction.Triggers>
                 </RadioButton>
                 <RadioButton Style="{StaticResource GraphicButton}"
-                           Content="{md:PackIcon Kind=Ocr}"
                     Grid.Column="3"
                     Grid.Row="1"
                     Height="46"
-                         x:Name="Octagon"
+                         x:Name="Teapot"
                     Width="46"
-                    ToolTip="Octagon" >
+                    ToolTip="Teapot" >
+                    <Image Source="pack://application:,,,/DoAn_OpenGL;component/Assets/Images/Teapot.png"/>
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="Checked">
                             <i:InvokeCommandAction Command="{Binding ChoseGraphicCommand}"
-                                               CommandParameter="{x:Static assets:DrawGraphic.Octagon}"/>
+                                               CommandParameter="{x:Static assets:DrawGraphic.Teapot}"/>
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                 </RadioButton>
@@ -338,22 +344,37 @@
                   IsChecked="{Binding ShowXYPlane, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
             <Separator/>
         </StackPanel>
-        <StackPanel>
+        <DockPanel>
             <TextBlock HorizontalAlignment="Center"
+                       DockPanel.Dock="Top"
                    Margin="5"
                    Style="{StaticResource MaterialDesignHeadline6TextBlock}">
             Object
             </TextBlock>
-            <ListView SelectionMode="Single"
-                      ScrollViewer.HorizontalScrollBarVisibility ="Auto"
-                      ScrollViewer.VerticalScrollBarVisibility ="Auto"
+            <ItemsControl Width="250"
+                          ScrollViewer.HorizontalScrollBarVisibility ="Disabled" 
+                          ScrollViewer.VerticalScrollBarVisibility ="Auto"
                   ItemsSource="{Binding ListObject, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}">
-                <ListView.ItemTemplate>
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
                     <DataTemplate DataType="{x:Type assets:DrawGraphic}">
-                        <TextBlock Text="{Binding Name}"/>
+                        <Grid Height="40" Margin="5">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Image Width="32"
+                                   Height="32"
+                                   ToolTip="{Binding Name, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                                   Source="{Binding Name , Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource ImagesourceCV}}"/>
+                        </Grid>
                     </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-        </StackPanel>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </DockPanel>
     </DockPanel>
 </UserControl>

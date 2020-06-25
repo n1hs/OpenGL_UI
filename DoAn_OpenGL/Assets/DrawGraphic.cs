@@ -11,6 +11,6 @@ namespace DoAn_OpenGL.Assets
         Cone,
         Pyramid,
         FrustumShape,
-        Octagon
+        Teapot
     }
 }

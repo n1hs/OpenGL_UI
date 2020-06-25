@@ -123,16 +123,19 @@ namespace DoAn_OpenGL.ViewModels
                 case 3:
                     DialogContent = new UserControls.GraphicProperties();
                     DialogContent.DataContext = graphicPropertyvm;
+                    graphicPropertyvm.Update();
                     DialogTitle = "Thuộc tính";
                     break;
                 case 4:
                     DialogContent = new UserControls.Animation();
                     DialogContent.DataContext = animationVM;
+                    animationVM.Update();
                     DialogTitle = "Animation";
                     break;
                 case 5:
                     DialogContent = new UserControls.Texture();
                     DialogContent.DataContext = textureVM;
+                    textureVM.Update();
                     DialogTitle = "Texture";
                     break;
 
