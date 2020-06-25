@@ -48,6 +48,8 @@ namespace DoAn_OpenGL.Graphics3D
 
             Animation(gl);
 
+
+
             gl.Translate(LocationX, LocationY, LocationZ);
             gl.Rotate(RotateX, 1.0, 0.0, 0.0);
             gl.Rotate(RotateY, 0.0, 1.0, 0.0);
@@ -61,6 +63,7 @@ namespace DoAn_OpenGL.Graphics3D
             cone.Slices = Slices;
             cone.Stacks = Stacks;
             cone.QuadricDrawStyle = DrawStyle.Point;
+
 
             cone.CreateInContext(gl);
             cone.PushObjectSpace(gl);
@@ -115,6 +118,11 @@ namespace DoAn_OpenGL.Graphics3D
             cone.Slices = Slices;
             cone.Stacks = Stacks;
             cone.QuadricDrawStyle = DrawStyle.Fill;
+
+            Material material = new Material();
+            material.Ambient = new System.Drawing.Color();
+            material.Bind(gl);
+            cone.Material = material;
 
             cone.CreateInContext(gl);
             cone.PushObjectSpace(gl);

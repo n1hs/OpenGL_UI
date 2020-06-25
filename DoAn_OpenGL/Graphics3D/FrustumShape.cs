@@ -64,24 +64,63 @@ namespace DoAn_OpenGL.Graphics3D
             //frumstumShape.PopObjectSpace(gl);
             //frumstumShape.DestroyInContext(gl);
 
+            gl.PushMatrix();
+            gl.Rotate(45, 0, 0, 1);
             gl.Begin(OpenGL.GL_POINTS);
             double stacks = Stacks;
-            double tempX = SizeX;
+            double tempX = SizeX * (System.Math.Sqrt(2)) / 2;
+            double tempy = SizeY;
             double tempZ = 0;
-            while (tempZ <= SizeZ)
+            //for (double i = -tempX; i <= tempX; i += 0.1)
+            //{
+            //    for (double j = -tempX; j <= tempX; j += 0.1)
+            //    {
+            //        gl.Vertex(i, j, 0);
+            //    }
+            //}
+            //for (double i = -tempy; i <= tempy; i += 0.1)
+            //{
+            //    for (double j = -tempy; j <= tempy; j += 0.1)
+            //    {
+            //        gl.Vertex(i, j, SizeZ);
+            //    }
+            //}
+
+            for (double j = 0; j<=SizeZ; j+=SizeZ/Stacks)
             {
+                for(double i =-tempX; i<=tempX;i+=0.1)
+                {
+                    gl.Vertex(i, -tempX, j);
+                }
                 for (double i = -tempX; i <= tempX; i += 0.1)
                 {
-                    for (double j = -tempX; j <= tempX; j += 0.1)
-                    {
-                        gl.Vertex(i, j, tempZ);
-                    }
+                    gl.Vertex(i, tempX, j);
                 }
-                tempX -= ((SizeX - SizeY) / stacks);
-                tempZ += (SizeZ / stacks);
+                for (double i = -tempX; i <= tempX; i += 0.1)
+                {
+                    gl.Vertex(-tempX, i, j);
+                }
+                for (double i = -tempX; i <= tempX; i += 0.1)
+                {
+                    gl.Vertex(tempX, i, j);
+                }
+                tempX -= ((SizeX - SizeY) / Stacks)*Math.Sqrt(2)/2;
             }
+                //while (tempZ <= SizeZ)
+                //{
+                //    for (double i = -tempX; i <= tempX; i += 0.1)
+                //    {
+                //        for (double j = -tempX; j <= tempX; j += 0.1)
+                //        {
+                //            gl.Vertex(i, j, tempZ);
+                //        }
+                //    }
+                //    tempX -= ((SizeX - SizeY) / stacks);
+                //    tempZ += (SizeZ / stacks);
+                //}
 
-            gl.End();
+                gl.End();
+                gl.PopMatrix();
 
             gl.PopMatrix();
         }

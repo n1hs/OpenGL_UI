@@ -1,5 +1,6 @@
 ﻿using SharpGL;
 using SharpGL.SceneGraph.Quadrics;
+using System;
 
 namespace DoAn_OpenGL.Graphics3D
 {
@@ -19,7 +20,7 @@ namespace DoAn_OpenGL.Graphics3D
             LocationY = tranY;
             LocationZ = tranZ;
             Slices = 4;
-            Stacks = 100;
+            Stacks = 10;
 
         }
 
@@ -71,15 +72,36 @@ namespace DoAn_OpenGL.Graphics3D
             pyramid.PopObjectSpace(gl);
             pyramid.DestroyInContext(gl);
 
-            //gl.Begin(OpenGL.GL_POINTS);
-            //for (double i = 0; i <= SizeX; i += SizeX / Stacks)
-            //{
-            //    for (double j = 0; j <= SizeX; j += SizeX / Stacks)
-            //    {
-            //        gl.Vertex(j+i, -SizeX + j, 0);
-            //    }
-            //}
-            //gl.End();
+            //ve base radius by point
+            gl.PushMatrix();
+            gl.Rotate(45, 0, 0, 1);
+            gl.Begin(OpenGL.GL_POINTS);
+            double stacks = Stacks;
+            double tempX = SizeX * (System.Math.Sqrt(2)) / 2;
+            double tempy = SizeY;
+            double tempZ = 0;
+            for (double j = 0; j <= SizeZ; j += SizeZ / Stacks)
+            {
+                for (double i = -tempX; i <= tempX; i += 0.1)
+                {
+                    gl.Vertex(i, -tempX, j);
+                }
+                for (double i = -tempX; i <= tempX; i += 0.1)
+                {
+                    gl.Vertex(i, tempX, j);
+                }
+                for (double i = -tempX; i <= tempX; i += 0.1)
+                {
+                    gl.Vertex(-tempX, i, j);
+                }
+                for (double i = -tempX; i <= tempX; i += 0.1)
+                {
+                    gl.Vertex(tempX, i, j);
+                }
+                tempX -= ((SizeX - SizeY) / Stacks) * Math.Sqrt(2) / 2;
+            }
+            gl.End();
+            gl.PopMatrix();
 
             gl.PopMatrix();
         }
