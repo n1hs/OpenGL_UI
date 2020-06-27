@@ -13,6 +13,7 @@ namespace DoAn_OpenGL.Graphics3D
         private double tempry;
         private double temprz;
         private Translational animationTT;
+        protected bool ambientFlag;
 
         public Translational AnimationTT
         {

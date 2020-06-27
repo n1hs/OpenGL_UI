@@ -79,7 +79,6 @@ namespace DoAn_OpenGL.Graphics3D
             double stacks = Stacks;
             double tempX = SizeX * (System.Math.Sqrt(2)) / 2;
             double tempy = SizeY;
-            double tempZ = 0;
             for (double j = 0; j <= SizeZ; j += SizeZ / Stacks)
             {
                 for (double i = -tempX; i <= tempX; i += 0.1)
