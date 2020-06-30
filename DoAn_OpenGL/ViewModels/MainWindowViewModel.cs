@@ -276,7 +276,12 @@ namespace DoAn_OpenGL.ViewModels
                 double posX, posY, posZ;
                 posX = posY = posZ = 0;
                 gl.UnProject(winX, winY, 0, modelview, projection, viewport, ref posX, ref posY, ref posZ);
-
+                if(temp !=null)
+                {
+                    temp.LightSourceX = posX;
+                    temp.LightSourceZ = posZ;
+                    temp.LightSourceY = posY;
+                }    
                 double pos1X, pos1Y, pos1Z;
                 pos1X = pos1Y = pos1Z = 0;
                 gl.UnProject(winX, winY, 1, modelview, projection, viewport, ref pos1X, ref pos1Y, ref pos1Z);

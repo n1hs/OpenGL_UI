@@ -78,7 +78,9 @@ namespace DoAn_OpenGL.Graphics3D
         public string Name { get; set; }
 
         public DrawStyle Style { get; protected set; }
-        public Point LightSource { get; set; }
+        public double LightSourceX { get; set; }
+        public double LightSourceY { get; set; }
+        public double LightSourceZ { get; set; }
 
         public Lighting LightingMode { get; set; } 
         public abstract void DrawPoint(OpenGL gl);
