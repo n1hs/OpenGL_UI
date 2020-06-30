@@ -1,6 +1,7 @@
 ﻿using SharpGL;
 using SharpGL.SceneGraph;
 using SharpGL.SceneGraph.Assets;
+using SharpGL.SceneGraph.Lighting;
 using SharpGL.SceneGraph.Primitives;
 using SharpGL.SceneGraph.Quadrics;
 using System;
@@ -111,18 +112,15 @@ namespace DoAn_OpenGL.Graphics3D
 
             LightBegin(gl);
 
-
             cone.CreateInContext(gl);
             cone.PushObjectSpace(gl);
             cone.Render(gl, SharpGL.SceneGraph.Core.RenderMode.Render);
             cone.PopObjectSpace(gl);
             cone.DestroyInContext(gl);
 
-
             LightEnd(gl);
 
             DrawBoder(gl,SizeX, SizeX, SizeZ);
-
 
             gl.PopMatrix();
         }

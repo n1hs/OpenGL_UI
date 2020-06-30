@@ -3,6 +3,8 @@ using SharpGL.SceneGraph.Quadrics;
 using DoAn_OpenGL.Assets;
 using System;
 using System.Drawing;
+using System.Data;
+using System.Windows.Controls.Primitives;
 
 namespace DoAn_OpenGL.Graphics3D
 {
@@ -124,15 +126,22 @@ namespace DoAn_OpenGL.Graphics3D
                 case Lighting.AMBIENT:
                     gl.Enable(OpenGL.GL_LIGHTING);
                     gl.Enable(OpenGL.GL_LIGHT0);
-                    float[] light_pos = new float[4];
-                    light_pos[0] = (float)0.0;
-                    light_pos[1] = (float)0.0;
-                    light_pos[2] = (float)0.0;
-                    light_pos[3] = (float)0.0;
-                    gl.Material(OpenGL.GL_FRONT_AND_BACK, OpenGL.GL_AMBIENT, light_pos);
+                    float[] ambient = new float[4];
+                    ambient[0] = (float)0.0;
+                    ambient[1] = (float)0.0;
+                    ambient[2] = (float)0.0;
+                    ambient[3] = (float)1.0;
+                    gl.Material(OpenGL.GL_FRONT_AND_BACK, OpenGL.GL_AMBIENT, ambient);
                     break;
                 case Lighting.DIFFUSE:
-
+                    gl.Enable(OpenGL.GL_LIGHTING);
+                    gl.Enable(OpenGL.GL_LIGHT0);
+                    float[] light_pos = new float[4];
+                    light_pos[0] = (float)LightSourceX;
+                    light_pos[1] = (float)LightSourceY;
+                    light_pos[2] = (float)LightSourceZ;
+                    light_pos[3] = (float)0.0;
+                    gl.Light(OpenGL.GL_LIGHT0, OpenGL.GL_POSITION, light_pos);
                     ///Code chiếu sáng
                     ///
                     break;
@@ -149,10 +158,12 @@ namespace DoAn_OpenGL.Graphics3D
             switch (LightingMode)
             {
                 case Lighting.AMBIENT:
+                    gl.Disable(OpenGL.GL_LIGHT0);
                     gl.Disable(OpenGL.GL_LIGHTING);
                     break;
                 case Lighting.DIFFUSE:
-
+                    gl.Disable(OpenGL.GL_LIGHT0);
+                    gl.Disable(OpenGL.GL_LIGHTING);
                     ///Code chiếu sáng
                     ///
                     break;
