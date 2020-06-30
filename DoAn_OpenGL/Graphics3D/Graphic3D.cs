@@ -2,6 +2,7 @@
 using SharpGL.SceneGraph.Quadrics;
 using DoAn_OpenGL.Assets;
 using System;
+using System.Drawing;
 
 namespace DoAn_OpenGL.Graphics3D
 {
@@ -77,7 +78,9 @@ namespace DoAn_OpenGL.Graphics3D
         public string Name { get; set; }
 
         public DrawStyle Style { get; protected set; }
+        public Point LightSource { get; set; }
 
+        public Lighting LightingMode { get; set; } 
         public abstract void DrawPoint(OpenGL gl);
         public abstract void DrawLine(OpenGL gl);
         public abstract void DrawSolid(OpenGL gl);
@@ -110,6 +113,59 @@ namespace DoAn_OpenGL.Graphics3D
                     RotateZ += 5 ;
                     break;
             }
+        }
+
+        protected void LightBegin(OpenGL gl)
+        {
+            switch(LightingMode)
+            {
+                case Lighting.AMBIENT:
+                    gl.Enable(OpenGL.GL_LIGHTING);
+                    gl.Enable(OpenGL.GL_LIGHT0);
+                    float[] light_pos = new float[4];
+                    light_pos[0] = (float)0.0;
+                    light_pos[1] = (float)0.0;
+                    light_pos[2] = (float)0.0;
+                    light_pos[3] = (float)0.0;
+                    gl.Material(OpenGL.GL_FRONT_AND_BACK, OpenGL.GL_AMBIENT, light_pos);
+                    break;
+                case Lighting.DIFFUSE:
+
+                    ///Code chiếu sáng
+                    ///
+                    break;
+                case Lighting.SHADOW:
+
+                    ///Code đổ bóng
+                    ///
+                    break;
+                default: break;
+            }    
+        }
+        protected void LightEnd(OpenGL gl)
+        {
+            switch (LightingMode)
+            {
+                case Lighting.AMBIENT:
+                    gl.Disable(OpenGL.GL_LIGHTING);
+                    break;
+                case Lighting.DIFFUSE:
+
+                    ///Code chiếu sáng
+                    ///
+                    break;
+                case Lighting.SHADOW:
+
+                    ///Code đổ bóng
+                    ///
+                    break;
+                default: break;
+            }
+        }
+        public Graphic3D()
+        {
+            LightingMode = Lighting.NONE;
+
         }
     }
 }

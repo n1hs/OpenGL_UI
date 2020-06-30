@@ -154,41 +154,41 @@ namespace DoAn_OpenGL.ViewModels
                 });
         }
 
-        private void UpdateGraphic()
-        {
-            if(mainmodel.isDrawMode)
-            switch (mainmodel.drawGraphic)
-            {
-                case DrawGraphic.Cone:
-                    mainmodel.temp = new Cone(mainmodel.drawMode, 2, 2, r, g, b);
-                    break;
-                case DrawGraphic.Cube:
-                    mainmodel.temp = new Cube(mainmodel.drawMode, 2, 2, 2, r, g, b);
-                    break;
-                case DrawGraphic.Cylinder:
-                    mainmodel.temp = new Cylinder(mainmodel.drawMode, 2, 3, r, g, b);
-                    break;
-                case DrawGraphic.FrustumShape:
-                    mainmodel.temp = new FrustumShape(mainmodel.drawMode, 2, 1, 2,  r, g, b);
-                    break;
-                case DrawGraphic.Teapot:
-                    mainmodel.temp = new Teapot(mainmodel.drawMode, 20, 2, r, g, b);
-                    break;
-                case DrawGraphic.Pyramid:
-                    mainmodel.temp = new Pyramid(mainmodel.drawMode, 2, 2,  r, g, b);
-                    break;
-                case DrawGraphic.Sphere:
-                    mainmodel.temp = new Sphere(mainmodel.drawMode, 2, r, g, b);
-                    break;
-                case DrawGraphic.TruncatedCone:
-                    mainmodel.temp = new TruncatedCone(mainmodel.drawMode, 2, 1, 2, r, g, b);
-                    break;
-                }
-        }
+
         #endregion
 
         #region Methods
-
+        private void UpdateGraphic()
+        {
+            if (mainmodel.isDrawMode)
+                switch (mainmodel.drawGraphic)
+                {
+                    case DrawGraphic.Cone:
+                        mainmodel.temp = new Cone(mainmodel.drawMode, 2, 2, r, g, b);
+                        break;
+                    case DrawGraphic.Cube:
+                        mainmodel.temp = new Cube(mainmodel.drawMode, 2, 2, 2, r, g, b);
+                        break;
+                    case DrawGraphic.Cylinder:
+                        mainmodel.temp = new Cylinder(mainmodel.drawMode, 2, 3, r, g, b);
+                        break;
+                    case DrawGraphic.FrustumShape:
+                        mainmodel.temp = new FrustumShape(mainmodel.drawMode, 2, 1, 2, r, g, b);
+                        break;
+                    case DrawGraphic.Teapot:
+                        mainmodel.temp = new Teapot(mainmodel.drawMode, 20, 2, r, g, b);
+                        break;
+                    case DrawGraphic.Pyramid:
+                        mainmodel.temp = new Pyramid(mainmodel.drawMode, 2, 2, r, g, b);
+                        break;
+                    case DrawGraphic.Sphere:
+                        mainmodel.temp = new Sphere(mainmodel.drawMode, 2, r, g, b);
+                        break;
+                    case DrawGraphic.TruncatedCone:
+                        mainmodel.temp = new TruncatedCone(mainmodel.drawMode, 2, 1, 2, r, g, b);
+                        break;
+                }
+        }
 
         #endregion
     }

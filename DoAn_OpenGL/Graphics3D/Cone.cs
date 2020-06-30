@@ -125,19 +125,7 @@ namespace DoAn_OpenGL.Graphics3D
             cone.Stacks = Stacks;
             cone.QuadricDrawStyle = DrawStyle.Fill;
 
-            
-
-            if (ambientFlag)
-            {
-                gl.Enable(OpenGL.GL_LIGHTING);
-                gl.Enable(OpenGL.GL_LIGHT0);
-                float[] light_pos = new float[4];
-                light_pos[0] = (float)0.0;
-                light_pos[1] = (float)0.0;
-                light_pos[2] = (float)0.0;
-                light_pos[3] = (float)0.0;
-                gl.Material(OpenGL.GL_FRONT_AND_BACK, OpenGL.GL_AMBIENT, light_pos);
-            }
+            LightBegin(gl);
 
 
             cone.CreateInContext(gl);
@@ -147,10 +135,7 @@ namespace DoAn_OpenGL.Graphics3D
             cone.DestroyInContext(gl);
 
 
-            if (ambientFlag)
-            {
-                gl.Disable(OpenGL.GL_LIGHTING);
-            }
+            LightEnd(gl);
 
 
             gl.PopMatrix();

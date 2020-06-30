@@ -106,6 +106,12 @@
                             ToolTip="Texture"
                                  Command="{Binding ShowDialogCommand}"
                             CommandParameter="5"/>
+                    <RadioButton Style="{StaticResource MaterialDesignTabRadioButton}"
+                            Content="{materialDesign:PackIcon Kind=Lightbulb}"
+                            Margin="2"
+                            ToolTip="Lighting"
+                                 Command="{Binding ShowDialogCommand}"
+                            CommandParameter="6"/>
                 </StackPanel>
             </DockPanel>
         </materialDesign:ColorZone>

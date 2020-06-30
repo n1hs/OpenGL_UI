@@ -111,11 +111,15 @@ namespace DoAn_OpenGL.Graphics3D
             sphere.Stacks = 100;
             sphere.QuadricDrawStyle = DrawStyle.Fill;
 
+            LightBegin(gl);
+
             sphere.CreateInContext(gl);
             sphere.PushObjectSpace(gl);
             sphere.Render(gl, SharpGL.SceneGraph.Core.RenderMode.Render);
             sphere.PopObjectSpace(gl);
             sphere.DestroyInContext(gl);
+
+            LightEnd(gl);
 
             gl.PopMatrix();
         }

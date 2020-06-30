@@ -102,6 +102,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Assets\Animation.cs" />
+    <Compile Include="Assets\Lighting.cs" />
     <Compile Include="Assets\ObjectCopier.cs" />
     <Compile Include="Converters\ImageSourceConverter.cs" />
     <Compile Include="Graphics3D\Cone.cs" />
@@ -117,6 +118,9 @@
     <Compile Include="Graphics3D\Pyramid.cs" />
     <Compile Include="UserControls\Animation.xaml.cs">
       <DependentUpon>Animation.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Lighting.xaml.cs">
+      <DependentUpon>Lighting.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserControls\Texture.xaml.cs">
       <DependentUpon>Texture.xaml</DependentUpon>
@@ -135,6 +139,7 @@
     <Compile Include="ViewModels\CameraControlViewModel.cs" />
     <Compile Include="ViewModels\DrawViewModel.cs" />
     <Compile Include="ViewModels\GraphicPropertyVM.cs" />
+    <Compile Include="ViewModels\LightingViewModel.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="ViewModels\TextureViewModel.cs" />
     <Page Include="MainWindow.xaml">
@@ -162,6 +167,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UserControls\GraphicProperties.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\Lighting.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

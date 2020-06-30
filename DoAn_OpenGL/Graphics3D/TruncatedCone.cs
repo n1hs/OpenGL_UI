@@ -112,11 +112,15 @@ namespace DoAn_OpenGL.Graphics3D
             truncatedCone.Stacks = Stacks;
             truncatedCone.QuadricDrawStyle = DrawStyle.Fill;
 
+            LightBegin(gl);
+
             truncatedCone.CreateInContext(gl);
             truncatedCone.PushObjectSpace(gl);
             truncatedCone.Render(gl, SharpGL.SceneGraph.Core.RenderMode.Render);
             truncatedCone.PopObjectSpace(gl);
             truncatedCone.DestroyInContext(gl);
+
+            LightEnd(gl);
 
             gl.PopMatrix();
 

@@ -19,6 +19,7 @@ namespace DoAn_OpenGL.ViewModels
         private GraphicPropertyVM graphicPropertyvm;
         private AnimationViewModel animationVM;
         private TextureViewModel textureVM;
+        private LightingViewModel lightingVM;
         internal Graphic3D seletedGraphic;
 
         internal bool showXYPlane;
@@ -72,6 +73,7 @@ namespace DoAn_OpenGL.ViewModels
             graphicPropertyvm = new GraphicPropertyVM(this);
             animationVM = new AnimationViewModel(this);
             textureVM = new TextureViewModel(this);
+            lightingVM = new LightingViewModel(this);
             showDialog = true;
             DialogContent = new UserControls.DrawControl();
             drawmodel = new DrawViewModel(this);
@@ -137,6 +139,12 @@ namespace DoAn_OpenGL.ViewModels
                     DialogContent.DataContext = textureVM;
                     textureVM.Update();
                     DialogTitle = "Texture";
+                    break;
+                case 6:
+                    DialogContent = new UserControls.Lighting();
+                    DialogContent.DataContext = lightingVM;
+                    lightingVM.Update();
+                    DialogTitle = "Lighting";
                     break;
 
             }
@@ -285,6 +293,7 @@ namespace DoAn_OpenGL.ViewModels
             {
                 if(isDrawMode && temp!= null)
                 {
+                    temp.Name += string.Format(".{0}.{1}", temp.Style.ToString(), DateTime.Now.ToShortTimeString());
                     drawmodel.ListObject.Add(temp);
                     drawmodel.ResetDraw = true;
                     isDrawMode = false;

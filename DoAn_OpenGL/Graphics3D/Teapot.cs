@@ -71,8 +71,12 @@ namespace DoAn_OpenGL.Graphics3D
             gl.Translate(0.0, 0.0, SizeX-0.25*SizeX);
             gl.Rotate(90, 1.0, 0.0, 0.0);
 
+            LightBegin(gl);
+
             SharpGL.SceneGraph.Primitives.Teapot teapot = new SharpGL.SceneGraph.Primitives.Teapot();
             teapot.Draw(gl, Stacks, SizeX, OpenGL.GL_FILL);
+
+            LightEnd(gl);
 
             gl.PopMatrix();
         }

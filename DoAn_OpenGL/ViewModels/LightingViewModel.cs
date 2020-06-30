@@ -1,15 +1,10 @@
-﻿using DoAn_OpenGL.Assets;
-using DoAn_OpenGL.Graphics3D;
-using Microsoft.Win32;
+﻿using DoAn_OpenGL.Graphics3D;
 using System;
 using System.Collections.ObjectModel;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
 
 namespace DoAn_OpenGL.ViewModels
 {
-    public class TextureViewModel : BaseViewModel
+    public class LightingViewModel: BaseViewModel
     {
         #region Properties
         private MainWindowViewModel mainVM;
@@ -45,29 +40,56 @@ namespace DoAn_OpenGL.ViewModels
         public bool IsPanelEnable
         {
             get { return isPanelEnable; }
-            set { isPanelEnable = value; OnPropertyChanged("IsPanelEnable"); }
+            set
+            {
+                isPanelEnable = value;
+                OnPropertyChanged("IsPanelEnable");
+            }
         }
-        private ImageSource textuteImage;
 
-        public ImageSource TextuteImage
+
+        public bool LNONE
         {
-            get { return textuteImage; }
-            set { textuteImage = value; OnPropertyChanged("TextuteImage"); }
+            get { return SelectedGraphic?.LightingMode == Assets.Lighting.NONE; }
+            set {
+                if(value)
+                SelectedGraphic.LightingMode = Assets.Lighting.NONE; 
+            }
+        }
+        public bool LAMBIENT
+        {
+            get { return SelectedGraphic?.LightingMode == Assets.Lighting.AMBIENT;  }
+            set
+            {
+                if (value)
+                    SelectedGraphic.LightingMode = Assets.Lighting.AMBIENT;
+            }
+        }
+        public bool LDIFFUSE
+        {
+            get { return SelectedGraphic?.LightingMode == Assets.Lighting.DIFFUSE;  }
+            set
+            {
+                if (value)
+                    SelectedGraphic.LightingMode = Assets.Lighting.DIFFUSE;
+            }
+        }
+        public bool LSHADOW
+        {
+            get { return SelectedGraphic?.LightingMode == Assets.Lighting.SHADOW;  }
+            set
+            {
+                if (value)
+                    SelectedGraphic.LightingMode = Assets.Lighting.SHADOW;
+            }
         }
 
 
-        public ICommand BrowserCommand { set; get; }
         #endregion
         #region Contruction
-        public TextureViewModel(MainWindowViewModel vm)
+        public LightingViewModel(MainWindowViewModel vm)
         {
             mainVM = vm;
-            BrowserCommand = new RelayCommand(_ => {
-                OpenFileDialog openFileDialog = new OpenFileDialog();
-                openFileDialog.Filter = "Image files (*.jpg, *.jpeg, *.jpe, *.jfif, *.png) | *.jpg; *.jpeg; *.jpe; *.jfif; *.png";
-                if (openFileDialog.ShowDialog() == true)
-                    TextuteImage = new BitmapImage(new Uri(openFileDialog.FileName));
-            });
         }
 
         internal void Update()
@@ -79,7 +101,7 @@ namespace DoAn_OpenGL.ViewModels
             else
             {
                 IsPanelEnable = false;
-            }
+            }          
         }
         #endregion
     }

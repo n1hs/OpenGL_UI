@@ -134,11 +134,15 @@ namespace DoAn_OpenGL.Graphics3D
             cylinder.Slices = Slices;
             cylinder.Stacks = Stacks;
 
+            LightBegin(gl);
+
             cylinder.CreateInContext(gl);
             cylinder.PushObjectSpace(gl);
             cylinder.Render(gl, SharpGL.SceneGraph.Core.RenderMode.Render);
             cylinder.PopObjectSpace(gl);
             cylinder.DestroyInContext(gl);
+
+            LightEnd(gl);
 
             gl.PopMatrix();
         }

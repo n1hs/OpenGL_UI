@@ -149,11 +149,15 @@ namespace DoAn_OpenGL.Graphics3D
             pyramid.Stacks = Stacks;
             pyramid.QuadricDrawStyle = DrawStyle.Fill;
 
+            LightBegin(gl);
+
             pyramid.CreateInContext(gl);
             pyramid.PushObjectSpace(gl);
             pyramid.Render(gl, SharpGL.SceneGraph.Core.RenderMode.Render);
             pyramid.PopObjectSpace(gl);
             pyramid.DestroyInContext(gl);
+
+            LightEnd(gl);
 
             gl.PopMatrix();
         }

@@ -173,6 +173,7 @@ namespace DoAn_OpenGL.Graphics3D
             gl.Rotate(RotateZ, 0.0, 0.0, 1.0);
             gl.Color(ColorR, ColorG, ColorB);
 
+            LightBegin(gl);
             //Back
             gl.Begin(OpenGL.GL_QUADS);
             gl.Vertex(-SizeX/2, SizeY/2, 0);
@@ -220,6 +221,8 @@ namespace DoAn_OpenGL.Graphics3D
             gl.Vertex(SizeX/2, -SizeY/2, 0);
             gl.Vertex(SizeX/2, SizeY/2, 0);
             gl.End();
+
+            LightEnd(gl);
 
             gl.PopMatrix();
         }

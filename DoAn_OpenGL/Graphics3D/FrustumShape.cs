@@ -168,11 +168,15 @@ namespace DoAn_OpenGL.Graphics3D
             frumstumShape.Stacks = Stacks;
             frumstumShape.QuadricDrawStyle = DrawStyle.Fill;
 
+            LightBegin(gl);
+
             frumstumShape.CreateInContext(gl);
             frumstumShape.PushObjectSpace(gl);
             frumstumShape.Render(gl, SharpGL.SceneGraph.Core.RenderMode.Render);
             frumstumShape.PopObjectSpace(gl);
             frumstumShape.DestroyInContext(gl);
+
+            LightEnd(gl);
 
             gl.PopMatrix();
         }

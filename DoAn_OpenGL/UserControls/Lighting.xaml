@@ -1,0 +1,41 @@
+﻿<UserControl x:Class="DoAn_OpenGL.UserControls.Lighting"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes" 
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"    
+             Width="250">
+    <StackPanel>
+        <StackPanel DockPanel.Dock="Top">
+            <TextBlock HorizontalAlignment="Center"
+                   Margin="5"
+                   Style="{StaticResource MaterialDesignHeadline6TextBlock}">
+            Chọn khối hình
+            </TextBlock>
+            <ComboBox Margin="5" 
+                      x:Name="Propertycbb"
+                      DisplayMemberPath="Name"
+                      ItemsSource="{Binding ListObject, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                      SelectedItem="{Binding SelectedGraphic, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                      md:HintAssist.Hint="None">
+            </ComboBox>
+        </StackPanel>
+        <StackPanel IsEnabled="{Binding IsPanelEnable, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" >
+            <RadioButton Style="{StaticResource MaterialDesignLightRadioButton}"
+                          GroupName="lightingmode"
+                             IsChecked="{Binding LNONE, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                             Content="None" />
+            <RadioButton Style="{StaticResource MaterialDesignLightRadioButton}"
+                          GroupName="lightingmode"
+                             IsChecked="{Binding LAMBIENT, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                             Content="Chiếu sáng toàn phần" />
+            <RadioButton Style="{StaticResource MaterialDesignLightRadioButton}"
+                          GroupName="lightingmode"
+                             IsChecked="{Binding LDIFFUSE, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                             Content="Chiếu sáng" />
+            <RadioButton Style="{StaticResource MaterialDesignLightRadioButton}"
+                         GroupName="lightingmode"
+                            IsChecked="{Binding LSHADOW, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                             Content="Đổ bóng" />
+        </StackPanel>
+    </StackPanel>
+</UserControl>
