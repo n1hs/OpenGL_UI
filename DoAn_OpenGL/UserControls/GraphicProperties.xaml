@@ -26,8 +26,9 @@
                    Text="Kích thước:"/>
                 <DockPanel Margin="2" >
                     <TextBlock DockPanel.Dock="Left"
-                       Width="50">
-                <Run Text="X: "/>
+                       Width="100">
+                <Run Text="{Binding SizeXName, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        <Run Text=" : "/>
                 <Run Text="{Binding ElementName=SizeX, Path=Value, Mode=OneWay , UpdateSourceTrigger=PropertyChanged}"/>
                     </TextBlock>
                     <Slider TickFrequency="0.1"
@@ -38,10 +39,12 @@
                     Maximum="10"
                     Value="{Binding ElementName=Propertycbb, Path=SelectedItem.SizeX, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                 </DockPanel>
-                <DockPanel Margin="2" >
+                <DockPanel Margin="2" 
+                           Visibility="{Binding YVisibility, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}">
                     <TextBlock DockPanel.Dock="Left"
-                       Width="50">
-                <Run Text="Y: "/>
+                       Width="100">
+                <Run Text="{Binding SizeYName, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        <Run Text=" : "/>
                 <Run Text="{Binding ElementName=SizeY, Path=Value, Mode=OneWay , UpdateSourceTrigger=PropertyChanged}"/>
                     </TextBlock>
                     <Slider TickFrequency="0.1"
@@ -52,10 +55,12 @@
                     Maximum="10"
                     Value="{Binding ElementName=Propertycbb, Path=SelectedItem.SizeY, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                 </DockPanel>
-                <DockPanel Margin="2" >
+                <DockPanel Margin="2"
+                            Visibility="{Binding ZVisibility, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}">
                     <TextBlock DockPanel.Dock="Left"
-                       Width="50">
-                <Run Text="Z: "/>
+                       Width="100">
+                <Run Text="{Binding SizeZName, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        <Run Text=" : "/>
                 <Run Text="{Binding ElementName=SizeZ, Path=Value, Mode=OneWay , UpdateSourceTrigger=PropertyChanged}"/>
                     </TextBlock>
                     <Slider TickFrequency="0.1"

@@ -2,6 +2,7 @@
 using DoAn_OpenGL.Graphics3D;
 using System;
 using System.Collections.ObjectModel;
+using System.Windows;
 using System.Windows.Input;
 
 namespace DoAn_OpenGL.ViewModels
@@ -20,15 +21,20 @@ namespace DoAn_OpenGL.ViewModels
         public Graphic3D SelectedGraphic { 
         get
             {
-                return mainVM?.seletedGraphic;
+                return mainVM?.SeletedGraphic;
             }
             set
             {
-                mainVM.seletedGraphic = value;
+                mainVM.SeletedGraphic = value;
                 if(value!= null)
                 {
                     CheckColor(value.ColorR, value.ColorG, value.ColorB);
                     IsPanelEnable = true;
+                    OnPropertyChanged("SizeXName");
+                    OnPropertyChanged("SizeYName");
+                    OnPropertyChanged("SizeZName");
+                    OnPropertyChanged("ZVisibility");
+                    OnPropertyChanged("YVisibility");
                 }    
                 else
                 {
@@ -58,37 +64,37 @@ namespace DoAn_OpenGL.ViewModels
                     switch (i)
                     {
                         case "Black":
-                            mainVM.seletedGraphic.ColorR = mainVM.seletedGraphic.ColorG = mainVM.seletedGraphic.ColorB = 0.0;
+                            mainVM.SeletedGraphic.ColorR = mainVM.SeletedGraphic.ColorG = mainVM.SeletedGraphic.ColorB = 0.0;
                             break;
                         case "Red":
-                            mainVM.seletedGraphic.ColorG = mainVM.seletedGraphic.ColorB = 0.0;
-                            mainVM.seletedGraphic.ColorR = 1.0;
+                            mainVM.SeletedGraphic.ColorG = mainVM.SeletedGraphic.ColorB = 0.0;
+                            mainVM.SeletedGraphic.ColorR = 1.0;
                             break;
                         case "Yellow":
-                            mainVM.seletedGraphic.ColorR = mainVM.seletedGraphic.ColorG = 1.0;
-                            mainVM.seletedGraphic.ColorB = 0.0;
+                            mainVM.SeletedGraphic.ColorR = mainVM.SeletedGraphic.ColorG = 1.0;
+                            mainVM.SeletedGraphic.ColorB = 0.0;
                             break;
                         case "Green":
-                            mainVM.seletedGraphic.ColorR = mainVM.seletedGraphic.ColorB = 0.0;
-                            mainVM.seletedGraphic.ColorG = 1.0;
+                            mainVM.SeletedGraphic.ColorR = mainVM.SeletedGraphic.ColorB = 0.0;
+                            mainVM.SeletedGraphic.ColorG = 1.0;
                             break;
                         case "Cyan":
-                            mainVM.seletedGraphic.ColorR = 0;
-                            mainVM.seletedGraphic.ColorG = mainVM.seletedGraphic.ColorB = 1.0;
+                            mainVM.SeletedGraphic.ColorR = 0;
+                            mainVM.SeletedGraphic.ColorG = mainVM.SeletedGraphic.ColorB = 1.0;
                             break;
                         case "Blue":
-                            mainVM.seletedGraphic.ColorR = mainVM.seletedGraphic.ColorG = 0.0;
-                            mainVM.seletedGraphic.ColorB = 1.0;
+                            mainVM.SeletedGraphic.ColorR = mainVM.SeletedGraphic.ColorG = 0.0;
+                            mainVM.SeletedGraphic.ColorB = 1.0;
                             break;
                         case "Magenta":
-                            mainVM.seletedGraphic.ColorR = mainVM.seletedGraphic.ColorB = 1.0;
-                            mainVM.seletedGraphic.ColorG = 0.0;
+                            mainVM.SeletedGraphic.ColorR = mainVM.SeletedGraphic.ColorB = 1.0;
+                            mainVM.SeletedGraphic.ColorG = 0.0;
                             break;
                         case "Gray":
-                            mainVM.seletedGraphic.ColorR = mainVM.seletedGraphic.ColorG = mainVM.seletedGraphic.ColorB = 0.5;
+                            mainVM.SeletedGraphic.ColorR = mainVM.SeletedGraphic.ColorG = mainVM.SeletedGraphic.ColorB = 0.5;
                             break;
                         default:
-                            mainVM.seletedGraphic.ColorR = mainVM.seletedGraphic.ColorG = mainVM.seletedGraphic.ColorB = 1.0;
+                            mainVM.SeletedGraphic.ColorR = mainVM.SeletedGraphic.ColorG = mainVM.SeletedGraphic.ColorB = 1.0;
                             break;
                     }
                 });
@@ -121,6 +127,59 @@ namespace DoAn_OpenGL.ViewModels
         public bool IsBlue { get; set; }
         public bool IsMagenta { get; set; }
         public bool IsGray { get; set; }
+
+
+        public string SizeXName
+        {
+            get { 
+                if(SelectedGraphic is Cube)
+                {
+                    return "X";
+                }
+                return "BaseRadius";
+            }
+        }
+
+        public string SizeYName
+        {
+            get
+            {
+                if (SelectedGraphic is Cube)
+                {
+                    return "Y";
+                }
+                return "TopRadius";
+            }
+        }
+        public string SizeZName
+        {
+            get
+            {
+                return "Height";
+            }
+        }
+        public Visibility ZVisibility
+        {
+            get
+            {
+                if (SelectedGraphic is Sphere || SelectedGraphic is Teapot )
+                {
+                    return Visibility.Collapsed;
+                }
+                return Visibility.Visible;
+            }
+        }
+
+        public Visibility YVisibility {
+            get
+            {
+                if(SelectedGraphic is Sphere || SelectedGraphic is Cone || SelectedGraphic is Teapot || SelectedGraphic is Cylinder || SelectedGraphic is Pyramid)
+                {
+                    return Visibility.Collapsed;
+                }
+                return Visibility.Visible;
+            }
+        }
         #endregion
         #region Methods
         private void SetColor(int i)
@@ -176,9 +235,9 @@ namespace DoAn_OpenGL.ViewModels
         }
         private void CheckColor(double r, double g, double b)
         {
-           if(mainVM.seletedGraphic.ColorR ==0)
+           if(mainVM.SeletedGraphic.ColorR ==0)
             {
-                if(mainVM.seletedGraphic.ColorG ==0)
+                if(mainVM.SeletedGraphic.ColorG ==0)
                 {
                     if(b==0)
                     {
@@ -191,7 +250,7 @@ namespace DoAn_OpenGL.ViewModels
                 }  
                 else
                 {
-                    if (mainVM.seletedGraphic.ColorB == 0)
+                    if (mainVM.SeletedGraphic.ColorB == 0)
                     {
                         SetColor(3);
                     }
@@ -203,9 +262,9 @@ namespace DoAn_OpenGL.ViewModels
             }  
            else
             {
-                if (mainVM.seletedGraphic.ColorG == 0)
+                if (mainVM.SeletedGraphic.ColorG == 0)
                 {
-                    if (mainVM.seletedGraphic.ColorB == 0)
+                    if (mainVM.SeletedGraphic.ColorB == 0)
                     {
                         SetColor(5);
                     }
@@ -216,13 +275,13 @@ namespace DoAn_OpenGL.ViewModels
                 }
                 else
                 {
-                    if (mainVM.seletedGraphic.ColorB == 0)
+                    if (mainVM.SeletedGraphic.ColorB == 0)
                     {
                         SetColor(7);
                     }
                     else
                     {
-                        if (mainVM.seletedGraphic.ColorB == 1)
+                        if (mainVM.SeletedGraphic.ColorB == 1)
                         {
                             SetColor(8);
                         }

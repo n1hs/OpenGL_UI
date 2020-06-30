@@ -21,11 +21,11 @@ namespace DoAn_OpenGL.ViewModels
         {
             get
             {
-                return mainVM?.seletedGraphic;
+                return mainVM?.SeletedGraphic;
             }
             set
             {
-                mainVM.seletedGraphic = value;
+                mainVM.SeletedGraphic = value;
                 if (value != null)
                 {
                     IsPanelEnable = true;

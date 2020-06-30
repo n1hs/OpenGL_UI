@@ -19,26 +19,10 @@ namespace DoAn_OpenGL.Graphics3D
             LocationX = tranX;
             LocationY = tranY;
             LocationZ = tranZ;
-            Slices = 10;
-            Stacks = 10;
+            Slices = 15;
+            Stacks = 15;
         }
 
-        public Cube(DrawStyle style, double WidthX, double WidthY, double height, int slices, int stacks, double R, double G, double B, double tranX = 0, double tranY = 0, double tranZ = 0, double rotX = 0, double rotY = 0, double rotZ = 0)
-        {
-            Style = style;
-            Name = "Cube";
-            SizeX = WidthX;
-            SizeY = WidthY;
-            SizeZ = height;
-            ColorR = R;
-            ColorG = G;
-            ColorB = B;
-            LocationX = tranX;
-            LocationY = tranY;
-            LocationZ = tranZ;
-            Slices = slices;
-            Stacks = stacks;
-        }
 
         public override void DrawPoint(OpenGL gl)
         {
@@ -67,6 +51,7 @@ namespace DoAn_OpenGL.Graphics3D
             }
             gl.End();
 
+            DrawBoder(gl, SizeX/2, SizeY/2, SizeZ);
             gl.PopMatrix();
         }
 
@@ -159,6 +144,7 @@ namespace DoAn_OpenGL.Graphics3D
             }
             gl.End();
 
+            DrawBoder(gl, SizeX/2, SizeY/2, SizeZ);
             gl.PopMatrix();
         }
         
@@ -224,6 +210,7 @@ namespace DoAn_OpenGL.Graphics3D
 
             LightEnd(gl);
 
+            DrawBoder(gl, SizeX/2, SizeY/2, SizeZ);
             gl.PopMatrix();
         }
 

@@ -20,25 +20,9 @@ namespace DoAn_OpenGL.Graphics3D
             LocationY = tranY;
             LocationZ = tranZ;
             Slices = 4;
-            Stacks = 100;
+            Stacks = 50;
         }
 
-        public FrustumShape(DrawStyle style, double baseRadius, double topRadius, int stacks, double height, double R, double G, double B, double tranX = 0, double tranY = 0, double tranZ = 0, double rotX = 0, double rotY = 0, double rotZ = 0)
-        {
-            Style = style;
-            Name = "FrustumShape";
-            SizeX = baseRadius;
-            SizeY = topRadius;
-            SizeZ = height;
-            ColorR = R;
-            ColorG = G;
-            ColorB = B;
-            LocationX = tranX;
-            LocationY = tranY;
-            LocationZ = tranZ;
-            Slices = 4;
-            Stacks = stacks;
-        }
 
         public override void DrawPoint(OpenGL gl)
         {
@@ -120,7 +104,7 @@ namespace DoAn_OpenGL.Graphics3D
 
                 gl.End();
                 gl.PopMatrix();
-
+            DrawBoder(gl, SizeX, SizeX, SizeZ);
             gl.PopMatrix();
         }
         public override void DrawLine(OpenGL gl)
@@ -146,7 +130,7 @@ namespace DoAn_OpenGL.Graphics3D
             frumstumShape.Render(gl, SharpGL.SceneGraph.Core.RenderMode.Render);
             frumstumShape.PopObjectSpace(gl);
             frumstumShape.DestroyInContext(gl);
-
+            DrawBoder(gl, SizeX, SizeX, SizeZ);
             gl.PopMatrix();
         }
         
@@ -177,7 +161,7 @@ namespace DoAn_OpenGL.Graphics3D
             frumstumShape.DestroyInContext(gl);
 
             LightEnd(gl);
-
+            DrawBoder(gl, SizeX, SizeX, SizeZ);
             gl.PopMatrix();
         }
 

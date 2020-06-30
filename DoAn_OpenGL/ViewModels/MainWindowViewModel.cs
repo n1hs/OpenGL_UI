@@ -20,7 +20,24 @@ namespace DoAn_OpenGL.ViewModels
         private AnimationViewModel animationVM;
         private TextureViewModel textureVM;
         private LightingViewModel lightingVM;
-        internal Graphic3D seletedGraphic;
+        private Graphic3D seletedGraphic;
+        internal Graphic3D SeletedGraphic
+        {
+            get
+            {
+                return seletedGraphic;
+            }
+            set
+            {
+                if (seletedGraphic != null)
+                    seletedGraphic.IsSelected = false;
+                if (value != null)
+                {
+                    seletedGraphic = value;
+                    seletedGraphic.IsSelected = true;
+                }    
+            }
+        }
 
         internal bool showXYPlane;
         internal bool isDrawMode;
@@ -87,6 +104,7 @@ namespace DoAn_OpenGL.ViewModels
                 (i) =>
                 {
                         ShowDialog = false;
+                    SeletedGraphic = null;
                 });
 
             RegisterFormCommand = new RelayCommand<MainWindow>(

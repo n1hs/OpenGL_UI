@@ -36,7 +36,8 @@ namespace DoAn_OpenGL.Graphics3D
 
             SharpGL.SceneGraph.Primitives.Teapot teapot = new SharpGL.SceneGraph.Primitives.Teapot();
             teapot.Draw(gl, Stacks, SizeX, OpenGL.GL_POINT);
-            
+
+            DrawBoder(gl, SizeX, SizeX, SizeX,2);
             gl.PopMatrix();
         }
         public override void DrawLine(OpenGL gl)
@@ -55,6 +56,7 @@ namespace DoAn_OpenGL.Graphics3D
             SharpGL.SceneGraph.Primitives.Teapot teapot = new SharpGL.SceneGraph.Primitives.Teapot();
             teapot.Draw(gl, Stacks, SizeX, OpenGL.GL_LINE);
 
+            DrawBoder(gl, SizeX, SizeX, SizeX,2);
             gl.PopMatrix();
         }
         
@@ -77,7 +79,7 @@ namespace DoAn_OpenGL.Graphics3D
             teapot.Draw(gl, Stacks, SizeX, OpenGL.GL_FILL);
 
             LightEnd(gl);
-
+            DrawBoder(gl, SizeX, SizeX, SizeX,2);
             gl.PopMatrix();
         }
 

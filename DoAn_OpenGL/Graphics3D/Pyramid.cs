@@ -20,37 +20,15 @@ namespace DoAn_OpenGL.Graphics3D
             LocationY = tranY;
             LocationZ = tranZ;
             Slices = 4;
-            Stacks = 10;
+            Stacks = 50;
 
         }
 
-        public Pyramid(DrawStyle style, double baseRadius, double height, int stacks, double R, double G, double B, double tranX = 0, double tranY = 0, double tranZ = 0, double rotX = 0, double rotY = 0, double rotZ = 0)
-        {
-            Style = style;
-            Name = "Pyramid";
-            SizeX = baseRadius;
-            SizeY = 0;
-            SizeZ = height;
-            ColorR = R;
-            ColorG = G;
-            ColorB = B;
-            LocationX = tranX;
-            LocationY = tranY;
-            LocationZ = tranZ;
-            Slices = 4;
-            Stacks = stacks;
-
-        }
 
         public override void DrawPoint(OpenGL gl)
         {
             gl.PushMatrix();
             Animation(gl);
-            //ham chieu sang -> toan phan, ,do bong(gl)
-
-            //them enum trong Graphics3D
-
-            //them ham chieu sang
 
             gl.Translate(LocationX, LocationY, LocationZ);
             gl.Rotate(RotateX, 1.0, 0.0, 0.0);
@@ -102,6 +80,7 @@ namespace DoAn_OpenGL.Graphics3D
             gl.End();
             gl.PopMatrix();
 
+            DrawBoder(gl, SizeX, SizeX, SizeZ);
             gl.PopMatrix();
         }
         public override void DrawLine(OpenGL gl)
@@ -128,6 +107,7 @@ namespace DoAn_OpenGL.Graphics3D
             pyramid.PopObjectSpace(gl);
             pyramid.DestroyInContext(gl);
 
+            DrawBoder(gl, SizeX, SizeX, SizeZ);
             gl.PopMatrix();
         }
         
@@ -158,6 +138,8 @@ namespace DoAn_OpenGL.Graphics3D
             pyramid.DestroyInContext(gl);
 
             LightEnd(gl);
+
+            DrawBoder(gl, SizeX, SizeX, SizeZ);
 
             gl.PopMatrix();
         }

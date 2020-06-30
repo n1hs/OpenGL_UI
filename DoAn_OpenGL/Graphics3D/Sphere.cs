@@ -18,26 +18,10 @@ namespace DoAn_OpenGL.Graphics3D
             LocationX = tranX;
             LocationY = tranY;
             LocationZ = tranZ;
-            Slices = 100;
-            Stacks = 100;
+            Slices = 50;
+            Stacks = 50;
         }
 
-        public Sphere(DrawStyle style, double baseRadius, int slicess, int stack, double R, double G, double B, double tranX = 0, double tranY = 0, double tranZ = 0, double rotX = 0, double rotY = 0, double rotZ = 0)
-        {
-            Style = style;
-            Name = "Sphere";
-            SizeX = baseRadius;
-            SizeY = baseRadius;
-            SizeZ = baseRadius;
-            ColorR = R;
-            ColorG = G;
-            ColorB = B;
-            LocationX = tranX;
-            LocationY = tranY;
-            LocationZ = tranZ;
-            Slices = 100;
-            Stacks = 100;
-        }
 
         public override void DrawPoint(OpenGL gl)
         {
@@ -49,7 +33,7 @@ namespace DoAn_OpenGL.Graphics3D
             gl.Rotate(RotateZ, 0.0, 0.0, 1.0);
             gl.Color(ColorR, ColorG, ColorB);
 
-            gl.Translate(0.0, 0.0, SizeX);
+            gl.Translate(0.0, 0.0, 2 * SizeX);
 
             SharpGL.SceneGraph.Quadrics.Sphere sphere = new SharpGL.SceneGraph.Quadrics.Sphere();
             sphere.Radius = SizeX;
@@ -63,6 +47,7 @@ namespace DoAn_OpenGL.Graphics3D
             sphere.PopObjectSpace(gl);
             sphere.DestroyInContext(gl);
 
+            DrawBoder(gl, SizeX, SizeX,SizeX,1);
             gl.PopMatrix();
         }
         public override void DrawLine(OpenGL gl)
@@ -89,7 +74,7 @@ namespace DoAn_OpenGL.Graphics3D
             sphere.Render(gl, SharpGL.SceneGraph.Core.RenderMode.Render);
             sphere.PopObjectSpace(gl);
             sphere.DestroyInContext(gl);
-
+            DrawBoder(gl, SizeX, SizeX, SizeX,1);
             gl.PopMatrix();
         }
 
@@ -120,7 +105,7 @@ namespace DoAn_OpenGL.Graphics3D
             sphere.DestroyInContext(gl);
 
             LightEnd(gl);
-
+            DrawBoder(gl, SizeX, SizeX, SizeX,1);
             gl.PopMatrix();
         }
 

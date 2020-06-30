@@ -25,27 +25,9 @@ namespace DoAn_OpenGL.Graphics3D
             LocationX = tranX;
             LocationY = tranY;
             LocationZ = tranZ;
-            Slices = 100;
-            Stacks = 100;
+            Slices = Stacks = 50;
             ambientFlag = true;
-        }
-
-        public Cone(DrawStyle style, double baseRadius, double height, int slices, int stacks, double R, double G, double B, double tranX = 0, double tranY = 0, double tranZ = 0, double rotX = 0, double rotY = 0, double rotZ = 0):base()
-        {
-            Style = style;
-            Name = "Cone";
-            SizeX = baseRadius;
-            SizeY = 0;
-            SizeZ = height;
-            ColorR = R;
-            ColorG = G;
-            ColorB = B;
-            LocationX = tranX;
-            LocationY = tranY;
-            LocationZ = tranZ;
-            Slices = slices;
-            Stacks = stacks;
-        }
+        }          
 
         public override void DrawPoint(OpenGL gl)
         {
@@ -76,6 +58,7 @@ namespace DoAn_OpenGL.Graphics3D
             cone.PopObjectSpace(gl);
             cone.DestroyInContext(gl);
 
+            DrawBoder(gl, SizeX, SizeX, SizeZ);
             gl.PopMatrix();
         }
 
@@ -104,6 +87,7 @@ namespace DoAn_OpenGL.Graphics3D
             cone.PopObjectSpace(gl);
             cone.DestroyInContext(gl);
 
+            DrawBoder(gl, SizeX, SizeX, SizeZ);
             gl.PopMatrix();
         }
 
@@ -137,9 +121,13 @@ namespace DoAn_OpenGL.Graphics3D
 
             LightEnd(gl);
 
+            DrawBoder(gl,SizeX, SizeX, SizeZ);
+
 
             gl.PopMatrix();
         }
+
+        
 
     }
 }

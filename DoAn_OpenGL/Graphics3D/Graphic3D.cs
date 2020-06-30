@@ -15,7 +15,7 @@ namespace DoAn_OpenGL.Graphics3D
         private double temprz;
         private Translational animationTT;
         protected bool ambientFlag;
-
+        public bool IsSelected { get; set; }
         public Translational AnimationTT
         {
             get { return animationTT; }
@@ -162,6 +162,66 @@ namespace DoAn_OpenGL.Graphics3D
                 default: break;
             }
         }
+
+        protected void DrawBoder(OpenGL gl, double x, double y, double z, int mode = 0)
+        {
+            if (!IsSelected)
+                return;
+            double tempzs = 0;
+            if(mode == 1)
+            {
+                tempzs = -z;
+            }
+            if (mode == 2)
+            {
+                gl.PushMatrix();
+                gl.Translate(0,0, -z);
+                z = 2 * z;
+            }
+            gl.Begin(OpenGL.GL_LINES);
+            gl.Color(0.8, 1, 1);
+            gl.Vertex(-x - 0.12, y + 0.12, tempzs);
+            gl.Vertex(x + 0.12, y + 0.12, tempzs);
+
+            gl.Vertex(x + 0.12, y + 0.12, tempzs);
+            gl.Vertex(x + 0.12, -y - 0.12, tempzs);
+
+            gl.Vertex(x + 0.12, -y - 0.12, tempzs);
+            gl.Vertex(-x - 0.12, -y - 0.12, tempzs);
+
+            gl.Vertex(-x - 0.12, -y - 0.12, tempzs);
+            gl.Vertex(-x - 0.12, y + 0.12, tempzs);
+
+            gl.Vertex(-x - 0.12, y + 0.12, z);
+            gl.Vertex(x + 0.12, y + 0.12, z);
+
+            gl.Vertex(x + 0.12, y + 0.12, z);
+            gl.Vertex(x + 0.12, -y - 0.12, z);
+
+            gl.Vertex(x + 0.12, -y - 0.12, z);
+            gl.Vertex(-x - 0.12, -y - 0.12, z);
+
+            gl.Vertex(-x - 0.12, -y - 0.12, z);
+            gl.Vertex(-x - 0.12, y + 0.12, z);
+
+            gl.Vertex(-x - 0.12, y + 0.12, z);
+            gl.Vertex(-x - 0.12, y + 0.12, tempzs);
+
+            gl.Vertex(x + 0.12, y + 0.12, z);
+            gl.Vertex(x + 0.12, y + 0.12, tempzs);
+
+            gl.Vertex(x + 0.12, -y - 0.12, z);
+            gl.Vertex(x + 0.12, -y - 0.12, tempzs);
+
+            gl.Vertex(-x - 0.12, -y - 0.12, z);
+            gl.Vertex(-x - 0.12, -y - 0.12, tempzs);
+            gl.End();
+            if (mode == 2)
+            {
+                gl.PopMatrix();
+            }
+        }
+
         public Graphic3D()
         {
             LightingMode = Lighting.NONE;

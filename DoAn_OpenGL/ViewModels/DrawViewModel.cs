@@ -167,7 +167,7 @@ namespace DoAn_OpenGL.ViewModels
                         mainmodel.temp = new Cone(mainmodel.drawMode, 2, 2, r, g, b);
                         break;
                     case DrawGraphic.Cube:
-                        mainmodel.temp = new Cube(mainmodel.drawMode, 2, 2, 2, r, g, b);
+                        mainmodel.temp = new Cube(mainmodel.drawMode, 4, 4, 4, r, g, b);
                         break;
                     case DrawGraphic.Cylinder:
                         mainmodel.temp = new Cylinder(mainmodel.drawMode, 2, 3, r, g, b);
