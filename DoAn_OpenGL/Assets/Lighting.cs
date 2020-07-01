@@ -4,7 +4,7 @@
     {
         NONE,
         AMBIENT,
-        DIFFUSE,
+        POSITION,
         SHADOW
     }
 }

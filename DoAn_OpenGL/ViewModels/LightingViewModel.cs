@@ -67,11 +67,11 @@ namespace DoAn_OpenGL.ViewModels
         }
         public bool LDIFFUSE
         {
-            get { return SelectedGraphic?.LightingMode == Assets.Lighting.DIFFUSE;  }
+            get { return SelectedGraphic?.LightingMode == Assets.Lighting.POSITION;  }
             set
             {
                 if (value)
-                    SelectedGraphic.LightingMode = Assets.Lighting.DIFFUSE;
+                    SelectedGraphic.LightingMode = Assets.Lighting.POSITION;
             }
         }
         public bool LSHADOW

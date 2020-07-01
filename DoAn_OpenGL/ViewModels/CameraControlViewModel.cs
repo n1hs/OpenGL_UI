@@ -7,8 +7,8 @@ namespace DoAn_OpenGL.ViewModels
     public class CameraControlViewModel : BaseViewModel
     {
         #region Properties
-        private const double xeye = 15.0;
-        private const double yeye = 0.0;
+        private const double xeye = 0;
+        private const double yeye = -15.0;
         private const double zeye = 15.0;
         private const double xcenter = 0.0;
         private const double ycenter = 0.0;

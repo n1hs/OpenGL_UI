@@ -21,15 +21,8 @@ namespace DoAn_OpenGL.Graphics3D
             Slices = 0;
             Stacks = grid;
         }
-        public override void DrawPoint(OpenGL gl)
+        protected override void DrawPoint(OpenGL gl)
         {
-            gl.PushMatrix();
-            Animation(gl);
-            gl.Translate(LocationX, LocationY, LocationZ);
-            gl.Rotate(RotateX, 1.0, 0.0, 0.0);
-            gl.Rotate(RotateY, 0.0, 1.0, 0.0);
-            gl.Rotate(RotateZ, 0.0, 0.0, 1.0);
-            gl.Color(ColorR, ColorG, ColorB);
 
             gl.Translate(0.0, 0.0, SizeX - 0.25 * SizeX);
             gl.Rotate(90, 1.0, 0.0, 0.0);
@@ -37,50 +30,26 @@ namespace DoAn_OpenGL.Graphics3D
             SharpGL.SceneGraph.Primitives.Teapot teapot = new SharpGL.SceneGraph.Primitives.Teapot();
             teapot.Draw(gl, Stacks, SizeX, OpenGL.GL_POINT);
 
-            DrawBoder(gl, SizeX, SizeX, SizeX,2);
-            gl.PopMatrix();
         }
-        public override void DrawLine(OpenGL gl)
+        protected override void DrawLine(OpenGL gl)
         {
-            gl.PushMatrix();
-            Animation(gl);
-            gl.Translate(LocationX, LocationY, LocationZ);
-            gl.Rotate(RotateX, 1.0, 0.0, 0.0);
-            gl.Rotate(RotateY, 0.0, 1.0, 0.0);
-            gl.Rotate(RotateZ, 0.0, 0.0, 1.0);
-            gl.Color(ColorR, ColorG, ColorB);
 
             gl.Translate(0.0, 0.0, SizeX - 0.25 * SizeX);
             gl.Rotate(90, 1.0, 0.0, 0.0);
 
             SharpGL.SceneGraph.Primitives.Teapot teapot = new SharpGL.SceneGraph.Primitives.Teapot();
             teapot.Draw(gl, Stacks, SizeX, OpenGL.GL_LINE);
-
-            DrawBoder(gl, SizeX, SizeX, SizeX,2);
-            gl.PopMatrix();
         }
         
-        public override void DrawSolid(OpenGL gl)
+        protected override void DrawSolid(OpenGL gl)
         {
-            gl.PushMatrix();
-            Animation(gl);
-            gl.Translate(LocationX, LocationY, LocationZ);
-            gl.Rotate(RotateX, 1.0, 0.0, 0.0);
-            gl.Rotate(RotateY, 0.0, 1.0, 0.0);
-            gl.Rotate(RotateZ, 0.0, 0.0, 1.0);
-            gl.Color(ColorR, ColorG, ColorB);
 
             gl.Translate(0.0, 0.0, SizeX-0.25*SizeX);
             gl.Rotate(90, 1.0, 0.0, 0.0);
 
-            LightBegin(gl);
 
             SharpGL.SceneGraph.Primitives.Teapot teapot = new SharpGL.SceneGraph.Primitives.Teapot();
             teapot.Draw(gl, Stacks, SizeX, OpenGL.GL_FILL);
-
-            LightEnd(gl);
-            DrawBoder(gl, SizeX, SizeX, SizeX,2);
-            gl.PopMatrix();
         }
 
 

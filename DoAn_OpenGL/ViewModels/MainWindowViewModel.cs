@@ -184,8 +184,8 @@ namespace DoAn_OpenGL.ViewModels
         internal Graphic3D temp;
 
 
-        internal double xEye = 15.0;
-        internal double yEye = 0.0;
+        internal double xEye = 0;
+        internal double yEye = -15.0;
         internal double zEye = 15.0;
         internal double xCenter = 0.0;
         internal double yCenter = 0.0;
@@ -223,12 +223,7 @@ namespace DoAn_OpenGL.ViewModels
             {
                 foreach(Graphic3D g in listObject)
                 {
-                    if (g.Style == DrawStyle.Fill)
-                        g.DrawSolid(gl);
-                    if (g.Style == DrawStyle.Point)
-                        g.DrawPoint(gl);
-                    if (g.Style == DrawStyle.Line)
-                        g.DrawLine(gl);
+                    g.Draw(gl);
                 }
             }
 
@@ -237,12 +232,7 @@ namespace DoAn_OpenGL.ViewModels
             if (isMouseEnter && isDrawMode && temp != null)
             {
                 gl.PushMatrix();
-                if (temp.Style == DrawStyle.Fill)
-                    temp.DrawSolid(gl);
-                if (temp.Style == DrawStyle.Point)
-                    temp.DrawPoint(gl);
-                if (temp.Style == DrawStyle.Line)
-                    temp.DrawLine(gl);
+                temp.Draw(gl);
                 gl.PopMatrix();
             }
             gl.Flush();

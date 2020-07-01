@@ -27,23 +27,10 @@ namespace DoAn_OpenGL.Graphics3D
             LocationY = tranY;
             LocationZ = tranZ;
             Slices = Stacks = 50;
-            ambientFlag = true;
         }          
 
-        public override void DrawPoint(OpenGL gl)
+        protected override void DrawPoint(OpenGL gl)
         {
-            gl.PushMatrix();
-
-            Animation(gl);
-
-
-
-            gl.Translate(LocationX, LocationY, LocationZ);
-            gl.Rotate(RotateX, 1.0, 0.0, 0.0);
-            gl.Rotate(RotateY, 0.0, 1.0, 0.0);
-            gl.Rotate(RotateZ, 0.0, 0.0, 1.0);
-            gl.Color(ColorR, ColorG, ColorB);
-
             SharpGL.SceneGraph.Quadrics.Cylinder cone = new SharpGL.SceneGraph.Quadrics.Cylinder();
             cone.TopRadius = SizeY;
             cone.BaseRadius = SizeX;
@@ -58,21 +45,10 @@ namespace DoAn_OpenGL.Graphics3D
             cone.Render(gl, SharpGL.SceneGraph.Core.RenderMode.Render);
             cone.PopObjectSpace(gl);
             cone.DestroyInContext(gl);
-
-            DrawBoder(gl, SizeX, SizeX, SizeZ);
-            gl.PopMatrix();
         }
 
-        public override void DrawLine(OpenGL gl)
+        protected override void DrawLine(OpenGL gl)
         {
-            gl.PushMatrix();
-            Animation(gl);
-
-            gl.Translate(LocationX, LocationY, LocationZ);
-            gl.Rotate(RotateX, 1.0, 0.0, 0.0);
-            gl.Rotate(RotateY, 0.0, 1.0, 0.0);
-            gl.Rotate(RotateZ, 0.0, 0.0, 1.0);
-            gl.Color(ColorR, ColorG, ColorB);
 
             SharpGL.SceneGraph.Quadrics.Cylinder cone = new SharpGL.SceneGraph.Quadrics.Cylinder();
             cone.TopRadius = SizeY;
@@ -87,42 +63,15 @@ namespace DoAn_OpenGL.Graphics3D
             cone.Render(gl, SharpGL.SceneGraph.Core.RenderMode.Render);
             cone.PopObjectSpace(gl);
             cone.DestroyInContext(gl);
-
-            DrawBoder(gl, SizeX, SizeX, SizeZ);
-            gl.PopMatrix();
         }
 
-        public override void DrawSolid(OpenGL gl)
+        protected override void DrawSolid(OpenGL gl)
         {
-            gl.PushMatrix();
-            Animation(gl);
-            gl.Translate(LocationX, LocationY, LocationZ);
-            gl.Rotate(RotateX, 1.0, 0.0, 0.0);
-            gl.Rotate(RotateY, 0.0, 1.0, 0.0);
-            gl.Rotate(RotateZ, 0.0, 0.0, 1.0);
-            gl.Color(ColorR, ColorG, ColorB);
-
-            SharpGL.SceneGraph.Quadrics.Cylinder cone = new SharpGL.SceneGraph.Quadrics.Cylinder();
-            cone.TopRadius = SizeY;
-            cone.BaseRadius = SizeX;
-            cone.Height = SizeZ;
-            cone.Slices = Slices;
-            cone.Stacks = Stacks;
-            cone.QuadricDrawStyle = DrawStyle.Fill;
-
-            LightBegin(gl);
-
-            cone.CreateInContext(gl);
-            cone.PushObjectSpace(gl);
-            cone.Render(gl, SharpGL.SceneGraph.Core.RenderMode.Render);
-            cone.PopObjectSpace(gl);
-            cone.DestroyInContext(gl);
-
-            LightEnd(gl);
-
-            DrawBoder(gl,SizeX, SizeX, SizeZ);
-
-            gl.PopMatrix();
+            var quadric = gl.NewQuadric();
+            gl.QuadricDrawStyle(quadric, OpenGL.GL_FILL);
+            gl.QuadricNormals(quadric, OpenGL.GLU_SMOOTH);
+            gl.QuadricTexture(quadric, (int)OpenGL.GL_TRUE);
+            gl.Cylinder(quadric, SizeX, 0, SizeZ, Slices, Stacks);
         }
 
         

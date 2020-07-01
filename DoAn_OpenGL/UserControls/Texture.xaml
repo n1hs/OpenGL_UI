@@ -21,9 +21,9 @@
         </StackPanel>
         <StackPanel IsEnabled="{Binding IsPanelEnable, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" >
             <Button Style="{StaticResource MaterialDesignRaisedDarkButton}"
-                        Height="40"
-                    Margin="15 5"
-                        md:ButtonAssist.CornerRadius="25"
+                        Height="30"
+                    Margin="55 5"
+                        md:ButtonAssist.CornerRadius="5"
                         ToolTip="Browser">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="Click">
@@ -36,7 +36,39 @@
                    Height="245"
                    Margin="2"
                    Source="{Binding TextuteImage, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
-               
+
+            <Grid Margin="5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Button Style="{StaticResource MaterialDesignRaisedDarkButton}"
+                        IsEnabled="{Binding TextureIsEnable, Mode=OneWay,UpdateSourceTrigger=PropertyChanged}"
+                        Height="30"
+                    Margin="5"
+                        md:ButtonAssist.CornerRadius="5">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Click">
+                            <i:InvokeCommandAction Command="{Binding TextuteCommand}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                    <TextBlock Text="OK" />
+                </Button>
+
+                <Button Style="{StaticResource MaterialDesignRaisedDarkButton}"
+                        Grid.Column="1"
+                        IsEnabled="{Binding RemoveIsEnable, Mode=OneWay,UpdateSourceTrigger=PropertyChanged}"
+                        Height="30"
+                    Margin="5"
+                        md:ButtonAssist.CornerRadius="5">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Click">
+                            <i:InvokeCommandAction Command="{Binding RemoveCommand}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                    <TextBlock Text="Remove" />
+                </Button>
+            </Grid>
         </StackPanel>
     </StackPanel>
 </UserControl>

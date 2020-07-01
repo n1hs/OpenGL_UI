@@ -25,16 +25,8 @@ namespace DoAn_OpenGL.Graphics3D
         }
 
 
-        public override void DrawPoint(OpenGL gl)
+        protected override void DrawPoint(OpenGL gl)
         {
-            gl.PushMatrix();
-            Animation(gl);
-
-            gl.Translate(LocationX, LocationY, LocationZ);
-            gl.Rotate(RotateX, 1.0, 0.0, 0.0);
-            gl.Rotate(RotateY, 0.0, 1.0, 0.0);
-            gl.Rotate(RotateZ, 0.0, 0.0, 1.0);
-            gl.Color(ColorR, ColorG, ColorB);
 
             SharpGL.SceneGraph.Quadrics.Cylinder pyramid = new SharpGL.SceneGraph.Quadrics.Cylinder();
             pyramid.TopRadius = SizeY;
@@ -79,19 +71,9 @@ namespace DoAn_OpenGL.Graphics3D
             }
             gl.End();
             gl.PopMatrix();
-
-            DrawBoder(gl, SizeX, SizeX, SizeZ);
-            gl.PopMatrix();
         }
-        public override void DrawLine(OpenGL gl)
+        protected override void DrawLine(OpenGL gl)
         {
-            gl.PushMatrix();
-            Animation(gl);
-            gl.Translate(LocationX, LocationY, LocationZ);
-            gl.Rotate(RotateX, 1.0, 0.0, 0.0);
-            gl.Rotate(RotateY, 0.0, 1.0, 0.0);
-            gl.Rotate(RotateZ, 0.0, 0.0, 1.0);
-            gl.Color(ColorR, ColorG, ColorB);
 
             SharpGL.SceneGraph.Quadrics.Cylinder pyramid = new SharpGL.SceneGraph.Quadrics.Cylinder();
             pyramid.TopRadius = SizeY;
@@ -106,42 +88,15 @@ namespace DoAn_OpenGL.Graphics3D
             pyramid.Render(gl, SharpGL.SceneGraph.Core.RenderMode.Render);
             pyramid.PopObjectSpace(gl);
             pyramid.DestroyInContext(gl);
-
-            DrawBoder(gl, SizeX, SizeX, SizeZ);
-            gl.PopMatrix();
         }
         
-        public override void DrawSolid(OpenGL gl)
+        protected override void DrawSolid(OpenGL gl)
         {
-            gl.PushMatrix();
-            Animation(gl);
-            gl.Translate(LocationX, LocationY, LocationZ);
-            gl.Rotate(RotateX, 1.0, 0.0, 0.0);
-            gl.Rotate(RotateY, 0.0, 1.0, 0.0);
-            gl.Rotate(RotateZ, 0.0, 0.0, 1.0);
-            gl.Color(ColorR, ColorG, ColorB);
-
-            SharpGL.SceneGraph.Quadrics.Cylinder pyramid = new SharpGL.SceneGraph.Quadrics.Cylinder();
-            pyramid.TopRadius = SizeY;
-            pyramid.BaseRadius = SizeX;
-            pyramid.Height = SizeZ;
-            pyramid.Slices = Slices;
-            pyramid.Stacks = Stacks;
-            pyramid.QuadricDrawStyle = DrawStyle.Fill;
-
-            LightBegin(gl);
-
-            pyramid.CreateInContext(gl);
-            pyramid.PushObjectSpace(gl);
-            pyramid.Render(gl, SharpGL.SceneGraph.Core.RenderMode.Render);
-            pyramid.PopObjectSpace(gl);
-            pyramid.DestroyInContext(gl);
-
-            LightEnd(gl);
-
-            DrawBoder(gl, SizeX, SizeX, SizeZ);
-
-            gl.PopMatrix();
+            var quadric = gl.NewQuadric();
+            gl.QuadricDrawStyle(quadric, OpenGL.GL_FILL);
+            gl.QuadricNormals(quadric, OpenGL.GLU_SMOOTH);
+            gl.QuadricTexture(quadric, (int)OpenGL.GL_TRUE);
+            gl.Cylinder(quadric, SizeX, SizeY, SizeZ, Slices, Stacks);
         }
 
     }

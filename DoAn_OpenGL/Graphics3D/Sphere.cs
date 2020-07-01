@@ -23,17 +23,10 @@ namespace DoAn_OpenGL.Graphics3D
         }
 
 
-        public override void DrawPoint(OpenGL gl)
+        protected override void DrawPoint(OpenGL gl)
         {
-            gl.PushMatrix();
-            Animation(gl);
-            gl.Translate(LocationX, LocationY, LocationZ);
-            gl.Rotate(RotateX, 1.0, 0.0, 0.0);
-            gl.Rotate(RotateY, 0.0, 1.0, 0.0);
-            gl.Rotate(RotateZ, 0.0, 0.0, 1.0);
-            gl.Color(ColorR, ColorG, ColorB);
 
-            gl.Translate(0.0, 0.0, 2 * SizeX);
+            gl.Translate(0.0, 0.0, SizeX);
 
             SharpGL.SceneGraph.Quadrics.Sphere sphere = new SharpGL.SceneGraph.Quadrics.Sphere();
             sphere.Radius = SizeX;
@@ -46,19 +39,9 @@ namespace DoAn_OpenGL.Graphics3D
             sphere.Render(gl, SharpGL.SceneGraph.Core.RenderMode.Render);
             sphere.PopObjectSpace(gl);
             sphere.DestroyInContext(gl);
-
-            DrawBoder(gl, SizeX, SizeX,SizeX,1);
-            gl.PopMatrix();
         }
-        public override void DrawLine(OpenGL gl)
+        protected override void DrawLine(OpenGL gl)
         {
-            gl.PushMatrix();
-            Animation(gl);
-            gl.Translate(LocationX, LocationY, LocationZ);
-            gl.Rotate(RotateX, 1.0, 0.0, 0.0);
-            gl.Rotate(RotateY, 0.0, 1.0, 0.0);
-            gl.Rotate(RotateZ, 0.0, 0.0, 1.0);
-            gl.Color(ColorR, ColorG, ColorB);
 
             gl.Translate(0.0,0.0,SizeX);
 
@@ -74,39 +57,18 @@ namespace DoAn_OpenGL.Graphics3D
             sphere.Render(gl, SharpGL.SceneGraph.Core.RenderMode.Render);
             sphere.PopObjectSpace(gl);
             sphere.DestroyInContext(gl);
-            DrawBoder(gl, SizeX, SizeX, SizeX,1);
-            gl.PopMatrix();
         }
 
-        public override void DrawSolid(OpenGL gl)
+        protected override void DrawSolid(OpenGL gl)
         {
-            gl.PushMatrix();
-            Animation(gl);
-            gl.Translate(LocationX, LocationY, LocationZ);
-            gl.Rotate(RotateX, 1.0, 0.0, 0.0);
-            gl.Rotate(RotateY, 0.0, 1.0, 0.0);
-            gl.Rotate(RotateZ, 0.0, 0.0, 1.0);
-            gl.Color(ColorR, ColorG, ColorB);
 
             gl.Translate(0.0, 0.0, SizeX);
 
-            SharpGL.SceneGraph.Quadrics.Sphere sphere = new SharpGL.SceneGraph.Quadrics.Sphere();
-            sphere.Radius = SizeX;
-            sphere.Slices = 100;
-            sphere.Stacks = 100;
-            sphere.QuadricDrawStyle = DrawStyle.Fill;
-
-            LightBegin(gl);
-
-            sphere.CreateInContext(gl);
-            sphere.PushObjectSpace(gl);
-            sphere.Render(gl, SharpGL.SceneGraph.Core.RenderMode.Render);
-            sphere.PopObjectSpace(gl);
-            sphere.DestroyInContext(gl);
-
-            LightEnd(gl);
-            DrawBoder(gl, SizeX, SizeX, SizeX,1);
-            gl.PopMatrix();
+            var quadric = gl.NewQuadric();
+            gl.QuadricDrawStyle(quadric, OpenGL.GL_FILL);
+            gl.QuadricNormals(quadric, OpenGL.GLU_SMOOTH);
+            gl.QuadricTexture(quadric, (int)OpenGL.GL_TRUE);
+            gl.Sphere(quadric, SizeX,  Slices, Stacks);
         }
 
 

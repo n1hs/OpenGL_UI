@@ -24,15 +24,8 @@ namespace DoAn_OpenGL.Graphics3D
         }
 
 
-        public override void DrawPoint(OpenGL gl)
+        protected override void DrawPoint(OpenGL gl)
         {
-            gl.PushMatrix();
-            Animation(gl);
-            gl.Translate(LocationX, LocationY, LocationZ);
-            gl.Rotate(RotateX, 1.0, 0.0, 0.0);
-            gl.Rotate(RotateY, 0.0, 1.0, 0.0);
-            gl.Rotate(RotateZ, 0.0, 0.0, 1.0);
-            gl.Color(ColorR, ColorG, ColorB);
 
             gl.Begin(OpenGL.GL_POINTS);
             double tempX = SizeX/2;
@@ -51,20 +44,10 @@ namespace DoAn_OpenGL.Graphics3D
             }
             gl.End();
 
-            DrawBoder(gl, SizeX/2, SizeY/2, SizeZ);
-            gl.PopMatrix();
         }
 
-        public override void DrawLine(OpenGL gl)
+        protected override void DrawLine(OpenGL gl)
         {
-            gl.PushMatrix();
-            Animation(gl);
-            gl.Translate(LocationX, LocationY, LocationZ);
-            gl.Rotate(RotateX, 1.0, 0.0, 0.0);
-            gl.Rotate(RotateY, 0.0, 1.0, 0.0);
-            gl.Rotate(RotateZ, 0.0, 0.0, 1.0);
-            gl.Color(ColorR, ColorG, ColorB);
-
             //draw columns
             gl.Begin(OpenGL.GL_LINES);
             double tempX = SizeX/2;
@@ -144,74 +127,47 @@ namespace DoAn_OpenGL.Graphics3D
             }
             gl.End();
 
-            DrawBoder(gl, SizeX/2, SizeY/2, SizeZ);
-            gl.PopMatrix();
         }
         
-        public override void DrawSolid(OpenGL gl)
+        protected override void DrawSolid(OpenGL gl)
         {
-            
-            gl.PushMatrix();
-            Animation(gl);
-            gl.Translate(LocationX, LocationY, LocationZ);
-            gl.Rotate(RotateX, 1.0, 0.0, 0.0);
-            gl.Rotate(RotateY, 0.0, 1.0, 0.0);
-            gl.Rotate(RotateZ, 0.0, 0.0, 1.0);
-            gl.Color(ColorR, ColorG, ColorB);
-
-            LightBegin(gl);
-            //Back
             gl.Begin(OpenGL.GL_QUADS);
-            gl.Vertex(-SizeX/2, SizeY/2, 0);
-            gl.Vertex(-SizeX/2, SizeY/2, SizeZ);
-            gl.Vertex(SizeX/2, SizeY/2, SizeZ);
-            gl.Vertex(SizeX/2, SizeY/2, 0);
+            gl.TexCoord(0.0f, 0.0f); gl.Vertex(-SizeX / 2, -SizeY / 2, SizeZ); // Bottom Left Of The Texture and Quad
+            gl.TexCoord(1.0f, 0.0f); gl.Vertex(SizeX / 2, -SizeY / 2, SizeZ);  // Bottom Right Of The Texture and Quad
+            gl.TexCoord(1.0f, 1.0f); gl.Vertex(SizeX / 2, SizeY / 2, SizeZ);   // Top Right Of The Texture and Quad
+            gl.TexCoord(0.0f, 1.0f); gl.Vertex(-SizeX / 2, SizeY / 2, SizeZ);  // Top Left Of The Texture and Quad
+
+            // Back Face
+            gl.TexCoord(1.0f, 0.0f); gl.Vertex(-SizeX / 2, -SizeY / 2, 0);    // Bottom Right Of The Texture and Quad
+            gl.TexCoord(1.0f, 1.0f); gl.Vertex(-SizeX / 2, SizeY / 2, 0); // Top Right Of The Texture and Quad
+            gl.TexCoord(0.0f, 1.0f); gl.Vertex(SizeX / 2, SizeY / 2, 0);  // Top Left Of The Texture and Quad
+            gl.TexCoord(0.0f, 0.0f); gl.Vertex(SizeX / 2, -SizeY / 2, 0); // Bottom Left Of The Texture and Quad
+
+            // Top Face
+            gl.TexCoord(0.0f, 1.0f); gl.Vertex(-SizeX / 2, SizeY / 2, 0); // Top Left Of The Texture and Quad
+            gl.TexCoord(0.0f, 0.0f); gl.Vertex(-SizeX / 2, SizeY / 2, SizeZ);  // Bottom Left Of The Texture and Quad
+            gl.TexCoord(1.0f, 0.0f); gl.Vertex(SizeX / 2, SizeY / 2, SizeZ);   // Bottom Right Of The Texture and Quad
+            gl.TexCoord(1.0f, 1.0f); gl.Vertex(SizeX / 2, SizeY / 2, 0);  // Top Right Of The Texture and Quad
+
+            // Bottom Face
+            gl.TexCoord(1.0f, 1.0f); gl.Vertex(-SizeX / 2, -SizeY / 2, 0);    // Top Right Of The Texture and Quad
+            gl.TexCoord(0.0f, 1.0f); gl.Vertex(SizeX / 2, -SizeY / 2, 0); // Top Left Of The Texture and Quad
+            gl.TexCoord(0.0f, 0.0f); gl.Vertex(SizeX / 2, -SizeY / 2, SizeZ);  // Bottom Left Of The Texture and Quad
+            gl.TexCoord(1.0f, 0.0f); gl.Vertex(-SizeX / 2, -SizeY / 2, SizeZ); // Bottom Right Of The Texture and Quad
+
+            // Right face
+            gl.TexCoord(1.0f, 0.0f); gl.Vertex(SizeX / 2, -SizeY / 2, 0); // Bottom Right Of The Texture and Quad
+            gl.TexCoord(1.0f, 1.0f); gl.Vertex(SizeX / 2, SizeY / 2, 0);  // Top Right Of The Texture and Quad
+            gl.TexCoord(0.0f, 1.0f); gl.Vertex(SizeX / 2, SizeY / 2, SizeZ);   // Top Left Of The Texture and Quad
+            gl.TexCoord(0.0f, 0.0f); gl.Vertex(SizeX / 2, -SizeY / 2, SizeZ);  // Bottom Left Of The Texture and Quad
+
+            // Left Face
+            gl.TexCoord(0.0f, 0.0f); gl.Vertex(-SizeX / 2, -SizeY / 2, 0);    // Bottom Left Of The Texture and Quad
+            gl.TexCoord(1.0f, 0.0f); gl.Vertex(-SizeX / 2, -SizeY / 2, SizeZ); // Bottom Right Of The Texture and Quad
+            gl.TexCoord(1.0f, 1.0f); gl.Vertex(-SizeX / 2, SizeY / 2, SizeZ);  // Top Right Of The Texture and Quad
+            gl.TexCoord(0.0f, 1.0f); gl.Vertex(-SizeX / 2, SizeY / 2, 0);	// Top Left Of The Texture and Quad
             gl.End();
 
-            // left
-            gl.Begin(OpenGL.GL_QUADS);
-            gl.Vertex(-SizeX/2, -SizeY/2, 0);
-            gl.Vertex(-SizeX/2, -SizeY/2, SizeZ);
-            gl.Vertex(-SizeX/2, SizeY/2, SizeZ);
-            gl.Vertex(-SizeX/2, SizeY/2, 0);
-            gl.End();
-
-            //front
-            gl.Begin(OpenGL.GL_QUADS);
-            gl.Vertex(-SizeX/2, -SizeY/2, 0);
-            gl.Vertex(-SizeX/2, -SizeY/2, SizeZ);
-            gl.Vertex(SizeX/2, -SizeY/2, SizeZ);
-            gl.Vertex(SizeX/2, -SizeY/2, 0);
-            gl.End();
-
-            //// right
-            gl.Begin(OpenGL.GL_QUADS);
-            gl.Vertex(SizeX/2, SizeY/2, 0);
-            gl.Vertex(SizeX/2, SizeY/2, SizeZ);
-            gl.Vertex(SizeX/2, -SizeY/2, SizeZ);
-            gl.Vertex(SizeX/2, -SizeY/2, 0);
-            gl.End();
-
-            //Top
-            gl.Begin(OpenGL.GL_QUADS);
-            gl.Vertex(-SizeX/2, SizeY/2, SizeZ);
-            gl.Vertex(-SizeX/2, -SizeY/2, SizeZ);
-            gl.Vertex(SizeX/2, -SizeY/2, SizeZ);
-            gl.Vertex(SizeX/2, SizeY/2, SizeZ);
-            gl.End();
-
-            //Bottom
-            gl.Begin(OpenGL.GL_QUADS);
-            gl.Vertex(-SizeX/2, SizeY/2, 0);
-            gl.Vertex(-SizeX/2, -SizeY/2, 0);
-            gl.Vertex(SizeX/2, -SizeY/2, 0);
-            gl.Vertex(SizeX/2, SizeY/2, 0);
-            gl.End();
-
-            LightEnd(gl);
-
-            DrawBoder(gl, SizeX/2, SizeY/2, SizeZ);
-            gl.PopMatrix();
         }
 
 
