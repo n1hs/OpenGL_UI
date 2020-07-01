@@ -32,7 +32,13 @@ namespace DoAn_OpenGL.ViewModels
                 {
                     IsPanelEnable = false;
                 }
-
+                OnPropertyChanged("XEye");
+                OnPropertyChanged("YEye");
+                OnPropertyChanged("ZEye");
+                OnPropertyChanged("LNONE");
+                OnPropertyChanged("LAMBIENT");
+                OnPropertyChanged("LDIFFUSE");
+                OnPropertyChanged("LSHADOW");
             }
         }
         private bool isPanelEnable;
@@ -81,7 +87,46 @@ namespace DoAn_OpenGL.ViewModels
             {
                 if (value)
                     SelectedGraphic.LightingMode = Assets.Lighting.SHADOW;
+                else
+                    SelectedGraphic.LightingMode = Assets.Lighting.POSITION;
             }
+        }
+
+        public double XEye {
+            get
+            {
+                return SelectedGraphic is null ? 0 : SelectedGraphic.LightSourceX; 
+            }
+            set
+            {
+                SelectedGraphic.LightSourceX = value;
+            }
+
+        }
+        public double YEye
+        {
+            get
+            {
+                return SelectedGraphic is null ? 0 : SelectedGraphic.LightSourceY;
+            }
+            set
+            {
+                SelectedGraphic.LightSourceY = value;
+            }
+
+        }
+
+        public double ZEye
+        {
+            get
+            {
+                return SelectedGraphic is null ? 0 : SelectedGraphic.LightSourceZ;
+            }
+            set
+            {
+                SelectedGraphic.LightSourceZ = value;
+            }
+
         }
 
 

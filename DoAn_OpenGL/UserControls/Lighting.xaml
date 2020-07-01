@@ -30,12 +30,65 @@
                              Content="Chiếu sáng toàn phần" />
             <RadioButton Style="{StaticResource MaterialDesignLightRadioButton}"
                           GroupName="lightingmode"
+                         x:Name="lgih"
                              IsChecked="{Binding LDIFFUSE, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                             Content="Chiếu sáng" />
-            <RadioButton Style="{StaticResource MaterialDesignLightRadioButton}"
-                         GroupName="lightingmode"
-                            IsChecked="{Binding LSHADOW, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                             Content="Đổ bóng" />
+                             Content="Chiếu sáng" />           
+        </StackPanel>
+        <StackPanel IsEnabled="{Binding ElementName=lgih, Path=IsChecked}">
+            <TextBlock Margin="15 5"
+                   Style="{StaticResource MaterialDesignSubtitle1TextBlock}"
+                   TextWrapping="WrapWithOverflow"
+                   Text="Light point (vị trí nguồn sáng)."/>
+            <DockPanel Margin="2" >
+                <TextBlock DockPanel.Dock="Left"
+                       Width="50">
+                <Run Text="X: "/>
+                <Run Text="{Binding ElementName=eyeX, Path=Value, Mode=OneWay , UpdateSourceTrigger=PropertyChanged}"/>
+                </TextBlock>
+                <Slider TickFrequency="1"
+                    IsSnapToTickEnabled="True"
+                    x:Name="eyeX"
+                    Orientation="Horizontal"
+                    Minimum="-50"
+                    Maximum="50"
+                    Value="{Binding XEye, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            </DockPanel>
+            <DockPanel Margin="2" >
+                <TextBlock DockPanel.Dock="Left"
+                       Width="50">
+                <Run Text="Y: "/>
+                <Run Text="{Binding ElementName=eyeY, Path=Value, Mode=OneWay , UpdateSourceTrigger=PropertyChanged}"/>
+                </TextBlock>
+                <Slider TickFrequency="1"
+                    IsSnapToTickEnabled="True"
+                    Orientation="Horizontal"
+                     x:Name="eyeY"
+                    Minimum="-50"
+                    Maximum="50"
+                    Value="{Binding YEye, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            </DockPanel >
+            <DockPanel Margin="2" >
+                <TextBlock DockPanel.Dock="Left"
+                       Width="50">
+                <Run Text="Z: "/>
+                <Run Text="{Binding ElementName=eyeZ, Path=Value, Mode=OneWay , UpdateSourceTrigger=PropertyChanged}"/>
+                </TextBlock>
+                <Slider TickFrequency="1"
+                    IsSnapToTickEnabled="True"
+                    Orientation="Horizontal"
+                     x:Name="eyeZ"
+                    Minimum="-50"
+                    Maximum="50"
+                    Value="{Binding ZEye, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            </DockPanel>
+            <StackPanel Margin="5"
+                        Orientation="Horizontal">
+                <TextBlock Text="Drop shadow: "
+                           Style="{StaticResource MaterialDesignSubtitle1TextBlock}"/>
+
+                <ToggleButton Style="{StaticResource MaterialDesignSwitchDarkToggleButton}"
+                            IsChecked="{Binding LSHADOW, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+            </StackPanel>
         </StackPanel>
     </StackPanel>
 </UserControl>

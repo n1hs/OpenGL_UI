@@ -104,6 +104,7 @@
     <Compile Include="Assets\Animation.cs" />
     <Compile Include="Assets\Lighting.cs" />
     <Compile Include="Assets\ObjectCopier.cs" />
+    <Compile Include="Converters\GLRGBToSolidColorBrush.cs" />
     <Compile Include="Converters\ImageSourceConverter.cs" />
     <Compile Include="Graphics3D\Cone.cs" />
     <Compile Include="Graphics3D\Cube.cs" />

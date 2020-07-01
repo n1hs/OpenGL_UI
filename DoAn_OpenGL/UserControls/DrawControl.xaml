@@ -6,10 +6,40 @@
              xmlns:assets="clr-namespace:DoAn_OpenGL.Assets"
              xmlns:cv="clr-namespace:DoAn_OpenGL.Converters"
              HorizontalAlignment="Stretch"
+             x:Name="Main"
              VerticalAlignment="Stretch"
              Width="250">
     <UserControl.Resources>
         <cv:ImageSourceConverter x:Key="ImagesourceCV"/>
+        <cv:GLRGBToSolidColorBrush x:Key="ColorCV"/>
+        <Style TargetType="RadioButton" 
+                       x:Key="ColorButton"
+                       BasedOn="{StaticResource MaterialDesignRaisedButton}">
+            <Setter Property="BorderThickness" Value="2" />
+            <Setter Property="BorderBrush" Value="Transparent" />
+            <Setter Property="Margin" Value="1 1 0 0" />
+            <Setter Property="Tag" Value="0" />
+            <Style.Triggers>
+                <Trigger Property="IsChecked" Value="True">
+                    <Trigger.EnterActions>
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <ColorAnimation Storyboard.TargetProperty="BorderBrush.Color" 
+                                                                 To="Bisque" Duration="0:0:0.18" />
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </Trigger.EnterActions>
+                    <Trigger.ExitActions>
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <ColorAnimation Storyboard.TargetProperty="BorderBrush.Color" 
+                                                                 To="Transparent" Duration="0:0:0.18" />
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </Trigger.ExitActions>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
     </UserControl.Resources>
     <DockPanel >
         <StackPanel DockPanel.Dock="Top">
@@ -37,37 +67,7 @@
 
         <Separator />
         </StackPanel>
-        <StackPanel DockPanel.Dock="Top">
-            <StackPanel.Resources>
-                <Style TargetType="RadioButton" 
-                       x:Key="ColorButton"
-                       BasedOn="{StaticResource MaterialDesignRaisedButton}">
-                    <Setter Property="BorderThickness" Value="2" />
-                    <Setter Property="BorderBrush" Value="Transparent" />
-                    <Setter Property="Margin" Value="1 1 0 0" />
-                    <Setter Property="Tag" Value="0" />
-                    <Style.Triggers>
-                        <Trigger Property="IsChecked" Value="True">
-                            <Trigger.EnterActions>
-                                <BeginStoryboard>
-                                    <Storyboard>
-                                        <ColorAnimation Storyboard.TargetProperty="BorderBrush.Color" 
-                                                                 To="Bisque" Duration="0:0:0.18" />
-                                    </Storyboard>
-                                </BeginStoryboard>
-                            </Trigger.EnterActions>
-                            <Trigger.ExitActions>
-                                <BeginStoryboard>
-                                    <Storyboard>
-                                        <ColorAnimation Storyboard.TargetProperty="BorderBrush.Color" 
-                                                                 To="Transparent" Duration="0:0:0.18" />
-                                    </Storyboard>
-                                </BeginStoryboard>
-                            </Trigger.ExitActions>
-                        </Trigger>
-                    </Style.Triggers>
-                </Style>
-            </StackPanel.Resources>
+        <StackPanel DockPanel.Dock="Top">            
             <TextBlock HorizontalAlignment="Center"
                    Margin="5"
                    Style="{StaticResource MaterialDesignHeadline6TextBlock}">
@@ -345,15 +345,19 @@
             <Separator/>
         </StackPanel>
         <DockPanel>
+            
             <TextBlock HorizontalAlignment="Center"
                        DockPanel.Dock="Top"
                    Margin="5"
                    Style="{StaticResource MaterialDesignHeadline6TextBlock}">
             Object
             </TextBlock>
-            <ItemsControl Width="250"
-                          ScrollViewer.HorizontalScrollBarVisibility ="Disabled" 
-                          ScrollViewer.VerticalScrollBarVisibility ="Auto"
+            <ListView Width="250"
+                      SelectionMode="Single"
+                      Tag="{Binding ElementName=Main, Path=DataContext}"
+                      SelectedItem="{Binding SelectedGraphic, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                      ScrollViewer.HorizontalScrollBarVisibility ="Disabled" 
+                      ScrollViewer.VerticalScrollBarVisibility ="Auto"
                   ItemsSource="{Binding ListObject, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
@@ -361,20 +365,74 @@
                     </ItemsPanelTemplate>
                 </ItemsControl.ItemsPanel>
                 <ItemsControl.ItemTemplate>
-                    <DataTemplate DataType="{x:Type assets:DrawGraphic}">
-                        <Grid Height="40" Margin="5">
+                    <DataTemplate>
+                        <Grid Tag="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ListView}, Path=Tag}"
+                            Margin="2">
+                            <Grid.ContextMenu>
+                                <ContextMenu DataContext="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Grid}, Path=Tag}">
+                                    <MenuItem Header="Delete">
+                                        <i:Interaction.Triggers>
+                                            <i:EventTrigger EventName="Click">
+                                                <i:InvokeCommandAction Command="{Binding DeleteCommand}"/>
+                                            </i:EventTrigger>
+                                        </i:Interaction.Triggers>
+                                    </MenuItem>
+                                    <Separator />
+                                    <MenuItem Header="Delete">
+                                        <i:Interaction.Triggers>
+                                            <i:EventTrigger EventName="Click">
+                                                <i:InvokeCommandAction Command="{Binding DeleteCommand}"/>
+                                            </i:EventTrigger>
+                                        </i:Interaction.Triggers>
+                                    </MenuItem>
+                                    <MenuItem Header="Delete">
+                                        <i:Interaction.Triggers>
+                                            <i:EventTrigger EventName="Click">
+                                                <i:InvokeCommandAction Command="{Binding DeleteCommand}"/>
+                                            </i:EventTrigger>
+                                        </i:Interaction.Triggers>
+                                    </MenuItem>
+                                    <MenuItem Header="Delete">
+                                        <i:Interaction.Triggers>
+                                            <i:EventTrigger EventName="Click">
+                                                <i:InvokeCommandAction Command="{Binding DeleteCommand}"/>
+                                            </i:EventTrigger>
+                                        </i:Interaction.Triggers>
+                                    </MenuItem>
+                                    <MenuItem Header="Delete">
+                                        <i:Interaction.Triggers>
+                                            <i:EventTrigger EventName="Click">
+                                                <i:InvokeCommandAction Command="{Binding DeleteCommand}"/>
+                                            </i:EventTrigger>
+                                        </i:Interaction.Triggers>
+                                    </MenuItem>
+                                </ContextMenu>
+                            </Grid.ContextMenu>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="32"/>
+                                <ColumnDefinition Width="40"/>
                             </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
                             <Image Width="32"
+                                   Grid.RowSpan="2"
                                    Height="32"
                                    ToolTip="{Binding Name, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
                                    Source="{Binding Name , Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource ImagesourceCV}}"/>
+                                <TextBlock Grid.Column="1"
+                                           Text="{Binding Style, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                <RadioButton Style="{StaticResource ColorButton}"
+                                             Background="{Binding Converter={StaticResource ColorCV}}"
+                                             Grid.Column="1"
+                                             Grid.Row="1"
+                                             Content=""
+                                             IsEnabled="False"/>
                         </Grid>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
-            </ItemsControl>
+            </ListView>
         </DockPanel>
     </DockPanel>
 </UserControl>

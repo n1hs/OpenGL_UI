@@ -10,7 +10,7 @@ namespace DoAn_OpenGL.ViewModels
     public class DrawViewModel : BaseViewModel
     {
         #region Properties
-        private MainWindowViewModel mainmodel;
+        private MainWindowViewModel mainVM;
         private bool drawByPoint = true;
 
         public bool DrawByPoint
@@ -19,7 +19,7 @@ namespace DoAn_OpenGL.ViewModels
             set { 
                 if(value)
                 {
-                    mainmodel.drawMode =  SharpGL.SceneGraph.Quadrics.DrawStyle.Point;
+                    mainVM.drawMode =  SharpGL.SceneGraph.Quadrics.DrawStyle.Point;
                     UpdateGraphic();
                 }
                 drawByPoint = value;
@@ -35,7 +35,7 @@ namespace DoAn_OpenGL.ViewModels
             {
                 if (value)
                 {
-                    mainmodel.drawMode = SharpGL.SceneGraph.Quadrics.DrawStyle.Line;
+                    mainVM.drawMode = SharpGL.SceneGraph.Quadrics.DrawStyle.Line;
                     UpdateGraphic();
                 }
                 drawByLines = value;
@@ -51,7 +51,7 @@ namespace DoAn_OpenGL.ViewModels
             {
                 if (value)
                 {
-                    mainmodel.drawMode = SharpGL.SceneGraph.Quadrics.DrawStyle.Fill;
+                    mainVM.drawMode = SharpGL.SceneGraph.Quadrics.DrawStyle.Fill;
                     UpdateGraphic();
                 }
                 drawBySolid = value;
@@ -63,10 +63,10 @@ namespace DoAn_OpenGL.ViewModels
         public bool ShowXYPlane
         {
             get {
-                return ( (mainmodel==null) ? false : mainmodel.showXYPlane); 
+                return ( (mainVM==null) ? false : mainVM.showXYPlane); 
             }
             set { 
-                mainmodel.showXYPlane = value;
+                mainVM.showXYPlane = value;
                 OnPropertyChanged("DrawCoodinate"); }
         }
 
@@ -83,32 +83,45 @@ namespace DoAn_OpenGL.ViewModels
 
         public ObservableCollection<Graphics3D.Graphic3D> ListObject
         {
-            get { return mainmodel?.listObject; }
+            get { return mainVM?.listObject; }
             set
             {
-                mainmodel.listObject = value;
+                mainVM.listObject = value;
                 OnPropertyChanged("ListObject");
+            }
+        }
+
+        public Graphic3D SelectedGraphic
+        {
+            get
+            {
+                return mainVM?.SeletedGraphic;
+            }
+            set
+            {
+                mainVM.SeletedGraphic = value;
             }
         }
 
         public ICommand ChoseGraphicCommand { get; set; }
         public ICommand ChoseColorCommand { get; set; }
+        public ICommand DeleteCommand { get; set; }
 
         private double r = 1, g, b;
         #endregion
         #region Contruction
         public DrawViewModel(MainWindowViewModel _mainmodel)
         {
-            this.mainmodel = _mainmodel;
+            this.mainVM = _mainmodel;
             ShowXYPlane = true;
             ChoseGraphicCommand = new RelayCommand<DrawGraphic>(
                 (i) => true,
                 (i) =>
                 {
-                    mainmodel.isDrawMode = true;
+                    mainVM.isDrawMode = true;
                     ResetDraw = false;
-                    mainmodel.SetStatus( string.Format("DrawMode: {0}.", mainmodel.isDrawMode));
-                    mainmodel.drawGraphic = i;
+                    mainVM.SetStatus( string.Format("DrawMode: {0}.", mainVM.isDrawMode));
+                    mainVM.drawGraphic = i;
                     UpdateGraphic();
                 });
             ChoseColorCommand = new RelayCommand<string>(
@@ -152,6 +165,11 @@ namespace DoAn_OpenGL.ViewModels
                     }
                     UpdateGraphic();
                 });
+            DeleteCommand = new RelayCommand(_=> {
+                if (SelectedGraphic is null)
+                    return;
+                ListObject.Remove(SelectedGraphic);
+            });
         }
 
 
@@ -160,32 +178,32 @@ namespace DoAn_OpenGL.ViewModels
         #region Methods
         private void UpdateGraphic()
         {
-            if (mainmodel.isDrawMode)
-                switch (mainmodel.drawGraphic)
+            if (mainVM.isDrawMode)
+                switch (mainVM.drawGraphic)
                 {
                     case DrawGraphic.Cone:
-                        mainmodel.temp = new Cone(mainmodel.drawMode, 2, 2, r, g, b);
+                        mainVM.temp = new Cone(mainVM.drawMode, 2, 2, r, g, b);
                         break;
                     case DrawGraphic.Cube:
-                        mainmodel.temp = new Cube(mainmodel.drawMode, 4, 4, 4, r, g, b);
+                        mainVM.temp = new Cube(mainVM.drawMode, 4, 4, 4, r, g, b);
                         break;
                     case DrawGraphic.Cylinder:
-                        mainmodel.temp = new Cylinder(mainmodel.drawMode, 2, 3, r, g, b);
+                        mainVM.temp = new Cylinder(mainVM.drawMode, 2, 3, r, g, b);
                         break;
                     case DrawGraphic.FrustumShape:
-                        mainmodel.temp = new FrustumShape(mainmodel.drawMode, 2, 1, 2, r, g, b);
+                        mainVM.temp = new FrustumShape(mainVM.drawMode, 2, 1, 2, r, g, b);
                         break;
                     case DrawGraphic.Teapot:
-                        mainmodel.temp = new Teapot(mainmodel.drawMode, 20, 2, r, g, b);
+                        mainVM.temp = new Teapot(mainVM.drawMode, 20, 2, r, g, b);
                         break;
                     case DrawGraphic.Pyramid:
-                        mainmodel.temp = new Pyramid(mainmodel.drawMode, 2, 2, r, g, b);
+                        mainVM.temp = new Pyramid(mainVM.drawMode, 2, 2, r, g, b);
                         break;
                     case DrawGraphic.Sphere:
-                        mainmodel.temp = new Sphere(mainmodel.drawMode, 2, r, g, b);
+                        mainVM.temp = new Sphere(mainVM.drawMode, 2, r, g, b);
                         break;
                     case DrawGraphic.TruncatedCone:
-                        mainmodel.temp = new TruncatedCone(mainmodel.drawMode, 2, 1, 2, r, g, b);
+                        mainVM.temp = new TruncatedCone(mainVM.drawMode, 2, 1, 2, r, g, b);
                         break;
                 }
         }

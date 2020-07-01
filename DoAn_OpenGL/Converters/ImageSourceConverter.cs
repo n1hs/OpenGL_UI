@@ -14,7 +14,7 @@ namespace DoAn_OpenGL.Converters
                 {
                     if(!string.IsNullOrWhiteSpace(v))
                     {
-                        return string.Format("pack://application:,,,/DoAn_OpenGL;component/Assets/Images/{0}.png", v.Trim());
+                        return string.Format("pack://application:,,,/DoAn_OpenGL;component/Assets/Images/{0}.png", v.Split('.')[0].Trim());
                     }    
                 }    
             }

@@ -242,7 +242,6 @@ namespace DoAn_OpenGL.Graphics3D
             {
                 x = x / 2;
                 y = y / 2;
-                z = z / 2;
             }
             if (this is Sphere)
             {
