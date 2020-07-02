@@ -8,8 +8,8 @@ namespace DoAn_OpenGL.ViewModels
     {
         #region Properties
         private const double xeye = 0;
-        private const double yeye = -15.0;
-        private const double zeye = 15.0;
+        private const double yeye = -25.0;
+        private const double zeye = 25.0;
         private const double xcenter = 0.0;
         private const double ycenter = 0.0;
         private const double zcenter = 0.0;
@@ -92,6 +92,16 @@ namespace DoAn_OpenGL.ViewModels
                 YCenter = ycenter;
                 ZCenter = zcenter;
             });
+        }
+
+        public void Update()
+        {
+            OnPropertyChanged("ZCenter");
+            OnPropertyChanged("YCenter");
+            OnPropertyChanged("XCenter");
+            OnPropertyChanged("XEye");
+            OnPropertyChanged("YEye");
+            OnPropertyChanged("ZEye");
         }
         #endregion
     }

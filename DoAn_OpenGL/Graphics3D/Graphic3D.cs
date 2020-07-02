@@ -1,11 +1,10 @@
 ﻿using SharpGL;
 using SharpGL.SceneGraph.Quadrics;
 using DoAn_OpenGL.Assets;
-using System;
 using System.Drawing;
-using System.Data;
-using System.Windows.Controls.Primitives;
+using GlmNet;
 using System.Drawing.Imaging;
+using SharpGL.Shaders;
 
 namespace DoAn_OpenGL.Graphics3D
 {
@@ -109,13 +108,13 @@ namespace DoAn_OpenGL.Graphics3D
             {
                 case Translational.Ox:
                     LocationX +=0.3;
-                    if (LocationX > 10)
-                        LocationX = -10;
+                    if (LocationX > 15)
+                        LocationX = -15;
                     break;
                 case Translational.Oy:
                     LocationY+=0.3;
-                    if (LocationY > 10)
-                        LocationY = -10;
+                    if (LocationY > 15)
+                        LocationY = -15;
                     break;
             }
             switch (AnimationXoay)
@@ -137,9 +136,11 @@ namespace DoAn_OpenGL.Graphics3D
             gl.PushMatrix();
             Animation(gl);
             gl.Translate(LocationX, LocationY, LocationZ);
+            gl.Translate(0, 0, SizeZ / 2);
             gl.Rotate(RotateX, 1.0, 0.0, 0.0);
             gl.Rotate(RotateY, 0.0, 1.0, 0.0);
             gl.Rotate(RotateZ, 0.0, 0.0, 1.0);
+            gl.Translate(0, 0, -SizeZ / 2);
             gl.Color(ColorR, ColorG, ColorB);
 
             if (Style != DrawStyle.Fill)
@@ -151,12 +152,17 @@ namespace DoAn_OpenGL.Graphics3D
                 case Lighting.AMBIENT:
                     gl.Enable(OpenGL.GL_LIGHTING);
                     gl.Enable(OpenGL.GL_LIGHT0);
-                    float[] ambient = new float[4];
-                    ambient[0] = (float)0.0;
-                    ambient[1] = (float)0.0;
-                    ambient[2] = (float)0.0;
-                    ambient[3] = (float)1.0;
-                    gl.Material(OpenGL.GL_FRONT_AND_BACK, OpenGL.GL_AMBIENT, ambient);
+                    float[] light_pos1 = new float[4];
+                    gl.GetLight(OpenGL.GL_LIGHT0, OpenGL.GL_POSITION, light_pos1);
+                    if (light_pos1[0] == 0 && light_pos1[1] == 0 && light_pos1[2] == 1 && light_pos1[3] == 0)
+                    {
+
+                    }
+                    else
+                    {
+                        gl.Light(OpenGL.GL_LIGHT0, OpenGL.GL_POSITION, new float[4] { 0, 0, 1, 0 });
+                    }
+                    gl.Material(OpenGL.GL_FRONT_AND_BACK, OpenGL.GL_AMBIENT, new float[4] { 0, 0, 0, 1 });
                     break;
                 case Lighting.POSITION:
                     gl.Enable(OpenGL.GL_LIGHTING);
@@ -166,14 +172,12 @@ namespace DoAn_OpenGL.Graphics3D
                     light_pos[1] = (float)LightSourceY;
                     light_pos[2] = (float)LightSourceZ;
                     light_pos[3] = (float)0.0;
-                    gl.Light(OpenGL.GL_LIGHT0, OpenGL.GL_POSITION, light_pos);
+                    gl.Light(OpenGL.GL_LIGHT0, OpenGL.GL_POSITION, light_pos); 
                     ///Code chiếu sáng
                     ///
                     break;
                 case Lighting.SHADOW:
 
-                    ///Code đổ bóng
-                    ///
                     break;
                 default: break;
             }
@@ -196,6 +200,8 @@ namespace DoAn_OpenGL.Graphics3D
                 gl.TexParameter(OpenGL.GL_TEXTURE_2D, OpenGL.GL_TEXTURE_MAG_FILTER, OpenGL.GL_LINEAR);
             }
         }
+
+        const int SHADOW_WIDTH = 20, SHADOW_HEIGHT = 20;
         protected void EndInit(OpenGL gl)
         {
             if (Style == DrawStyle.Fill)
@@ -210,11 +216,8 @@ namespace DoAn_OpenGL.Graphics3D
                     case Lighting.POSITION:
                         gl.Disable(OpenGL.GL_LIGHT0);
                         gl.Disable(OpenGL.GL_LIGHTING);
-                        ///Code chiếu sáng
-                        ///
                         break;
                     case Lighting.SHADOW:
-
                         ///Code đổ bóng
                         ///
                         break;
@@ -228,8 +231,8 @@ namespace DoAn_OpenGL.Graphics3D
                     gl.Disable(OpenGL.GL_TEXTURE_2D);
                 }
             }
-
             DrawBoder(gl, SizeX, SizeX, SizeZ);
+
             gl.PopMatrix();
         }
 

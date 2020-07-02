@@ -8,6 +8,7 @@ using System.Collections.ObjectModel;
 using System.Windows.Controls;
 using System.Windows.Input;
 
+
 namespace DoAn_OpenGL.ViewModels
 {
     public class MainWindowViewModel : BaseViewModel
@@ -115,12 +116,11 @@ namespace DoAn_OpenGL.ViewModels
                     mainWindow.OpenGLControl.OpenGLInitialized += OpenGLControl_OpenGLInitialized;
                     mainWindow.OpenGLControl.MouseMove += OpenGLControl_MouseMove;
                     mainWindow.OpenGLControl.MouseLeave += OpenGLControl_MouseLeave;
-                    mainWindow.OpenGLControl.MouseLeftButtonDown += OpenGLControl_MouseLeftButtonDown;
                     mainWindow.OpenGLControl.MouseLeftButtonUp += OpenGLControl_MouseLeftButtonUp;
                     mainWindow.OpenGLControl.MouseEnter += OpenGLControl_MouseEnter;
+                    mainWindow.OpenGLControl.MouseWheel += OpenGLControl_MouseWheel;
                     });
         }
-
 
         private void ShowDialogControl(string key)
         {
@@ -185,8 +185,8 @@ namespace DoAn_OpenGL.ViewModels
 
 
         internal double xEye = 0;
-        internal double yEye = -15.0;
-        internal double zEye = 15.0;
+        internal double yEye = -25.0;
+        internal double zEye = 25.0;
         internal double xCenter = 0.0;
         internal double yCenter = 0.0;
         internal double zCenter = 0.0;
@@ -210,7 +210,6 @@ namespace DoAn_OpenGL.ViewModels
 
             gl.LookAt(xEye, yEye, zEye, xCenter, yCenter, zCenter, xup, yup, zup);
             gl.PushMatrix();
-
             DrawXYPlane();
             gl.ClearColor(0, 0, 0, 0);
 
@@ -266,12 +265,7 @@ namespace DoAn_OpenGL.ViewModels
                 double posX, posY, posZ;
                 posX = posY = posZ = 0;
                 gl.UnProject(winX, winY, 0, modelview, projection, viewport, ref posX, ref posY, ref posZ);
-                if(temp !=null)
-                {
-                    temp.LightSourceX = posX;
-                    temp.LightSourceZ = posZ;
-                    temp.LightSourceY = posY;
-                }    
+             
                 double pos1X, pos1Y, pos1Z;
                 pos1X = pos1Y = pos1Z = 0;
                 gl.UnProject(winX, winY, 1, modelview, projection, viewport, ref pos1X, ref pos1Y, ref pos1Z);
@@ -316,9 +310,58 @@ namespace DoAn_OpenGL.ViewModels
             
         }
 
-        private void OpenGLControl_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            
+
+        private void OpenGLControl_MouseWheel(object sender, MouseWheelEventArgs e)
+        {           
+            double a = xEye - xCenter;
+            double b = yEye - yCenter;
+            double c = zEye - zCenter;
+            double t, tx,ty,tz, min,max;
+            if (e.Delta>0 && a <1 && b<1 && c<1)
+            {
+                return;
+            }
+            if (a == 0 && b == 0 && c == 0)
+            {
+                System.Windows.MessageBox.Show("Vui lòng chọn tọa độ camera view khác tọa đọ tham chiếu.");
+                return;
+            }  
+
+            else
+            {
+                if(a!= 0)
+                {
+                    t = xEye / a;
+                }
+                else
+                {
+                    if (b != 0)
+                    {
+                        t = yEye / b;
+                    }
+                    else
+                    {
+                        t = zEye / c;
+                    }
+                }
+            }
+
+            t -= (double)e.Delta*0.1/120;
+
+            tx = xCenter + a * t;
+            ty = yCenter + b * t;
+            tz = zCenter + c * t;
+            max = Math.Max(tx, Math.Max(ty, tz));
+            min = Math.Min(tx, Math.Min(ty, tz));
+            if(min <= -50 || max >= 50.0)
+            {
+                System.Windows.MessageBox.Show("Giới hạn tọa độ chỉ từ -50 đến 50.");
+                return;
+            }    
+            xEye = tx;
+            yEye = ty;
+            zEye = tz;
+            cameraVM.Update();
         }
 
         internal void SetStatus(string text)
@@ -329,55 +372,42 @@ namespace DoAn_OpenGL.ViewModels
         /// <summary>
         ///  Vẽ mặt phẳng OXY 
         /// </summary>
-        private void DrawXYPlane()
+        private void DrawXYPlane(double size = 15, double distanceBetweenLines = 1.0)
         {
             if (!showXYPlane)
                 return;
+            //gl.Color(0.9, 0.9, 0.9);
+            //gl.Begin(OpenGL.GL_QUADS);
+
+            //gl.TexCoord(1.0f, 0.0f); gl.Vertex(-size, -size, 0);    // Bottom Right Of The Texture and Quad
+            //gl.TexCoord(1.0f, 1.0f); gl.Vertex(-size, size, 0); // Top Right Of The Texture and Quad
+            //gl.TexCoord(0.0f, 1.0f); gl.Vertex(size, size, 0);  // Top Left Of The Texture and Quad
+            //gl.TexCoord(0.0f, 0.0f); gl.Vertex(size, -size, 0); // Bottom Left Of The Texture and Quad
+
+            //gl.End();
 
             gl.Color(0.5, 0.5, 0.5);
-            int grid = 10;
-            double distanceBetweenLines = 1.0;
 
-            for (int x = -grid; x <= grid; x++)
+            for (double x = -size; x <= size; x += 1)
             {
 
                 gl.Begin(SharpGL.Enumerations.BeginMode.Lines);
-                gl.Vertex(x, -(grid * distanceBetweenLines), 0.0);
-                gl.Vertex(x, (grid * distanceBetweenLines), 0.0);
+                gl.Vertex(x, -(size * distanceBetweenLines), 0.0);
+                gl.Vertex(x, (size * distanceBetweenLines), 0.0);
                 gl.End();
             };
-            for (int y = -grid; y <= grid; y++)
+            for (double y = -size; y <= size; y += 1)
             {
                 gl.Begin(SharpGL.Enumerations.BeginMode.Lines);
-                gl.Vertex(-(grid * distanceBetweenLines), y, 0.0);
-                gl.Vertex(grid * distanceBetweenLines, y, 0.0);
+                gl.Vertex(-(size * distanceBetweenLines), y, 0.0);
+                gl.Vertex(size * distanceBetweenLines, y, 0.0);
                 gl.End();
             }
 
         }
 
-        //private void DrawCoodinate()
-        //{
-        //    //gl.Begin(SharpGL.Enumerations.BeginMode.Lines);
-        //    //gl.Color(1.0, 0.0, 0.0); // red X
-        //    //gl.Vertex(0.0, 0.0, 0.0);
-        //    //gl.Vertex(10.0, 0.0, 0.0);
-        //    //gl.End();
 
-        //    //gl.Begin(SharpGL.Enumerations.BeginMode.Lines);
-        //    //gl.Color(0.0, 1.0, 0.0); //Green X
-        //    //gl.Vertex(0.0, 0.0, 0.0);
-        //    //gl.Vertex(0.0, 10.0, 0.0);
-        //    //gl.End();
 
-        //    //gl.Begin(SharpGL.Enumerations.BeginMode.Lines);
-        //    //gl.Color(0.0, 0.0, 1.0); //Blue Z
-        //    //gl.Vertex(0.0, 0.0, 0.0);
-        //    //gl.Vertex(0.0, 0.0, 10.0);
-        //    //gl.End();
-        //}
-        
-      
 
 
         #endregion

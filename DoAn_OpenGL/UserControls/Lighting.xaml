@@ -87,6 +87,7 @@
                            Style="{StaticResource MaterialDesignSubtitle1TextBlock}"/>
 
                 <ToggleButton Style="{StaticResource MaterialDesignSwitchDarkToggleButton}"
+                              IsEnabled="False"
                             IsChecked="{Binding LSHADOW, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
             </StackPanel>
         </StackPanel>

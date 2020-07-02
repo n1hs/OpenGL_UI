@@ -77,7 +77,15 @@ namespace DoAn_OpenGL.ViewModels
             set
             {
                 if (value)
+                {
                     SelectedGraphic.LightingMode = Assets.Lighting.POSITION;
+                    SelectedGraphic.LightSourceX = mainVM.xEye;
+                    SelectedGraphic.LightSourceY = mainVM.yEye;
+                    SelectedGraphic.LightSourceZ = mainVM.zEye;
+                    OnPropertyChanged("XEye");
+                    OnPropertyChanged("YEye");
+                    OnPropertyChanged("ZEye");
+                }
             }
         }
         public bool LSHADOW

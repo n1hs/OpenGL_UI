@@ -165,6 +165,7 @@
         </materialDesign:Card>
         <sharpGL:OpenGLControl Grid.Row="1"     
                                x:Name="OpenGLControl"
+                               RenderContextType="FBO"
                                Margin="5"/>
         <StatusBar Grid.Row="2"
                    Background="{DynamicResource MaterialDesignDarkBackground}"
